@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lib.ailibrary.domain.room.RoomMapper">
+
+    <!-- tb_room_reserve 테이블 전체 컬럼 -->
+    <sql id="roomColumns">
+          room_reserve_id
+        , room_name
+        , room_user_stu_num
+        , room_user_name
+        , reserve_people_num
+        , reserve_date
+        , reserve_time
+    </sql>
+
+
+    <!-- 예약 정보 저장 -->
+    <insert id="save" parameterType="com.lib.ailibrary.domain.room.RoomReserveRequest">
+        INSERT INTO tb_room_reserve (
+            <include refid="roomColumns"></include>
+        ) VALUES (
+              #{roomReserveId}
+            , #{roomName}
+            , #{roomUserStuNum}
+            , #{roomUserName}
+            , #{reservePeopleNum}
+            , #{reserveDate}
+            , #{reserveTime}
+        )
+    </insert>
+
+
+    <!-- 예약 정보 조회 -->
+    <select id="findById" parameterType="long" resultType="com.lib.ailibrary.domain.room.RoomReserveResponse">
+        SELECT
+            <include refid="roomColumns"></include>
+        FROM
+            tb_room_reserve
+        WHERE
+            room_reserve_id = #{value}
+    </select>
+
+
+    <!-- 예약 정보 수정 (보류) -->
+    <update id="update" parameterType="com.lib.ailibrary.domain.room.RoomReserveRequest">
+    </update>
+
+
+    <!-- 예약 정보 삭제 or 취소 -->
+    <delete id="deleteById" parameterType="long">
+        DELETE
+        FROM
+            tb_room_reserve
+        WHERE
+            room_reserve_id = #{roomReserveId}
+    </delete>
+
+
+    <!-- 예약 내역 조회 -->
+    <select id="findAll" resultType="com.lib.ailibrary.domain.room.RoomReserveResponse">
+        SELECT
+            <include refid="roomColumns"></include>
+        FROM
+            tb_room_reserve
+        ORDER BY
+            room_reserve_id DESC
+    </select>
+
+</mapper>
