@@ -33,8 +33,8 @@ public interface RoomMapper {
     void deleteById(Long roomReserveId);
 
     /**
-     * 예약 내역 조회
-     * @return 예약 내역
+     * 예약 내역 전체 조회
+     * @return 예약 내역 전체
      */
     List<RoomReserveResponse> findAll();
 
