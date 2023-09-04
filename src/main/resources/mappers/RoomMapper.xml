@@ -16,7 +16,7 @@
 
 
     <!-- 예약 정보 저장 -->
-    <insert id="save" parameterType="com.lib.ailibrary.domain.room.RoomReserveRequest">
+    <insert id="save" parameterType="com.lib.ailibrary.domain.room.RoomReserveRequest" useGeneratedKeys="true" keyProperty="roomReserveId">
         INSERT INTO tb_room_reserve (
             <include refid="roomColumns"></include>
         ) VALUES (
