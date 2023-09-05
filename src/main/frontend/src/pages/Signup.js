@@ -51,12 +51,17 @@ const InputField = styled.input`
   width: 100%;
   height: 35px;
   border: 1px solid #c4c4c4;
-  padding: 5px;
+  padding: 2.5px;
 `;
 
 const InputInform = styled.p`
   font-size: 14px;
   margin: 0;
+`;
+const SelectGrade = styled.select`
+  width: 200px;
+  height: 35px;
+  border: 1px solid #c4c4c4;
 `;
 
 function Signup() {
@@ -145,12 +150,16 @@ function Signup() {
                             <InputInform>학년</InputInform>
                         </td>
                         <td>
-                            <InputField
-                                type="text"
+                            <SelectGrade
                                 name="grade"
                                 value={formData.grade}
                                 onChange={handleInputChange}
-                            />
+                            >
+                                <option value="1">1학년</option>
+                                <option value="2">2학년</option>
+                                <option value="3">3학년</option>
+                                <option value="4">4학년</option>
+                            </SelectGrade>
                         </td>
                     </TableRow>
                     <TableRow>
