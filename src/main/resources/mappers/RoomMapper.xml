@@ -69,4 +69,31 @@
             rez_id DESC
     </select>
 
+    <!-- 잔여 시설 조회 -->
+    <select id="searchRoom" resultType="com.lib.ailibrary.domain.room.RoomSearchResponse">
+        SELECT
+            room_floor
+          , room_name
+        FROM
+            tb_room
+        WHERE
+            (room_floor, room_name) NOT IN
+            (SELECT
+                 r.room_floor
+               , r.room_name
+             FROM
+                 tb_room r
+             LEFT JOIN
+                 tb_room_rez rr
+             ON
+                 r.room_id = rr.room_id
+             WHERE
+                 r.room_type = #{roomType}
+                 AND
+                 rr.rez_time = #{rezTime}
+                 AND
+                 rr.rez_date = #{rezDate}
+
+    </select>
+
 </mapper>

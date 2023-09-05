@@ -43,4 +43,10 @@ public interface RoomMapper {
      * @return 예약 정보 수
      */
     int count();
+
+    /**
+     * 잔여 시설 조회
+     * @return 잔여 시설
+     */
+    List<RoomSearchResponse> searchRoom();
 }
