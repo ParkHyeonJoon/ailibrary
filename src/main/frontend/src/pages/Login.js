@@ -147,9 +147,11 @@ function Login() {
                 <Button backgroundColor="#FDDC3F" textColor="#3A2929" type="submit">
                     카카오톡으로 로그인
                 </Button>
-                <Button as={Link} to="/signup" border="1px solid #1D2B74" backgroundColor="white" textColor="black">
-                    회원가입
-                </Button>
+                <Link to="/signup" style={{ textDecoration: 'none' }}>
+                    <Button border="1px solid #1D2B74" backgroundColor="white" textColor="black">
+                        회원가입
+                    </Button>
+                </Link>
             </LoginArea>
         </Wrapper>
     );
