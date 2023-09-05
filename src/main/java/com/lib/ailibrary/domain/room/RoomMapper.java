@@ -15,10 +15,10 @@ public interface RoomMapper {
 
     /**
      * 예약 정보 조회
-     * @param roomReserveId - PK
+     * @param rezId - PK
      * @return 예약 정보
      */
-    RoomReserveResponse findById(Long roomReserveId);
+    RoomReserveResponse findById(Long rezId);
 
     /**
      * 예약 정보 수정
@@ -28,9 +28,9 @@ public interface RoomMapper {
 
     /**
      * 예약 정보 삭제
-     * @param roomReserveId - PK
+     * @param rezId - PK
      */
-    void deleteById(Long roomReserveId);
+    void deleteById(Long rezId);
 
     /**
      * 예약 내역 전체 조회

@@ -21,7 +21,7 @@ public class RoomService {
     @Transactional
     public Long saveReserve(final RoomReserveRequest params) {
         roomMapper.save(params);
-        return params.getRoomReserveId();
+        return params.getRezId();
     }
 
     /**

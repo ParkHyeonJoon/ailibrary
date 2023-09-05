@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -21,12 +22,12 @@ public class RoomMapperTest {
     @Test
     void save() {
         RoomReserveRequest params = new RoomReserveRequest();
-        params.setRoomName("스터디룸 1번");
-        params.setRoomUserStuNum("20233562");
-        params.setRoomUserName("김정환");
-        params.setReservePeopleNum(4);
-        params.setReserveDate("2023-08-10");
-        params.setReserveTime("15:00~16:00");
+        params.setRoomId(1);
+        params.setUserStuId(20233562);
+        params.setUserName("김정환");
+        params.setRezPeopleNum(4);
+        params.setRezDate(Date.valueOf("2023-09-05"));
+        params.setRezTime("15:00~16:00");
         roomMapper.save(params);
 
         List<RoomReserveResponse> rooms = roomMapper.findAll();
@@ -35,7 +36,7 @@ public class RoomMapperTest {
 
     @Test
     void findById() {
-        RoomReserveResponse room = roomMapper.findById(1L);
+        RoomReserveResponse room = roomMapper.findById(2L);
         try {
             String roomJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(room);
             System.out.println(roomJson);
