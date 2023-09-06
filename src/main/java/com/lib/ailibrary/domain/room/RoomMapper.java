@@ -48,5 +48,5 @@ public interface RoomMapper {
      * 잔여 시설 조회
      * @return 잔여 시설
      */
-    List<RoomSearchResponse> searchRoom();
+    List<RoomSearchResponse> searchRoom(RoomSearchRequest params);
 }

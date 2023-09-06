@@ -3,9 +3,7 @@ package com.lib.ailibrary;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.lib.ailibrary.domain.room.RoomMapper;
-import com.lib.ailibrary.domain.room.RoomReserveRequest;
-import com.lib.ailibrary.domain.room.RoomReserveResponse;
+import com.lib.ailibrary.domain.room.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,5 +48,19 @@ public class RoomMapperTest {
         System.out.println("삭제 이전의 전체 예약 개수는 : " + roomMapper.findAll().size() + "개입니다.");
         roomMapper.deleteById(1L);
         System.out.println("삭제 이후의 전체 예약 개수는 : " + roomMapper.findAll().size() + "개입니다.");
+    }
+
+    @Test
+    void 잔여시설조회() {
+        RoomSearchRequest params = new RoomSearchRequest();
+        params.setRoomType("스터디룸");
+        params.setRezDate(Date.valueOf("2023-09-05"));
+        params.setRezTime("15:00~16:00");
+
+        List<RoomSearchResponse> remainRoom = roomMapper.searchRoom(params);
+
+        for(int i=0; i<remainRoom.size(); i++) {
+            System.out.println(remainRoom.get(i).toString());
+        }
     }
 }

@@ -88,11 +88,12 @@
              ON
                  r.room_id = rr.room_id
              WHERE
-                 r.room_type = #{roomType}
-                 AND
                  rr.rez_time = #{rezTime}
                  AND
                  rr.rez_date = #{rezDate}
+            )
+            AND
+            room_type = #{roomType}
 
     </select>
 

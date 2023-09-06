@@ -1,6 +1,7 @@
 package com.lib.ailibrary.domain.room;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import java.sql.Date;
 
