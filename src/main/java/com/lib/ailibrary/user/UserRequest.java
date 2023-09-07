@@ -2,12 +2,10 @@ package com.lib.ailibrary.user;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
-public class UserResponse {
+public class UserRequest {
 
     private int userStuId;      // 학번 PK
     private String userName;    // 학생 이름
@@ -17,7 +15,4 @@ public class UserResponse {
     private String userId;      // 로그인 아이디
     private String userPw;      // 로그인 비밀번호
     private String userGrade;   // 학생 학년
-
 }
-
-
