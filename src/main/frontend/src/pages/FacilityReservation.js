@@ -6,12 +6,13 @@ import MyDatePicker from "../components/MyDatePicker";
 import MyTimePicker from "../components/MyTimePicker";
 
 const Wrapper = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    `;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 150px;
+`;
 const Title = styled.p`
     text-align: left;
     color: #000;

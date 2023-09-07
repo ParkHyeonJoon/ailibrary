@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding-bottom: 30px;
+  margin-top: 150px;
 `;
 
 const Title = styled.p`
@@ -74,12 +75,23 @@ function Signup() {
         phoneNumber: '',
         studentID: '',
         password: '',
+        confirmPassword: '', // 비밀번호 확인 추가
     });
+
+    // 비밀번호 확인 메시지 상태
+    const [passwordMatch, setPasswordMatch] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         // TODO: 유효성 검사 및 회원가입 로직 구현
+
+        // 비밀번호 확인 로직 추가
+        if (formData.password === formData.confirmPassword) {
+            setPasswordMatch('확인이 완료되었습니다.');
+        } else {
+            setPasswordMatch('입력하신 비밀번호와 일치하지 않습니다.');
+        }
 
         // 예시: 필수 입력 사항이 모두 입력되었는지 확인
         if (
@@ -107,6 +119,8 @@ function Signup() {
             ...formData,
             [name]: value,
         });
+
+        setPasswordMatch(''); //입력 값이 변경될 때마다 비밀번호 확인 메시지 초기화
     };
 
     return (
@@ -225,6 +239,21 @@ function Signup() {
                                 value={formData.password}
                                 onChange={handleInputChange}
                             />
+                        </td>
+                    </TableRow>
+                    <TableRow>
+                        <td>
+                            <InputInform>비밀번호 확인</InputInform>
+                        </td>
+                        <td>
+                            <InputField
+                                type="password"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleInputChange}
+                            />
+                            {/* 비밀번호 확인 메시지 */}
+                            <p style={{ fontSize: '14px', color: 'red' }}>{passwordMatch}</p>
                         </td>
                     </TableRow>
                 </TBody>
