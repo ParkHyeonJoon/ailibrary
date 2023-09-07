@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lib.ailibrary.domain.room.RoomMapper">
+
+    <!-- tb_room_rez 테이블 전체 컬럼 -->
+    <sql id="roomColumns">
+          rez_id
+        , rez_people_num
+        , rez_date
+        , rez_time
+        , room_id
+        , user_stu_id
+        , user_name
+
+    </sql>
+
+
+    <!-- 예약 정보 저장 -->
+    <insert id="save" parameterType="com.lib.ailibrary.domain.room.RoomReserveRequest" useGeneratedKeys="true" keyProperty="rezId">
+        INSERT INTO tb_room_rez (
+            <include refid="roomColumns"></include>
+        ) VALUES (
+              #{rezId}
+            , #{rezPeopleNum}
+            , #{rezDate}
+            , #{rezTime}
+            , #{roomId}
+            , #{UserStuId}
+            , #{UserName}
+
+        )
+    </insert>
+
+
+    <!-- 예약 정보 조회 -->
+    <select id="findById" parameterType="long" resultType="com.lib.ailibrary.domain.room.RoomReserveResponse">
+        SELECT
+            <include refid="roomColumns"></include>
+        FROM
+            tb_room_rez
+        WHERE
+            rez_id = #{value}
+    </select>
+
+
+    <!-- 예약 정보 수정 (보류) -->
+    <update id="update" parameterType="com.lib.ailibrary.domain.room.RoomReserveRequest">
+    </update>
+
+
+    <!-- 예약 정보 삭제 or 취소 -->
+    <delete id="deleteById" parameterType="long">
+        DELETE
+        FROM
+            tb_room_rez
+        WHERE
+            rezid = #{rezId}
+    </delete>
+
+
+    <!-- 예약 내역 조회 -->
+    <select id="findAll" resultType="com.lib.ailibrary.domain.room.RoomReserveResponse">
+        SELECT
+            <include refid="roomColumns"></include>
+        FROM
+            tb_room_rez
+        ORDER BY
+            rez_id DESC
+    </select>
+
+    <!-- 잔여 시설 조회 -->
+    <select id="searchRoom" resultType="com.lib.ailibrary.domain.room.RoomSearchResponse">
+        SELECT
+            room_floor
+          , room_name
+        FROM
+            tb_room
+        WHERE
+            (room_floor, room_name) NOT IN
+            (SELECT
+                 r.room_floor
+               , r.room_name
+             FROM
+                 tb_room r
+             LEFT JOIN
+                 tb_room_rez rr
+             ON
+                 r.room_id = rr.room_id
+             WHERE
+                 rr.rez_time = #{rezTime}
+                 AND
+                 rr.rez_date = #{rezDate}
+            )
+            AND
+            room_type = #{roomType}
+
+    </select>
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lib.ailibrary.user.UserMapper">
+
+    <!-- tb_user 테이블 전체 컬럼 -->
+    <sql id="userColumns">
+          user_stu_id
+        , user_name
+        , user_major
+        , user_email
+        , user_pnum
+        , user_id
+        , user_pw
+        , user_grade
+    </sql>
+
+    <!-- 회원가입 -->
+    <insert id="join" parameterType="com.lib.ailibrary.user.UserRequest">
+        INSERT INTO tb_user (
+            <include refid="userColumns"></include>
+        ) VALUES (
+              #{userStuId}
+            , #{userName}
+            , #{userMajor}
+            , #{userEmail}
+            , #{userPnum}
+            , #{userId}
+            , #{userPw}
+            , #{userGrade}
+        )
+    </insert>
+
+    <!-- 로그인 -->
+    <select id="login" parameterType="com.lib.ailibrary.user.UserLoginRequest" resultType="com.lib.ailibrary.user.UserResponse">
+            SELECT
+                <include refid="userColumns"></include>
+            FROM
+                tb_user
+            WHERE
+                user_id = #{userId}
+                AND
+                user_pw = #{userPw}
+    </select>
+
+
+</mapper>

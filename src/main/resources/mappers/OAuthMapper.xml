@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lib.ailibrary.oauth.OAuthMapper">
+
+    <!-- 회원가입 여부 조회 -->
+    <select id="checkMember" parameterType="string" resultType="com.lib.ailibrary.user.UserResponse">
+        SELECT
+            user_stu_id
+          , user_name
+          , user_major
+          , user_email
+          , user_pnum
+          , user_id
+          , user_pw
+        FROM
+            tb_user
+        WHERE
+            user_id = #{userId}
+    </select>
+</mapper>
