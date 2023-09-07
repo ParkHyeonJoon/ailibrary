@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lib.ailibrary.domain.book.BookMapper">
+
+    <!-- tb_book 테이블 전체 컬럼 -->
+    <sql id="bookColumns">
+          book_id
+        , book_name
+        , author
+        , published_date
+        , publisher
+        , category
+        , floor
+        , location
+    </sql>
+
+    <!-- 도서 검색 정보 조회 -->
+    <select id="findByName" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        WHERE
+            book_name = #{value}
+    </select>
+
+    <!-- 신착 도서 조회 -->
+    <select id="findNew" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        ORDER BY
+            book_id DESC
+        LIMIT 5
+    </select>
+
+    <!-- 전체 도서 조회 -->
+    <select id="findAll" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        ORDER BY
+            book_id DESC
+    </select>
+
+</mapper>
