@@ -18,6 +18,9 @@ public class UserResponse {
     private String userPw;      // 로그인 비밀번호
     private String userGrade;   // 학생 학년
 
+    public void clearPassword() {
+        this.userPw = "";
+    }
 }
 
 
