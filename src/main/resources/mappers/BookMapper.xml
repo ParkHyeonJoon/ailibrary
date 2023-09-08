@@ -6,23 +6,24 @@
     <!-- tb_book 테이블 전체 컬럼 -->
     <sql id="bookColumns">
           book_id
-        , book_name
+        , book_title
         , author
         , published_date
         , publisher
         , category
         , floor
-        , location
+        , book_good
+        , book_date
     </sql>
 
     <!-- 도서 검색 정보 조회 -->
-    <select id="findByName" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+    <select id="findByTitle" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
         SELECT
             <include refid="bookColumns"></include>
         FROM
             tb_book
         WHERE
-            book_name = #{value}
+            book_title = #{value}
     </select>
 
     <!-- 신착 도서 조회 -->
@@ -32,7 +33,18 @@
         FROM
             tb_book
         ORDER BY
-            book_id DESC
+            book_date DESC
+        LIMIT 5
+    </select>
+
+    <!-- 인기 도서 조회 -->
+    <select id="findGood" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        ORDER BY
+            book_good DESC
         LIMIT 5
     </select>
 

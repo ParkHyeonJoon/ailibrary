@@ -13,19 +13,27 @@ public class BookService {
 
     /**
      * 도서 검색
-     * @param bookName - 도서명으로 검색
+     * @param bookTitle - 도서명으로 검색
      * @return 도서 정보
      */
-    public Book findBookByName(final String bookName) {
-        return bookMapper.findByName(bookName);
+    public Book findBookByTitle(final String bookTitle) {
+        return bookMapper.findByTitle(bookTitle);
     }
 
     /**
      * 신착 도서 조회
-     * @return - bookId 내림차순으로 5개 정도
+     * @return - book_date 순으로
      */
     public List<Book> findNewBook() {
         return bookMapper.findNew();
+    }
+
+    /**
+     * 인기 도서 조회
+     * @return - book_good 순으로
+     */
+    public List<Book> findGoodBook() {
+        return bookMapper.findGood();
     }
 
     /**
