@@ -33,10 +33,10 @@ function NavigationBar() {
     return (
         <Wrapper>
             <NavWrapper>
-                <NavItem href="#">인기/신착</NavItem>
+                <NavItem href="/popularbooks">인기/신착</NavItem>
                 <NavItem href="/facility-reservation">시설예약</NavItem>
                 <NavItem href="#">도서관안내</NavItem>
-                <NavItem href="#">MyPage</NavItem>
+                <NavItem href="/mypage">MyPage</NavItem>
             </NavWrapper>
         </Wrapper>
     );
