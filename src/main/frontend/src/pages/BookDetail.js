@@ -21,7 +21,7 @@ const ContentWrapper = styled.div`
 const BackgroundImage = styled.div`
   background: url(${process.env.PUBLIC_URL}/assets/BookList/1.jpg); /* 배경 이미지 설정 */
   background-size: cover; /* 이미지를 컨테이너에 맞게 확대/축소 */
-  filter: brightness(15%) blur(10px); /* 밝기와 블러 필터 적용 */
+  filter: brightness(30%) blur(10px); /* 밝기와 블러 필터 적용 */
   width: 100%;
   height: 100vh; /* 화면 높이로 설정 (뷰포트 높이) */
   position: absolute;
