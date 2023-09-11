@@ -116,7 +116,7 @@ function Login() {
         e.preventDefault();
         // 클라이언트 사이드에서 서버로 로그인 정보를 전송
         try {
-            const response = await fetch('http://localhost:8080/user/login', {
+            const response = await fetch('http://localhost:8080/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -125,11 +125,14 @@ function Login() {
             });
 
             if (response.ok) {
-                // 로그인 성공
-                setLoginStatus('로그인 성공');
+                const data = await response.json();
+                if (data.success) { // 서버에서 성공 응답이 오는 경우에 따라서 수정
+                    setLoginStatus('로그인 성공');
+                } else {
+                    setLoginStatus('로그인 실패: ' + data.message); // 서버에서 실패 메시지를 반환하도록 수정
+                }
             } else {
-                // 로그인 실패
-                setLoginStatus('로그인 실패');
+                setLoginStatus('로그인 실패: 서버 오류');
             }
         } catch (error) {
             console.error('로그인 오류:', error);

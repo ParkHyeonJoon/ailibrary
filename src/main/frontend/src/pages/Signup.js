@@ -165,7 +165,7 @@ function Signup() {
                     const responseData = await response.json();
                     console.log('회원가입 성공:', responseData);
                     alert('회원가입에 성공하셨습니다');
-                    // 회원가입 성공 후 추가 작업 수행
+                    // TODO: 회원가입 성공 후 추가 작업 수행
                 } else {
                     // 오류 처리
                     console.error('회원가입 실패:', response.statusText);
