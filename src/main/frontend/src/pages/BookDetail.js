@@ -3,6 +3,21 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import BookInfo from "../components/BookInfo";
 
+const ParentWrapper = styled.div`
+  position: relative;
+`;
+
+const BackgroundImage = styled.div`
+  background-image: url('/assets/BookList/1.jpg'); /* 배경 이미지 설정 */
+  background-size: cover; /* 이미지를 컨테이너에 맞게 확대/축소 */
+  filter: brightness(50%) blur(20px); /* 밝기와 블러 필터 적용 */
+  width: 100%;
+  height: 100vh; /* 화면 높이로 설정 (뷰포트 높이) */
+  position: absolute;
+  z-index: -1; /* 배경 이미지는 Wrapper 아래에 표시되도록 */
+  top: -30px;
+`;
+
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -10,8 +25,9 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 150px;
-  background: #000;
-  color: #fff;
+  background: black;
+  color: white;
+  z-index: 0; /* Wrapper는 자식 컴포넌트 위에 표시되도록 */
 `;
 
 const ContentWrapper = styled.div`
@@ -20,33 +36,26 @@ const ContentWrapper = styled.div`
   flex-direction: row;
 `;
 
-const BackgroundImage = styled.div`
-  background: url(${process.env.PUBLIC_URL}/assets/BookList/1.jpg); /* 배경 이미지 설정 */
-  background-size: cover; /* 이미지를 컨테이너에 맞게 확대/축소 */
-  width: 100%;
-  height: 100vh; /* 화면 높이로 설정 (뷰포트 높이) */
-  position: absolute;
-  z-index: -1; /* 배경 이미지는 다른 요소 뒤에 표시되도록 */
-  top: -30px;
-`;
-
 const BookImage = styled.img`
   margin-top: 40px;
   width: 300px;
-  height: 450px;
+  height: auto;
   border-radius: 5px;
   box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.2);
 `;
 
 const BookDetail = () => {
     return (
-        <Wrapper>
+        <ParentWrapper>
             <Header />
-            <ContentWrapper>
-                <BookInfo />
-                <BookImage src={`${process.env.PUBLIC_URL}/assets/BookList/1.jpg`} alt="Book" />
-            </ContentWrapper>
-        </Wrapper>
+            <BackgroundImage />
+            <Wrapper>
+                <ContentWrapper>
+                    <BookInfo />
+                    <BookImage src={`${process.env.PUBLIC_URL}/assets/BookList/1.jpg`} alt="Book" />
+                </ContentWrapper>
+            </Wrapper>
+        </ParentWrapper>
     );
 };
 

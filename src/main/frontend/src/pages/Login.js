@@ -126,12 +126,15 @@ function Login() {
 
             if (response.ok) {
                 const data = await response.json();
-                if (data.success) { // 서버에서 성공 응답이 오는 경우에 따라서 수정
+                if (data) {
+                    // 성공적인 JSON 데이터 처리
                     setLoginStatus('로그인 성공');
                 } else {
-                    setLoginStatus('로그인 실패: ' + data.message); // 서버에서 실패 메시지를 반환하도록 수정
+                    // JSON 데이터가 비어 있는 경우 처리
+                    setLoginStatus('로그인 실패: 빈 응답');
                 }
             } else {
+                // 서버에서 오류 응답을 보낸 경우 처리
                 setLoginStatus('로그인 실패: 서버 오류');
             }
         } catch (error) {
