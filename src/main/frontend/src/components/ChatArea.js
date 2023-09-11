@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
+  padding-top: 30px;
 `;
 
 const TitleArea = styled.div`

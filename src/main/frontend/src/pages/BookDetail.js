@@ -1,36 +1,52 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
-import Room from "../components/Room";
-import MyDatePicker from "../components/MyDatePicker";
-import MyTimePicker from "../components/MyTimePicker";
+import BookInfo from "../components/BookInfo";
 
 const Wrapper = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    `;
-const Title = styled.p`
-    text-align: left;
-    color: #000;
-    font-family: Inter;
-    font-size: 25px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-`
-function BookDetail() {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 150px;
+`;
 
+const ContentWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+`;
+
+const BackgroundImage = styled.div`
+  background: url(${process.env.PUBLIC_URL}/assets/BookList/1.jpg); /* 배경 이미지 설정 */
+  background-size: cover; /* 이미지를 컨테이너에 맞게 확대/축소 */
+  filter: brightness(30%) blur(10px); /* 밝기와 블러 필터 적용 */
+  width: 100%;
+  height: 100vh; /* 화면 높이로 설정 (뷰포트 높이) */
+  position: absolute;
+  z-index: -1; /* 배경 이미지는 다른 요소 뒤에 표시되도록 */
+`;
+
+const BookImage = styled.img`
+  margin-top: 40px;
+  width: 300px;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.2);
+`;
+
+const BookDetail = () => {
     return (
         <Wrapper>
-            <Header/>
-            <Title>상세정보</Title>
-
-            <Room/>
+            <Header />
+            <ContentWrapper>
+                <BackgroundImage />
+                <BookInfo />
+                <BookImage src={`${process.env.PUBLIC_URL}/assets/BookList/1.jpg`} alt="Book" />
+            </ContentWrapper>
         </Wrapper>
     );
-}
+};
 
 export default BookDetail;
