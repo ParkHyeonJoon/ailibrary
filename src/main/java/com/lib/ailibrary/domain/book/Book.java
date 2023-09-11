@@ -16,4 +16,5 @@ public class Book {
     private int floor; //층수
     private int bookGood; //도서 찜 횟수(인기순 구별)
     private String bookDate; //도서 입고날짜(신착 도서)
+    private String bookImage; //도서 이미지 URL
 }
