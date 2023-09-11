@@ -70,23 +70,23 @@ public class UserService {
 
     /**
      * 로그인
-     * @param userId - 로그인 ID
-     * @param userPw - 비밀번호
+     * @param params - 로그인 정보
      * @return 회원 상세정보
      */
-    public UserResponse login(final String userId, final String userPw) {
+    public UserResponse login(final UserLoginRequest params) {
 
         // 1. 회원 정보 및 비밀번호 조회
-        UserResponse user = findUserByUserId(userId);
+        UserResponse user = findUserByUserId(params.getUserId());
         String encodedPassword = (user == null) ? "" : user.getUserPw();
 
         // 2. 회원 정보 및 비밀번호 체크
-        if (user == null || passwordEncoder.matches(userPw, encodedPassword) == false) {
+        if (user == null || passwordEncoder.matches(params.getUserPw(), encodedPassword) == false) {
             return null;
         }
 
         // 3. 회원 응답 객체에서 비밀번호를 제거한 후 회원 정보 리턴
         user.clearPassword();
+        System.out.println(params.getUserId() + " " + params.getUserPw());
         return user;
     }
 }

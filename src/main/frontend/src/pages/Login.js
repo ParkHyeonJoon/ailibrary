@@ -76,8 +76,8 @@ const LoginForm = styled.form`
 function Login() {
     // 로그인 폼의 상태 관리
     const [formData, setFormData] = useState({
-        id: localStorage.getItem('savedId') || '', // 페이지 로드 시 저장된 아이디 불러오기
-        password: '',
+        userId: localStorage.getItem('savedId') || '', // 페이지 로드 시 저장된 아이디 불러오기
+        userPw: '',
     });
 
     // 아이디 저장 체크박스 상태 관리
@@ -100,7 +100,7 @@ function Login() {
         if (savedId) {
             setFormData({
                 ...formData,
-                id: savedId,
+                userId: savedId,
             });
             setSaveId(true);
         }
@@ -126,6 +126,7 @@ function Login() {
 
             if (response.ok) {
                 const data = await response.json();
+                alert(data.userName)
                 if (data.success) { // 서버에서 성공 응답이 오는 경우에 따라서 수정
                     setLoginStatus('로그인 성공');
                 } else {
@@ -142,7 +143,7 @@ function Login() {
         // 아이디 저장 체크박스가 체크되어 있다면 아이디를 저장할 수 있습니다.
         if (saveId) {
             // 아이디를 로컬 스토리지에 저장
-            localStorage.setItem('savedId', formData.id);
+            localStorage.setItem('savedId', formData.userId);
         } else {
             // 체크가 해제된 경우 저장된 아이디를 삭제
             localStorage.removeItem('savedId');
@@ -158,9 +159,9 @@ function Login() {
                     <InputArea>
                         <StyledInput
                             type="text"
-                            id="id"
-                            name="id"
-                            value={formData.id}
+                            id="userId"
+                            name="userId"
+                            value={formData.userId}
                             onChange={handleInputChange}
                             required
                         />
@@ -168,9 +169,9 @@ function Login() {
                     <InputArea>
                         <StyledInput
                             type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
+                            id="userPw"
+                            name="userPw"
+                            value={formData.userPw}
                             onChange={handleInputChange}
                             required
                         />
