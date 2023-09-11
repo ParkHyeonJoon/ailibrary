@@ -45,4 +45,18 @@ public class UserMapperTest {
             System.out.println(resultList.toString());
         }
     }
+
+    @Test
+    void 아이디체크() {
+        int idCheckFlag = userMapper.idCheck("abcd");
+        int pwCheckFlag = userMapper.pwCheck("1234");
+
+        if(idCheckFlag > 0) {
+            if(pwCheckFlag > 0)
+                System.out.println("로그인 성공");
+            else
+                System.out.println("비밀번호 틀림");
+        } else
+            System.out.println("아이디 틀림");
+    }
 }

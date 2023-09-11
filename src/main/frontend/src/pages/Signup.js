@@ -138,7 +138,7 @@ function Signup() {
             // 필수 입력 사항이 모두 입력된 경우, 회원가입 로직 수행
 
             // API 엔드포인트 URL
-            const apiUrl = 'http://localhost:8080/user/join';
+            const apiUrl = 'http://localhost:8080/user';
 
             // 회원가입 요청 데이터 생성
             const requestBody = {
@@ -164,7 +164,7 @@ function Signup() {
                 if (response.ok) {
                     const responseData = await response.json();
                     console.log('회원가입 성공:', responseData);
-
+                    alert('회원가입에 성공하셨습니다');
                     // 회원가입 성공 후 추가 작업 수행
                 } else {
                     // 오류 처리
