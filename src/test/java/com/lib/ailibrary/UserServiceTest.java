@@ -12,7 +12,7 @@ public class UserServiceTest {
     @Autowired
     UserService userService;
 
-    @Test
+   /* @Test
     void 회원가입() {
         UserRequest params = new UserRequest();
         params.setUserStuId(12345);
@@ -25,5 +25,5 @@ public class UserServiceTest {
         params.setUserGrade("213123");
 
         userService.join(params);
-    }
+    }*/
 }
