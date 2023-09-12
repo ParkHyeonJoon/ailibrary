@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 
@@ -19,7 +21,7 @@ public class RoomService {
      * @return Generated PK
      */
     @Transactional
-    public Long saveReserve(final RoomReserveRequest params) {
+    public Long saveReserve(RoomReserveRequest params) {
         roomMapper.save(params);
         return params.getRezId();
     }
@@ -59,7 +61,8 @@ public class RoomService {
      * 잔여 시설 조회
      * @return 잔여 시설
      */
-    public List<RoomSearchResponse> findRemainRoom(RoomSearchRequest params) {
-        return roomMapper.searchRoom(params);
+    public List<RoomSearchResponse> findRemainRoom(final String roomType, final LocalDate rezDate, final String[] times) {
+
+        return roomMapper.searchRoom(roomType, rezDate, times);
     }
 }
