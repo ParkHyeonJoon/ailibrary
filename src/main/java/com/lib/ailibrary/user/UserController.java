@@ -54,21 +54,8 @@ public class UserController {
     // 로그인
     @PostMapping("/login")
     @ResponseBody
-    public UserResponse login(HttpServletRequest request) {
-
-        // 1. 회원 정보 조회
-        String userid = request.getParameter("userId");
-        String userPw = request.getParameter("userPw");
-        UserResponse user = userService.login(userid, userPw);
-
-        // 2. 세션에 회원 정보 저장 & 세션 유지 시가 설정
-        if (user != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("loginUser", user);
-            session.setMaxInactiveInterval(60 * 30);
-        }
-
-        return user;
+    public UserResponse login(@RequestBody UserLoginRequest params) {
+        return userService.login(params);
     }
 
     // 로그아웃

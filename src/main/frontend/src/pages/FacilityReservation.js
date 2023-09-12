@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Room from "../components/Room";
 import MyDatePicker from "../components/MyDatePicker";
 import MyTimePicker from "../components/MyTimePicker";
+import Button from "../common/Button";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -56,11 +57,12 @@ const RoomTypeBtn = styled.button`
     }
 `;
 const PickerArea = styled.div`
-    width: 800px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: 20px;
 `;
 function FacilityReservation() {
     const [selectedMenu, setSelectedMenu] = useState("스터디룸"); // 초기값: 추천도서
@@ -82,6 +84,7 @@ function FacilityReservation() {
             <MyDatePicker/>
             <MyTimePicker/>
         </PickerArea>
+        <Button  backgroundColor="#B3C4FF" textColor="#fff" type="submit">시설검색</Button>
         <Room/>
     </Wrapper>
     );

@@ -63,8 +63,9 @@ function MyDatePicker() {
           <FontAwesomeIcon icon={faCalendar} />
         </CustomIcon>
         <StyledDatePicker
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            dateFormat="yyyy-MM-dd"
         />
       </StyledDatePickerWrapper>
     </CustomDatePicker>

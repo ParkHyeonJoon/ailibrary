@@ -76,8 +76,8 @@ const LoginForm = styled.form`
 function Login() {
     // 로그인 폼의 상태 관리
     const [formData, setFormData] = useState({
-        id: localStorage.getItem('savedId') || '', // 페이지 로드 시 저장된 아이디 불러오기
-        password: '',
+        userId: localStorage.getItem('savedId') || '', // 페이지 로드 시 저장된 아이디 불러오기
+        userPw: '',
     });
 
     // 아이디 저장 체크박스 상태 관리
@@ -100,7 +100,7 @@ function Login() {
         if (savedId) {
             setFormData({
                 ...formData,
-                id: savedId,
+                userId: savedId,
             });
             setSaveId(true);
         }
@@ -126,15 +126,18 @@ function Login() {
 
             if (response.ok) {
                 const data = await response.json();
-                if (data) {
+
+                if (data.userName != null) {
                     // 성공적인 JSON 데이터 처리
                     setLoginStatus('로그인 성공');
+                    alert(data.userName);
                 } else {
                     // JSON 데이터가 비어 있는 경우 처리
                     setLoginStatus('로그인 실패: 빈 응답');
                 }
             } else {
                 // 서버에서 오류 응답을 보낸 경우 처리
+
                 setLoginStatus('로그인 실패: 서버 오류');
             }
         } catch (error) {
@@ -145,7 +148,7 @@ function Login() {
         // 아이디 저장 체크박스가 체크되어 있다면 아이디를 저장할 수 있습니다.
         if (saveId) {
             // 아이디를 로컬 스토리지에 저장
-            localStorage.setItem('savedId', formData.id);
+            localStorage.setItem('savedId', formData.userId);
         } else {
             // 체크가 해제된 경우 저장된 아이디를 삭제
             localStorage.removeItem('savedId');
@@ -161,9 +164,9 @@ function Login() {
                     <InputArea>
                         <StyledInput
                             type="text"
-                            id="id"
-                            name="id"
-                            value={formData.id}
+                            id="userId"
+                            name="userId"
+                            value={formData.userId}
                             onChange={handleInputChange}
                             required
                         />
@@ -171,9 +174,9 @@ function Login() {
                     <InputArea>
                         <StyledInput
                             type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
+                            id="userPw"
+                            name="userPw"
+                            value={formData.userPw}
                             onChange={handleInputChange}
                             required
                         />
