@@ -31,4 +31,11 @@ public interface BookMapper {
      */
     List<Book> findAll();
 
+    /**
+     * ID별 도서 조회
+     * @param bookId
+     */
+    Book findById(int bookId);
+
+
 }

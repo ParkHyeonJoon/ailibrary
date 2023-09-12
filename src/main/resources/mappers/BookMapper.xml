@@ -59,4 +59,14 @@
             book_id DESC
     </select>
 
+    <!-- id별 도서 조회 -->
+    <select id="findById" parameterType="int" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        WHERE
+            book_id = #{value}
+    </select>
+
 </mapper>

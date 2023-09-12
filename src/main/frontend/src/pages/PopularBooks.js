@@ -3,6 +3,9 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import Room from "../components/Room";
 import Book from "../components/BookFrame";
+import BookFrame from "../components/BookFrame";
+import { useLocation } from "react-router-dom";
+
 
 const Wrapper = styled.div`
     width: 100%;
@@ -23,6 +26,8 @@ const Title = styled.p`
 `;
 function PopularBooks() {
    const [popularBooks, setPopularBooks] = useState([]);
+   const location = useLocation(); // 현재 URL 정보를 가져옴
+   const showText = location.pathname === "/popularbooks" ? "인기도서" : ""; // URL에 따라 showText 설정
 
    useEffect(() => {
            // 서버에서 데이터 가져오는 요청
@@ -35,17 +40,14 @@ function PopularBooks() {
     return (
         <Wrapper>
             <Header />
-            <Title>인기도서</Title>
+            {showText && <Title>{showText}</Title>}
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
             {popularBooks.length === 0 ? (
                 <p>Loading...</p>
             ) : (
                 popularBooks.map((book, index) => (
                     <div style={{ width: 'calc(33.33% - 10px)', margin: '10px 0' }} key={index}>
-                        <p key={`title_${index}`}>도서 제목: {book.bookTitle}</p>
-                        <p key={`author_${index}`}>작가명: {book.author}</p>
-                        <p key={`publishedDate_${index}`}>출판 연도: {book.publishedDate}</p>
-                        <img src={book.bookImage} alt={`${book.bookTitle} 이미지`} />
+                        <BookFrame book={book} />
                     </div>
                 ))
             )}
@@ -56,3 +58,4 @@ function PopularBooks() {
 }
 
 export default PopularBooks;
+

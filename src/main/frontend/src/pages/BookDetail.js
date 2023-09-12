@@ -1,7 +1,9 @@
-import React from "react";
+import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import BookInfo from "../components/BookInfo";
+
 
 const Wrapper = styled.div`
   width: 100%;
@@ -37,16 +39,27 @@ const BookImage = styled.img`
 `;
 
 const BookDetail = () => {
+    const { bookId } = useParams();
+    const [bookInfo, setBookInfo] = useState({});
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/book/${bookId}`)
+            .then((response) => response.json())
+            .then((data) => setBookInfo(data))
+            .catch((error) => console.error("Error fetching book info: ", error));
+    }, [bookId]);
+
     return (
         <Wrapper>
             <Header />
             <ContentWrapper>
-                <BackgroundImage />
-                <BookInfo />
-                <BookImage src={`${process.env.PUBLIC_URL}/assets/BookList/1.jpg`} alt="Book" />
+                <BackgroundImage style={{ backgroundImage: `url(${bookInfo.bookImage})` }} /> {/* 이미지 URL 사용 */}
+                <BookInfo bookInfo={bookInfo} />
+                <BookImage src={bookInfo.bookImage} alt="Book" /> {/* 이미지 URL 사용 */}
             </ContentWrapper>
         </Wrapper>
     );
 };
+
 
 export default BookDetail;

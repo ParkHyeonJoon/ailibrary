@@ -1,10 +1,7 @@
 package com.lib.ailibrary.domain.book;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +20,12 @@ public class BookController {
     @GetMapping("/all")
     public List<Book> findAllBook() {
         List<Book> book = bookService.findAllBook();
+        return book;
+    }
+
+    @GetMapping("/{bookId}")
+    public Book findBookById(@PathVariable int bookId) {
+        Book book = bookService.findBookById(bookId);
         return book;
     }
 }

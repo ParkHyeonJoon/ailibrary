@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Book from "./BookFrame";
+import PopularBooks from '../pages/PopularBooks'; // 파일 경로에 따라 경로 수정 필요
+
 
 const Wrapper = styled.div`
     width: 100%;
@@ -72,7 +73,7 @@ function MainBookList() {
                 <MenuBtn onClick={() => handleMenuClick("인기도서")}>인기도서</MenuBtn>
                 <MenuBtn onClick={() => handleMenuClick("신착도서")}>신착도서</MenuBtn>
             </MenuArea>
-            <Book/>
+            <PopularBooks />
         </Wrapper> 
     );
 }
