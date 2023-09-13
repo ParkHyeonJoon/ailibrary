@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lib.ailibrary.user.UserMapper">
+
+    <!-- tb_user 테이블 전체 컬럼 -->
+    <sql id="userColumns">
+          user_stu_id
+        , user_name
+        , user_major
+        , user_email
+        , user_pnum
+        , user_id
+        , user_pw
+        , user_grade
+    </sql>
+
+    <!-- 회원가입 -->
+    <insert id="join" parameterType="com.lib.ailibrary.user.UserRequest">
+        INSERT INTO tb_user (
+            <include refid="userColumns"></include>
+        ) VALUES (
+              #{userStuId}
+            , #{userName}
+            , #{userMajor}
+            , #{userEmail}
+            , #{userPnum}
+            , #{userId}
+            , #{userPw}
+            , #{userGrade}
+        )
+    </insert>
+
+    <!-- 회원 상세정보 조회 -->
+    <select id="findByLoginId" parameterType="string" resultType="com.lib.ailibrary.user.UserResponse">
+            SELECT
+                <include refid="userColumns"></include>
+            FROM
+                tb_user
+            WHERE
+                user_id = #{userId}
+    </select>
+
+    <!-- 회원 정보 수정 -->
+    <update id="update" parameterType="com.lib.ailibrary.user.UserRequest">
+        UPDATE tb_user
+        SET
+            user_name = #{userName}
+          , user_major = #{userMajor}
+          , user_email = #{userEmail}
+          , user_pnum = #{userPnum}
+          , user_grade = #{userGrade}
+          <if test="user_pw != null and user_pw != ''">
+          , user_pw = #{userPw}
+          </if>
+        WHERE
+            user_stu_id = #{userStuId}
+    </update>
+
+    <!-- 회원 정보 삭제 (회원 탈퇴) -->
+    <delete id="deleteById" parameterType="int">
+        DELETE
+        FROM
+            tb_user
+        WHERE
+            user_stu_id = #{userStuId}
+    </delete>
+
+    <!-- 회원 수 카운팅 (ID 중복 체크) -->
+    <select id="countByLoginId" parameterType="string" resultType="int">
+        SELECT
+            count(*)
+        FROM
+            tb_user
+        WHERE
+            user_id = #{user_id}
+    </select>
+
+
+
+<!--    &lt;!&ndash; 로그인 아이디 체크 &ndash;&gt;
+    <select id="idCheck" parameterType="string" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_user
+        WHERE
+            user_id = #{userId}
+
+    </select>-->
+
+<!--    &lt;!&ndash; 로그인 비밀번호 체크 &ndash;&gt;
+    <select id="pwCheck" parameterType="string" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_user
+        WHERE
+            user_pw = #{userPw}
+    </select>-->
+
+</mapper>

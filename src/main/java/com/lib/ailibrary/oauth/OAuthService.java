@@ -2,13 +2,20 @@ package com.lib.ailibrary.oauth;
 
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
+import com.lib.ailibrary.user.UserResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class OAuthService {
+
+    private final OAuthMapper oAuthMapper;
 
     public String getKakaoAccessToken (String code) {
         String access_Token = "";
@@ -67,10 +74,12 @@ public class OAuthService {
 
     }
 
-    public void createKakaoUser(String token) {
+    public List<String> createKakaoUser(String token) {
 
         String reqURL = "https://kapi.kakao.com/v2/user/me";
-
+        List<String> idEmail = null;
+        String id = null;
+        String email = "";
         //access_token을 이용하여 사용자 정보 조회
         try {
             URL url = new URL(reqURL);
@@ -98,9 +107,9 @@ public class OAuthService {
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
 
-            Long id = element.getAsJsonObject().get("id").getAsLong();
+            id = String.valueOf(element.getAsJsonObject().get("id").getAsLong());
             boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
-            String email = "";
+
             if(hasEmail) {
                 email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
             }
@@ -108,10 +117,28 @@ public class OAuthService {
             System.out.println("id : " + id);
             System.out.println("email : " + email);
 
+            idEmail.add(id);
+            idEmail.add(email);
+
             br.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return idEmail;
     }
+
+    public <T>List<T> checkMember(List<String> idEmail) {
+        List<T> resultList = new ArrayList<>();
+
+        List<UserResponse> userInfo = oAuthMapper.checkMember(idEmail.get(0));
+        if (userInfo.isEmpty()) {
+            resultList.add((T) idEmail);
+        } else {
+            resultList.add((T) userInfo);
+        }
+
+        return  resultList;
+    }
+
 }

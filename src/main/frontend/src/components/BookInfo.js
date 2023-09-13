@@ -12,7 +12,6 @@ const Wrapper = styled.div`
 
 const BookTitle = styled.p`
   text-align: left;
-  color: #fff;
   font-family: Inter;
   font-size: 40px;
   font-style: normal;
@@ -23,12 +22,22 @@ const BookTitle = styled.p`
 
 const BookAuthor = styled.p`
   text-align: left;
-  color: #a2a2a2;
   font-family: Inter;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+`;
+
+
+const reserveBtn = styled.button`
+  width: 130px;
+  height: 50px;
+  background: #000F5F;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  font-weight: 600;
 `;
 
 const FormTable = styled.table`
@@ -58,14 +67,12 @@ const TableRow = styled.tr`
 const Info = styled.p`
   font-size: 14px;
   margin: 0;
-  color: white;
   font-weight: bold;
 `;
 
 const InfoContent = styled.p`
   font-size: 14px;
   margin: 0;
-  color: white;
 `;
 
 const BookInfo = ({ bookInfo }) => {
@@ -73,6 +80,7 @@ const BookInfo = ({ bookInfo }) => {
     <Wrapper>
       <BookTitle>{bookInfo.bookTitle}</BookTitle>
       <BookAuthor>{bookInfo.author}</BookAuthor>
+      <ReserveBtn>예약하기</ReserveBtn>
       <FormTable>
         <ColGroup>
           <col />

@@ -3,30 +3,32 @@
 
 <mapper namespace="com.lib.ailibrary.domain.room.RoomMapper">
 
-    <!-- tb_room_reserve 테이블 전체 컬럼 -->
+    <!-- tb_room_rez 테이블 전체 컬럼 -->
     <sql id="roomColumns">
-          room_reserve_id
-        , room_name
-        , room_user_stu_num
-        , room_user_name
-        , reserve_people_num
-        , reserve_date
-        , reserve_time
+          rez_id
+        , rez_people_num
+        , rez_date
+        , rez_time
+        , room_id
+        , user_stu_id
+        , user_name
+
     </sql>
 
 
     <!-- 예약 정보 저장 -->
-    <insert id="save" parameterType="com.lib.ailibrary.domain.room.RoomReserveRequest" useGeneratedKeys="true" keyProperty="roomReserveId">
-        INSERT INTO tb_room_reserve (
+    <insert id="save" parameterType="com.lib.ailibrary.domain.room.RoomReserveRequest" useGeneratedKeys="true" keyProperty="rezId">
+        INSERT INTO tb_room_rez (
             <include refid="roomColumns"></include>
         ) VALUES (
-              #{roomReserveId}
-            , #{roomName}
-            , #{roomUserStuNum}
-            , #{roomUserName}
-            , #{reservePeopleNum}
-            , #{reserveDate}
-            , #{reserveTime}
+              #{rezId}
+            , #{rezPeopleNum}
+            , #{rezDate}
+            , #{rezTime}
+            , #{roomId}
+            , #{userStuId}
+            , #{userName}
+
         )
     </insert>
 
@@ -36,9 +38,9 @@
         SELECT
             <include refid="roomColumns"></include>
         FROM
-            tb_room_reserve
+            tb_room_rez
         WHERE
-            room_reserve_id = #{value}
+            rez_id = #{value}
     </select>
 
 
@@ -51,9 +53,9 @@
     <delete id="deleteById" parameterType="long">
         DELETE
         FROM
-            tb_room_reserve
+            tb_room_rez
         WHERE
-            room_reserve_id = #{roomReserveId}
+            rezid = #{rezId}
     </delete>
 
 
@@ -62,9 +64,43 @@
         SELECT
             <include refid="roomColumns"></include>
         FROM
-            tb_room_reserve
+            tb_room_rez
         ORDER BY
-            room_reserve_id DESC
+            rez_id DESC
+    </select>
+
+    <!-- 잔여 시설 조회 -->
+    <select id="searchRoom" resultType="com.lib.ailibrary.domain.room.RoomSearchResponse">
+        SELECT
+            room_floor
+          , room_name
+          , image
+        FROM
+            tb_room
+        WHERE
+            (room_floor, room_name) NOT IN
+            (SELECT
+                 r.room_floor
+               , r.room_name
+             FROM
+                 tb_room r
+             LEFT JOIN
+                 tb_room_rez rr
+             ON
+                 r.room_id = rr.room_id
+             <where>
+                 <if test = "times != null and times.length > 0">
+                     AND rez_time IN
+                     <foreach item="time" collection="times" open="(" separator="," close=")">
+                         #{time}
+                     </foreach>
+                 </if>
+                 AND rez_date = #{rezDate}
+             </where>
+            )
+            AND
+            room_type = #{roomType}
+
     </select>
 
 </mapper>

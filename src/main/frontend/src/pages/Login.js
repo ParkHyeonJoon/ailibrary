@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import Header from "../components/Header";
 import Button from "../common/Button";
@@ -66,25 +66,45 @@ const LoginForm = styled.form`
   justify-content: center;
   margin-bottom: 50px;
 `;
+//TODO: 정규식 이용해서 아이디 형식 검증
+//const isValidId = (id) => {
+//   // 정규식을 사용하여 아이디 형식을 검증
+//   const idRegex = /^[a-zA-Z0-9]{4,16}$/; // 예: 길이가 4에서 16자 사이의 영문자와 숫자만 허용
+//   return idRegex.test(id);
+// };
 
 function Login() {
     // 로그인 폼의 상태 관리
     const [formData, setFormData] = useState({
-        id: '',
-        password: '',
+        userId: localStorage.getItem('savedId') || '', // 페이지 로드 시 저장된 아이디 불러오기
+        userPw: '',
     });
 
     // 아이디 저장 체크박스 상태 관리
     const [saveId, setSaveId] = useState(false);
 
+    // 로그인 상태를 관리하기 위한 상태 변수와 업데이트 함수 설정
+    const [loginStatus, setLoginStatus] = useState('');
+
     // 폼 입력값 변경 시 이벤트 핸들러
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormData({
             ...formData,
             [name]: value,
         });
     };
+    // 페이지 로드 시 저장된 아이디를 불러와서 폼 데이터에 설정
+    useEffect(() => {
+        const savedId = localStorage.getItem('savedId');
+        if (savedId) {
+            setFormData({
+                ...formData,
+                userId: savedId,
+            });
+            setSaveId(true);
+        }
+    }, []); // 빈 배열을 전달하여 페이지 로드 시 한 번만 실행
 
     // 아이디 저장 체크박스 상태 변경 시 이벤트 핸들러
     const handleSaveIdChange = (e) => {
@@ -92,15 +112,41 @@ function Login() {
     };
 
     // 폼 제출 시 이벤트 핸들러
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // 여기에서 실제 로그인 로직을 구현하거나 API 호출을 수행할 수 있습니다.
-        // formData를 사용하여 이메일과 패스워드를 얻을 수 있습니다.
-        console.log('로그인 시도:', formData);
+        // 클라이언트 사이드에서 서버로 로그인 정보를 전송
+        try {
+            const response = await fetch('http://localhost:8080/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert(data.userName)
+                if (data.success) { // 서버에서 성공 응답이 오는 경우에 따라서 수정
+                    setLoginStatus('로그인 성공');
+                } else {
+                    setLoginStatus('로그인 실패: ' + data.message); // 서버에서 실패 메시지를 반환하도록 수정
+                }
+            } else {
+                setLoginStatus('로그인 실패: 서버 오류');
+            }
+        } catch (error) {
+            console.error('로그인 오류:', error);
+            setLoginStatus('로그인 중 오류 발생');
+        }
 
         // 아이디 저장 체크박스가 체크되어 있다면 아이디를 저장할 수 있습니다.
         if (saveId) {
-            // TODO: 아이디 저장 로직을 추가하세요.
+            // 아이디를 로컬 스토리지에 저장
+            localStorage.setItem('savedId', formData.userId);
+        } else {
+            // 체크가 해제된 경우 저장된 아이디를 삭제
+            localStorage.removeItem('savedId');
         }
     };
 
@@ -112,10 +158,10 @@ function Login() {
                 <LoginForm onSubmit={handleSubmit}>
                     <InputArea>
                         <StyledInput
-                            type="id"
-                            id="id"
-                            name="id"
-                            value={formData.id}
+                            type="text"
+                            id="userId"
+                            name="userId"
+                            value={formData.userId}
                             onChange={handleInputChange}
                             required
                         />
@@ -123,9 +169,9 @@ function Login() {
                     <InputArea>
                         <StyledInput
                             type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
+                            id="userPw"
+                            name="userPw"
+                            value={formData.userPw}
                             onChange={handleInputChange}
                             required
                         />
@@ -148,11 +194,12 @@ function Login() {
                 <Button backgroundColor="#FDDC3F" textColor="#3A2929" type="submit">
                     카카오톡으로 로그인
                 </Button>
-                <Link to="/signup" style={{ textDecoration: 'none' }}>
+                <Link to="/signup" style={{textDecoration: 'none'}}>
                     <Button border="1px solid #1D2B74" backgroundColor="white" textColor="black">
                         회원가입
                     </Button>
                 </Link>
+                <p>{loginStatus}</p>
             </LoginArea>
         </Wrapper>
     );

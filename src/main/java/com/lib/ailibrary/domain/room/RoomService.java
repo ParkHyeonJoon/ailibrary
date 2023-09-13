@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 
@@ -19,18 +21,18 @@ public class RoomService {
      * @return Generated PK
      */
     @Transactional
-    public Long saveReserve(final RoomReserveRequest params) {
+    public Long saveReserve(RoomReserveRequest params) {
         roomMapper.save(params);
-        return params.getRoomReserveId();
+        return params.getRezId();
     }
 
     /**
      * 예약 정보 조회
-     * @param roomResserveId - PK
+     * @param roomRezId - PK
      * @return 예약 정보
      */
-    public RoomReserveResponse findReserveById(final Long roomResserveId) {
-        return roomMapper.findById(roomResserveId);
+    public RoomReserveResponse findRezById(final Long roomRezId) {
+        return roomMapper.findById(roomRezId);
     }
 
     /**
@@ -39,12 +41,12 @@ public class RoomService {
 
     /**
      * 예약 정보 삭제
-     * @param roomReserveId - PK
+     * @param roomRezId - PK
      * @return PK
      */
-    public Long deleteReserve(final Long roomReserveId) {
-        roomMapper.deleteById(roomReserveId);
-        return roomReserveId;
+    public Long deleteReserve(final Long roomRezId) {
+        roomMapper.deleteById(roomRezId);
+        return roomRezId;
     }
 
     /**
@@ -53,5 +55,14 @@ public class RoomService {
      */
     public List<RoomReserveResponse> findAllReserve() {
         return roomMapper.findAll();
+    }
+
+    /**
+     * 잔여 시설 조회
+     * @return 잔여 시설
+     */
+    public List<RoomSearchResponse> findRemainRoom(final String roomType, final LocalDate rezDate, final String[] times) {
+
+        return roomMapper.searchRoom(roomType, rezDate, times);
     }
 }
