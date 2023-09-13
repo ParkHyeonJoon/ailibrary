@@ -26,8 +26,8 @@
             , #{rezDate}
             , #{rezTime}
             , #{roomId}
-            , #{UserStuId}
-            , #{UserName}
+            , #{userStuId}
+            , #{userName}
 
         )
     </insert>
@@ -74,6 +74,7 @@
         SELECT
             room_floor
           , room_name
+          , image
         FROM
             tb_room
         WHERE
@@ -87,10 +88,15 @@
                  tb_room_rez rr
              ON
                  r.room_id = rr.room_id
-             WHERE
-                 rr.rez_time = #{rezTime}
-                 AND
-                 rr.rez_date = #{rezDate}
+             <where>
+                 <if test = "times != null and times.length > 0">
+                     AND rez_time IN
+                     <foreach item="time" collection="times" open="(" separator="," close=")">
+                         #{time}
+                     </foreach>
+                 </if>
+                 AND rez_date = #{rezDate}
+             </where>
             )
             AND
             room_type = #{roomType}

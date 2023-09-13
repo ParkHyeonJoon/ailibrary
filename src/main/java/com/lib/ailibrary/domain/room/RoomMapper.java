@@ -1,7 +1,10 @@
 package com.lib.ailibrary.domain.room;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -48,5 +51,8 @@ public interface RoomMapper {
      * 잔여 시설 조회
      * @return 잔여 시설
      */
-    List<RoomSearchResponse> searchRoom(RoomSearchRequest params);
+    List<RoomSearchResponse> searchRoom(@Param("roomType") String roomType, @Param("rezDate") LocalDate rezDate, @Param("times") String[] times);
+
+
+
 }
