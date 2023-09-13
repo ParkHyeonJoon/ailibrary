@@ -1,5 +1,6 @@
 package com.lib.ailibrary.domain.room;
 
+import com.lib.ailibrary.user.UserService;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +15,7 @@ public interface RoomMapper {
      * 예약 정보 저장
      * @param params - 예약 정보
      */
-    void save(RoomReserveRequest params);
+    void save(RoomReserveSaveRequest params);
 
     /**
      * 예약 정보 조회
@@ -51,7 +52,7 @@ public interface RoomMapper {
      * 잔여 시설 조회
      * @return 잔여 시설
      */
-    List<RoomSearchResponse> searchRoom(@Param("roomType") String roomType, @Param("rezDate") LocalDate rezDate, @Param("times") String[] times);
+    List<RoomSearchResponse> searchRoom(RoomSearchRequest params);
 
 
 

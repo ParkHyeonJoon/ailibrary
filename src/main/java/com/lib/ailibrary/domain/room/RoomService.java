@@ -21,7 +21,7 @@ public class RoomService {
      * @return Generated PK
      */
     @Transactional
-    public Long saveReserve(RoomReserveRequest params) {
+    public Long saveReserve(RoomReserveSaveRequest params) {
         roomMapper.save(params);
         return params.getRezId();
     }
@@ -61,8 +61,8 @@ public class RoomService {
      * 잔여 시설 조회
      * @return 잔여 시설
      */
-    public List<RoomSearchResponse> findRemainRoom(final String roomType, final LocalDate rezDate, final String[] times) {
+    public List<RoomSearchResponse> findRemainRoom(final RoomSearchRequest params) {
 
-        return roomMapper.searchRoom(roomType, rezDate, times);
+        return roomMapper.searchRoom(params);
     }
 }
