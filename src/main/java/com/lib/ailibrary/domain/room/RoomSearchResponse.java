@@ -10,5 +10,5 @@ import lombok.ToString;
 public class RoomSearchResponse {
         private int roomFloor;
         private String roomName;
-        private byte[] image;
+        private String image;
 }
