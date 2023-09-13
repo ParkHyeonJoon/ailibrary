@@ -5,7 +5,7 @@ const API_BASE_URL = "http://localhost:8080";
 // 시설 검색 API 요청 함수
 export const searchFacility = async (selectedMenu, selectedDate, selectedTimes) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/reserve/search.do`, {
+        const response = await fetch(`${API_BASE_URL}/reserve/search`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export const searchFacility = async (selectedMenu, selectedDate, selectedTimes) 
 // 예약 생성 API 요청 함수
 export const createReservation = async (roomName, selectedDate, selectedTimes) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/reserve/save.do`, {
+        const response = await fetch(`${API_BASE_URL}/reserve/save`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

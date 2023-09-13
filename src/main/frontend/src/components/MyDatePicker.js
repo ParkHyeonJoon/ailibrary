@@ -52,7 +52,8 @@ const DateText = styled.span`
   align-items: center; /* 텍스트와 아이콘을 세로 중앙 정렬 */
 `;
 
-const MyDatePicker = ({ selectedDate, setSelectedDate }) => {
+const MyDatePicker = () => {
+    const [selectedDate, setSelectedDate] = useState();
   return (
     <CustomDatePicker>
       <DateText>날짜</DateText>

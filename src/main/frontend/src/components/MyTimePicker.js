@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const TimePickerContainer = styled.div`
@@ -25,10 +25,10 @@ const TimeSlotText = styled.p`
 `;
 
 const AlertMessage = styled.p`
-  font-size: 12px; /* 폰트 크기 조정 */
-  margin-left: 10px; /* 오른쪽으로 간격 조정 */
-  color: red; /* 빨간색 텍스트로 변경 */
-  margin-top: 0; 
+  font-size: 12px;
+  margin-left: 10px;
+  color: red;
+  margin-top: 0;
 `;
 
 const TimeSlot = styled.div`
@@ -105,6 +105,6 @@ const MyTimePicker = ({ selectedTimes, setSelectedTimes }) => {
         )}
       </TimePickerContainer>
   );
-}
+};
 
 export default MyTimePicker;

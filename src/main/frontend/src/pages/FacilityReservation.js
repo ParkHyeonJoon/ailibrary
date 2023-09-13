@@ -81,16 +81,17 @@ function FacilityReservation() {
 
     const handleFacilitySearch = async () => {
         try {
-            if (selectedDate && selectedTimes.length > 0) {
-                const result = await searchFacility(
-                    selectedMenu,
-                    selectedDate,
-                    selectedTimes
-                );
-                setSearchResult(result);
-            } else {
+            if (!selectedDate || selectedTimes.length === 0) {
                 console.error("날짜와 시간을 선택해주세요.");
+                return; // 선택한 날짜나 시간이 없다면 더 이상 진행하지 않음
             }
+
+            const result = await searchFacility(
+                selectedMenu,
+                selectedDate,
+                selectedTimes
+            );
+            setSearchResult(result);
         } catch (error) {
             console.error("시설 검색 오류:", error);
         }
@@ -132,7 +133,10 @@ function FacilityReservation() {
             </RoomTypeArea>
             <PickerArea>
                 <MyDatePicker onDateChange={(date) => setSelectedDate(date)} />
-                <MyTimePicker onTimesChange={(times) => setSelectedTimes(times)} />
+                <MyTimePicker
+                    selectedTimes={selectedTimes}
+                    setSelectedTimes={setSelectedTimes}
+                />
             </PickerArea>
             <Button
                 backgroundColor="#b3c4ff"
