@@ -54,8 +54,7 @@ const TimeSlot = styled.div`
   `}
 `;
 
-function MyTimePicker() {
-  const [selectedTimes, setSelectedTimes] = useState([]);
+const MyTimePicker = ({ selectedTimes, setSelectedTimes }) => {
   const maxSelections = 3;
 
   const timeSlots = [
@@ -82,29 +81,29 @@ function MyTimePicker() {
   };
 
   return (
-    <TimePickerContainer>
-      <TextContainer>
-        <TimeSlotText>시간</TimeSlotText>
-      </TextContainer>
-      <TimeSlotRow>
-        {timeSlots.map((timeSlot, index) => (
-          <TimeSlot
-            key={index}
-            selected={selectedTimes.includes(timeSlot)}
-            disabled={
-              !selectedTimes.includes(timeSlot) &&
-              selectedTimes.length >= maxSelections
-            }
-            onClick={() => handleTimeSelect(timeSlot)}
-          >
-            {timeSlot}
-          </TimeSlot>
-        ))}
-      </TimeSlotRow>
-      {selectedTimes.length >= maxSelections && (
-          <AlertMessage>최대 {maxSelections}개까지 선택 가능합니다.</AlertMessage>
+      <TimePickerContainer>
+        <TextContainer>
+          <TimeSlotText>시간</TimeSlotText>
+        </TextContainer>
+        <TimeSlotRow>
+          {timeSlots.map((timeSlot, index) => (
+              <TimeSlot
+                  key={index}
+                  selected={selectedTimes.includes(timeSlot)}
+                  disabled={
+                      !selectedTimes.includes(timeSlot) &&
+                      selectedTimes.length >= maxSelections
+                  }
+                  onClick={() => handleTimeSelect(timeSlot)}
+              >
+                {timeSlot}
+              </TimeSlot>
+          ))}
+        </TimeSlotRow>
+        {selectedTimes.length >= maxSelections && (
+            <AlertMessage>최대 {maxSelections}개까지 선택 가능합니다.</AlertMessage>
         )}
-    </TimePickerContainer>
+      </TimePickerContainer>
   );
 }
 

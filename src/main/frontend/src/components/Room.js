@@ -37,7 +37,7 @@ const RoomType = styled.p`
   font-size: 12px;
 `;
 
-function Room() {
+function Room({roomData}) { // roomData 프로퍼티로 데이터 전달 받음
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const [reservationInfo, setReservationInfo] = useState({}); // 예약 정보
 
@@ -61,9 +61,9 @@ function Room() {
   return (
     <>
       <RoomWrapper onClick={handleRoomClick}>
-        <RoomImage src={`${process.env.PUBLIC_URL}/assets/room1.jpg`} alt="이미지" />
-        <RoomFloor>2층</RoomFloor>
-        <RoomType>스터디룸1</RoomType>
+        <RoomImage src={roomData.image} alt="이미지" /> {/* 이미지 프로퍼티 사용 */}
+        <RoomFloor>{roomData.floor}층</RoomFloor> {/* 층수 프로퍼티 사용 */}
+        <RoomType>{roomData.name}</RoomType> {/* 이름 프로퍼티 사용 */}
       </RoomWrapper>
       <Modal
         isOpen={isModalOpen}

@@ -52,9 +52,7 @@ const DateText = styled.span`
   align-items: center; /* 텍스트와 아이콘을 세로 중앙 정렬 */
 `;
 
-function MyDatePicker() {
-  const [selectedDate, setSelectedDate] = useState(null);
-
+const MyDatePicker = ({ selectedDate, setSelectedDate }) => {
   return (
     <CustomDatePicker>
       <DateText>날짜</DateText>
@@ -64,7 +62,7 @@ function MyDatePicker() {
         </CustomIcon>
         <StyledDatePicker
             selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
+            onChange={(date) => setSelectedDate(date)} // 선택한 날짜를 상위 컴포넌트로 전달
             dateFormat="yyyy-MM-dd"
         />
       </StyledDatePickerWrapper>
