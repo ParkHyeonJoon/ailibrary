@@ -37,5 +37,11 @@ public interface BookMapper {
      */
     Book findById(int bookId);
 
+    /**
+     * 키워드 입력으로 도서 검색 기능
+     * @param keyword
+     */
+    List<Book> find(String keyword);
+
 
 }

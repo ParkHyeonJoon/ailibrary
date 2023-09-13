@@ -45,11 +45,20 @@ public class BookService {
     }
 
     /**
-     * 도서 검색
+     * 도서 ID로 검색
      * @param bookId - 도서 ID로 검색
      * @return 도서 정보
      */
     public Book findBookById(int bookId) {
         return bookMapper.findById(bookId);
+    }
+
+    /**
+     * 도서 검색 기능
+     * @param keyword
+     */
+    public List<Book> findBookByKeyword(String keyword) {
+        keyword = "%" + keyword + "%";
+        return bookMapper.find(keyword);
     }
 }

@@ -8,6 +8,8 @@ import PopularBooks from "./pages/PopularBooks";
 import NewBooks from "./pages/NewBooks";
 import MyPage from "./pages/MyPage";
 import BookDetail from "./pages/BookDetail";
+import SearchResult from "./components/SearchResult"; // SearchResult 컴포넌트 import
+
 
 function App() {
     return (
@@ -21,6 +23,7 @@ function App() {
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/mypage" element={<MyPage/>}/>
                 <Route path="/book-detail/:bookId" element={<BookDetail/>}/>
+                <Route path="/results/:keyword" element={<SearchResult />} /> {/* SearchResult 컴포넌트 라우트 추가 */}
             </Routes>
         </Router>
     );

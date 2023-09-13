@@ -28,4 +28,11 @@ public class BookController {
         Book book = bookService.findBookById(bookId);
         return book;
     }
+
+    @GetMapping("/search")
+    public List<Book> findBookByKeyword(@RequestParam String keyword) {
+        // 키워드를 사용하여 도서를 검색하는 서비스 메서드를 호출
+        List<Book> books = bookService.findBookByKeyword(keyword);
+        return books;
+    }
 }

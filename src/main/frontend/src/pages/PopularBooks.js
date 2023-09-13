@@ -4,8 +4,7 @@ import Header from "../components/Header";
 import Room from "../components/Room";
 import Book from "../components/BookFrame";
 import BookFrame from "../components/BookFrame";
-import { useLocation } from "react-router-dom";
-
+import { useLocation } from 'react-router-dom';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -26,7 +25,7 @@ const Title = styled.p`
 `;
 function PopularBooks() {
    const [popularBooks, setPopularBooks] = useState([]);
-   const location = useLocation(); // 현재 URL 정보를 가져옴
+   const location = useLocation();
    const showText = location.pathname === "/popularbooks" ? "인기도서" : ""; // URL에 따라 showText 설정
 
    useEffect(() => {

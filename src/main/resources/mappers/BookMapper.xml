@@ -69,4 +69,15 @@
             book_id = #{value}
     </select>
 
+    <!-- 키워드로 도서 검색 -->
+    <select id="find" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        WHERE
+         book_title LIKE CONCAT('%', #{keyword}, '%')
+        OR author LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
 </mapper>

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Link } from "react-router-dom"; // Link 불러오기
+import { Link, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
     display: flex;
@@ -47,11 +47,12 @@ const SearchButton = styled.button`
 
 function SearchArea() {
     const [searchText, setSearchText] = useState("");
+    const navigate = useNavigate(); // history 객체를 가져옴
 
     const handleSearch = () => {
-        // 실제 검색 로직을 작성하는 부분
-        console.log("검색어:", searchText);
-    };
+            // 클라이언트에서 검색어로 서버 API를 호출
+           navigate(`/results/${searchText}`);
+        };
 
     return (
         <Wrapper>
