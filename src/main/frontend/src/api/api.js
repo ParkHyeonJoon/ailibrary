@@ -33,7 +33,7 @@ export const searchFacility = async (selectedMenu, selectedDate, selectedTimes) 
 };
 
 // 예약 생성 API 요청 함수
-export const createReservation = async (roomName, selectedDate, selectedTimes) => {
+export const createReservation = async (selectedMenu, selectedDate, selectedTimes) => {
     try {
         const response = await fetch(`${API_BASE_URL}/reserve/save`, {
             method: "POST",
@@ -41,7 +41,7 @@ export const createReservation = async (roomName, selectedDate, selectedTimes) =
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                roomName,
+                roomType: selectedMenu,
                 rezDate: selectedDate,
                 rezTime: selectedTimes,
             }),
