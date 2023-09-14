@@ -19,15 +19,18 @@ export const searchFacility = async (selectedMenu, selectedDate, selectedTimes) 
 
         if (response.ok) {
             const data = await response.json();
+            alert("성공")
             // 성공적인 응답 처리
             return data;
         } else {
             // 오류 응답 처리
+            alert("실패")
             throw new Error("시설 검색에 실패했습니다.");
         }
     } catch (error) {
         // 오류 처리
         console.error("API 오류:", error);
+        alert("오류")
         throw error;
     }
 };

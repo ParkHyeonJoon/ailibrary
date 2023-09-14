@@ -106,7 +106,7 @@ function FacilityReservation() {
             const reservationData = {
                 roomType: roomData.roomType,
                 rezDate: selectedDate,
-                rezTimes: selectedTimes,
+                rezTime: selectedTimes,
             };
 
             // createReservation 함수를 호출하여 예약 정보를 서버로 전송
