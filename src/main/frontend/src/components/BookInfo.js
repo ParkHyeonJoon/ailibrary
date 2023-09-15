@@ -30,7 +30,7 @@ const BookAuthor = styled.p`
 `;
 
 
-const reserveBtn = styled.button`
+const ReserveBtn = styled.button`
   width: 130px;
   height: 50px;
   background: #000F5F;
