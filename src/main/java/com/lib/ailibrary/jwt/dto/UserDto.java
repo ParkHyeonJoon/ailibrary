@@ -12,17 +12,29 @@ import lombok.*;
 @NoArgsConstructor
 public class UserDto {
 
-/*    @NotNull
-    @Size(min = 3, max = 20)
-    private String userStuId;
+    @NotNull
+    private Long userStuId;
 
     @NotNull
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 30)
     private String userName;
 
     @NotNull
     @Size(min = 3, max = 30)
+    private String userId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotNull
+    @Size(min = 3, max = 70)
+    private String userPw;
+
+    @NotNull
+    @Size(min = 3, max = 30)
     private String userMajor;
+
+    @NotNull
+    @Size(min = 3, max = 10)
+    private String userGrade;
 
     @NotNull
     @Size(min = 3, max = 30)
@@ -32,20 +44,8 @@ public class UserDto {
     @Size(min = 3, max = 15)
     private String userPnum;
 
-    @NotNull
-    @Size(min = 3, max = 30)
-    private String userId;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull
-    @Size(min = 3, max = 100)
-    private String userPw;
-
-    @NotNull
-    @Size(min = 3, max = 10)
-    private String userGrade;*/
-
-    @NotNull
+/*    @NotNull
     @Size(min = 3, max = 50)
     private String username;
 
@@ -56,6 +56,6 @@ public class UserDto {
 
     @NotNull
     @Size(min = 3, max = 50)
-    private String nickname;
+    private String nickname;*/
 
 }

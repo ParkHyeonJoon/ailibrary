@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     // 유저이름으로 유저 정보를 가져오는 메서드 추가
-    Optional<User> findByUsername(String username);
+    Optional<User> findByUserId(String userId);
 
-    Optional<User> findOneWithAuthoritiesByUsername(String username);
+    Optional<User> findOneWithAuthoritiesByUserId(String userId);
 }

@@ -29,9 +29,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login").permitAll()
-
+                        .requestMatchers("/user").permitAll()
                         .requestMatchers("/api/authenticate").permitAll() // 로그인 api
                         .requestMatchers("/api/signup").permitAll() // 회원가입 api
+                        .requestMatchers("/favicon.ico").permitAll()
                 .anyRequest().authenticated())
                 .csrf(setting -> setting.disable())
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
