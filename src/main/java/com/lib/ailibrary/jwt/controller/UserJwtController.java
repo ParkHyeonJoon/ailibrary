@@ -28,9 +28,9 @@ public class UserJwtController {
         return ResponseEntity.ok(userJwtService.getMyUserWithAuthorities().get());
     }
 
-    @GetMapping("/user/{username}")
+    @GetMapping("/user/{userId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<User> getUserInfo(@PathVariable String username) {
-        return ResponseEntity.ok(userJwtService.getUserWithAuthorities(username).get());
+    public ResponseEntity<User> getUserInfo(@PathVariable String userId) {
+        return ResponseEntity.ok(userJwtService.getUserWithAuthorities(userId).get());
     }
 }
