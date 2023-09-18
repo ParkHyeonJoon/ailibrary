@@ -6,7 +6,7 @@ const API_BASE_URL = "http://localhost:8080";
 export const searchFacility = async (selectedMenu, selectedDate, selectedTimes) => {
     try {
         const response = await fetch(`${API_BASE_URL}/reserve/search`, {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -20,9 +20,11 @@ export const searchFacility = async (selectedMenu, selectedDate, selectedTimes) 
         if (response.ok) {
             const data = await response.json();
             // 성공적인 응답 처리
+            console.log('post 성공:', data);
             return data;
         } else {
             // 오류 응답 처리
+            console.error('post 실패:');
             throw new Error("시설 검색에 실패했습니다.");
         }
     } catch (error) {

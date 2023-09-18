@@ -28,7 +28,7 @@ const BackgroundImage = styled.div`
   background-size: cover; /* 이미지를 컨테이너에 맞게 확대/축소 */
   filter: brightness(50%) blur(50px); /* 밝기와 블러 필터 적용 */
   width: 100%;
-  height: 100vh; /* 화면 높이로 설정 (뷰포트 높이) */
+  height: 100%; /* 화면 높이로 설정 (뷰포트 높이) */
   position: absolute;
   z-index: -1; /* 배경 이미지는 Wrapper 위에 표시되도록 */
   top: -30px;
