@@ -4,6 +4,8 @@ import com.lib.ailibrary.jwt.JwtFilter;
 import com.lib.ailibrary.jwt.TokenProvider;
 import com.lib.ailibrary.jwt.dto.LoginDto;
 import com.lib.ailibrary.jwt.dto.TokenDto;
+import com.lib.ailibrary.jwt.entity.User;
+import com.lib.ailibrary.jwt.service.UserJwtService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -24,9 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final UserJwtService userJwtService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<User> authorize(@Valid @RequestBody LoginDto loginDto) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUserId(), loginDto.getUserPw());
@@ -41,8 +44,8 @@ public class AuthController {
         HttpHeaders httpHeaders = new HttpHeaders();
         // response header에 jwt token에 넣어줌
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-
+        User user = userJwtService.getUserWithAuthorities(loginDto.getUserId()).get();
         // tokenDto를 이용해 response body에도 넣어서 리턴
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(user, httpHeaders, HttpStatus.OK);
     }
 }
