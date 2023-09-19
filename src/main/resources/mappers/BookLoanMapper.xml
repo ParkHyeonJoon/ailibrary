@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lib.ailibrary.domain.book.BookLoanMapper">
+
+    <!-- tb_room_rez 테이블 전체 컬럼 -->
+    <sql id="bookLoanColumns">
+        book_loan_id
+        , user_stu_id
+        , book_id
+        , loan_date
+        , return_date
+        , return_state
+
+    </sql>
+
+
+    <!-- 예약 정보 저장 -->
+    <insert id="save" parameterType="com.lib.ailibrary.domain.book.BookLoanRequest" useGeneratedKeys="true" keyProperty="bookLoanId">
+        INSERT INTO tb_book_loan (
+        <include refid="bookLoanColumns"></include>
+        ) VALUES (
+        #{bookLoanId}
+        , #{userStuId}
+        , #{bookId}
+        , #{loanDate}
+        , #{returnDate}
+        , #{returnState}
+        )
+    </insert>
+
+
+    <!-- 예약 정보 조회 -->
+    <select id="findById" parameterType="long" resultType="com.lib.ailibrary.domain.book.BookLoanResponse">
+        SELECT
+        <include refid="bookLoanColumns"></include>
+        FROM
+        tb_book_loan
+        WHERE
+        book_loan_id = #{value}
+    </select>
+
+
+    <!-- 예약 정보 수정 (보류) -->
+    <update id="update" parameterType="com.lib.ailibrary.domain.book.BookReserveRequest">
+    </update>
+
+
+    <!-- 예약 정보 삭제 or 취소 -->
+    <delete id="deleteById" parameterType="long">
+        DELETE
+        FROM
+        tb_book_loan
+        WHERE
+        book_loan_id = #{bookLoanId}
+    </delete>
+
+
+    <!-- 도서 대출 상태 -->
+    <select id="checkBookLoan" parameterType="long" resultType="com.lib.ailibrary.domain.book.BookLoanResponse">
+        SELECT
+        <include refid="bookLoanColumns"></include>
+        FROM
+        tb_book_loan
+        WHERE
+        book_id = #{bookId}
+    </select>
+</mapper>
