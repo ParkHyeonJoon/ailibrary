@@ -6,7 +6,7 @@ import Room from "../components/Room";
 import MyDatePicker from "../components/MyDatePicker";
 import MyTimePicker from "../components/MyTimePicker";
 import Button from "../common/Button";
-import { searchFacility, createReservation } from "../api/api"; // createReservation 함수 추가
+import { searchFacility, createReservation } from "../api/FacilityReserveapi"; // createReservation 함수 추가
 
 const Wrapper = styled.div`
   width: 100%;
@@ -107,7 +107,7 @@ function FacilityReservation() {
             const reservationData = {
                 roomType: selectedMenu,
                 rezDate: selectedDate,
-                rezTimes: selectedTimes,
+                rezTime: selectedTimes,
             };
 
             // createReservation 함수를 호출하여 예약 정보를 서버로 전송
