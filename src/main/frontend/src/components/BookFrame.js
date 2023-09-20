@@ -26,6 +26,7 @@ const BookTitle = styled.p`
   font-weight: 600;
   margin-top: 5px;
   margin-left: 2px;
+  text-decoration: none; /* 밑줄 제거 */
 `;
 
 const BookFrame = ({ book }) => { // book 데이터를 props로 받음
