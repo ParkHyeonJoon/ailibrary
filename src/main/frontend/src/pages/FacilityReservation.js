@@ -103,7 +103,6 @@ function FacilityReservation() {
     };
 
     useEffect(() => {
-    console.log("userInfo:", userInfo.userName); // 테스트용
         handleFacilitySearch();
     }, [selectedMenu, selectedDate, selectedTimes]);
 
