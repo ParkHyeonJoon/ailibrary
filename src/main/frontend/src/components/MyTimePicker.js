@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+//src/components/MyTimePicker.js
+import React from "react";
 import styled from "styled-components";
 
 const TimePickerContainer = styled.div`
@@ -25,10 +26,10 @@ const TimeSlotText = styled.p`
 `;
 
 const AlertMessage = styled.p`
-  font-size: 12px; /* 폰트 크기 조정 */
-  margin-left: 10px; /* 오른쪽으로 간격 조정 */
-  color: red; /* 빨간색 텍스트로 변경 */
-  margin-top: 0; 
+  font-size: 12px;
+  margin-left: 10px;
+  color: red;
+  margin-top: 0;
 `;
 
 const TimeSlot = styled.div`
@@ -54,8 +55,7 @@ const TimeSlot = styled.div`
   `}
 `;
 
-function MyTimePicker() {
-  const [selectedTimes, setSelectedTimes] = useState([]);
+const MyTimePicker = ({ selectedTimes, setSelectedTimes }) => {
   const maxSelections = 3;
 
   const timeSlots = [
@@ -82,30 +82,30 @@ function MyTimePicker() {
   };
 
   return (
-    <TimePickerContainer>
-      <TextContainer>
-        <TimeSlotText>시간</TimeSlotText>
-      </TextContainer>
-      <TimeSlotRow>
-        {timeSlots.map((timeSlot, index) => (
-          <TimeSlot
-            key={index}
-            selected={selectedTimes.includes(timeSlot)}
-            disabled={
-              !selectedTimes.includes(timeSlot) &&
-              selectedTimes.length >= maxSelections
-            }
-            onClick={() => handleTimeSelect(timeSlot)}
-          >
-            {timeSlot}
-          </TimeSlot>
-        ))}
-      </TimeSlotRow>
-      {selectedTimes.length >= maxSelections && (
-          <AlertMessage>최대 {maxSelections}개까지 선택 가능합니다.</AlertMessage>
+      <TimePickerContainer>
+        <TextContainer>
+          <TimeSlotText>시간</TimeSlotText>
+        </TextContainer>
+        <TimeSlotRow>
+          {timeSlots.map((timeSlot, index) => (
+              <TimeSlot
+                  key={index}
+                  selected={selectedTimes.includes(timeSlot)}
+                  disabled={
+                      !selectedTimes.includes(timeSlot) &&
+                      selectedTimes.length >= maxSelections
+                  }
+                  onClick={() => handleTimeSelect(timeSlot)}
+              >
+                {timeSlot}
+              </TimeSlot>
+          ))}
+        </TimeSlotRow>
+        {selectedTimes.length >= maxSelections && (
+            <AlertMessage>최대 {maxSelections}개까지 선택 가능합니다.</AlertMessage>
         )}
-    </TimePickerContainer>
+      </TimePickerContainer>
   );
-}
+};
 
 export default MyTimePicker;

@@ -16,12 +16,12 @@ public class RoomSearchRequest {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate rezDate;
 
-    private String rezTime;
+    private String[] rezTime;
 
-    public String[] timeSplit() {
+    /*public String[] timeSplit() {
         String[] times = rezTime.split("\\s");
         return times;
-    }
+    }*/
 
 
 }

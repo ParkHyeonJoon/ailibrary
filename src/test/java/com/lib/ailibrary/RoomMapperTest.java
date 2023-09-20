@@ -74,7 +74,7 @@ public class RoomMapperTest {
         }
         params.setRezTime("20:00~21:00");*/
 
-        String[] times = params.timeSplit();
+        /*String[] times = params.timeSplit();*/
 
         /*List<RoomSearchResponse> remainRoom = roomMapper.searchRoom(params.getRoomType(), params.getRezDate(), times);
 

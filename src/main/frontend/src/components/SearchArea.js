@@ -57,7 +57,7 @@ function SearchArea() {
     return (
         <Wrapper>
             <Link to="/">
-                <Logo src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt="로고" />
+                <Logo src={`${process.env.PUBLIC_URL}/assets/Logo.png`} alt="로고" />
             </Link>
             <SearchBar>
                 <SearchInput

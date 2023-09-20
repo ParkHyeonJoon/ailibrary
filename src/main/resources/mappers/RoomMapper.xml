@@ -17,7 +17,7 @@
 
 
     <!-- 예약 정보 저장 -->
-    <insert id="save" parameterType="com.lib.ailibrary.domain.room.RoomReserveRequest" useGeneratedKeys="true" keyProperty="rezId">
+    <insert id="save" parameterType="com.lib.ailibrary.domain.room.RoomReserveSaveRequest" useGeneratedKeys="true" keyProperty="rezId">
         INSERT INTO tb_room_rez (
             <include refid="roomColumns"></include>
         ) VALUES (
@@ -89,9 +89,9 @@
              ON
                  r.room_id = rr.room_id
              <where>
-                 <if test = "times != null and times.length > 0">
+                 <if test = "rezTime != null and rezTime.length > 0">
                      AND rez_time IN
-                     <foreach item="time" collection="times" open="(" separator="," close=")">
+                     <foreach item="time" collection="rezTime" open="(" separator="," close=")">
                          #{time}
                      </foreach>
                  </if>

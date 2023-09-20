@@ -1,3 +1,4 @@
+// src/components/MyDatePicker.js
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -52,9 +53,8 @@ const DateText = styled.span`
   align-items: center; /* 텍스트와 아이콘을 세로 중앙 정렬 */
 `;
 
-function MyDatePicker() {
-  const [selectedDate, setSelectedDate] = useState(null);
-
+const MyDatePicker = () => {
+    const [selectedDate, setSelectedDate] = useState();
   return (
     <CustomDatePicker>
       <DateText>날짜</DateText>
@@ -63,8 +63,9 @@ function MyDatePicker() {
           <FontAwesomeIcon icon={faCalendar} />
         </CustomIcon>
         <StyledDatePicker
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)} // 선택한 날짜를 상위 컴포넌트로 전달
+            dateFormat="yyyy-MM-dd"
         />
       </StyledDatePickerWrapper>
     </CustomDatePicker>
