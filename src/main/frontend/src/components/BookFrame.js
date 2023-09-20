@@ -28,7 +28,7 @@ const BookTitle = styled.p`
   margin-left: 2px;
 `;
 
-const BookFrame = ({ book }) => { // book 데이터를 props로 받음
+const BookFrame = ({ book }) => { // book 데이터를 popularBooks에서 props로 받음
     return (
         <Link to={`/book-detail/${book.bookId}`}> {/* 각 책에 대한 고유한 URL로 연결 */}
         <BookWrapper>

@@ -1,5 +1,6 @@
 package com.lib.ailibrary.domain.book;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +61,17 @@ public class BookService {
     public List<Book> findBookByKeyword(String keyword) {
         keyword = "%" + keyword + "%";
         return bookMapper.find(keyword);
+    }
+
+    @Transactional
+    public void increaseBookGood(int bookId) {
+        try {
+            bookMapper.increaseBookGood(bookId);
+            System.out.println("성공");
+        } catch(Exception e) {
+            System.out.println("여기서 에러");
+            System.out.println(bookId);
+            e.printStackTrace(); // 예외 정보 출력
+        }
     }
 }
