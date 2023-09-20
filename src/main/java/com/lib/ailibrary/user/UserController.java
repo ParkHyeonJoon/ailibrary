@@ -21,7 +21,7 @@ public class UserController {
 
     private final UserService userService;
 
-    // 회원가입
+ /*   // 회원가입
     @PostMapping("/user")
     @ResponseBody
     public int joinMember(@RequestBody final UserRequest params) {
@@ -33,7 +33,7 @@ public class UserController {
     @ResponseBody
     public UserResponse findUserByUserId(@PathVariable final String userId) {
         return userService.findUserByUserId(userId);
-    }
+    }*/
 
     // 회원 정보 수정
     @PatchMapping("/user/{userStuId}")

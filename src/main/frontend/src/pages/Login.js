@@ -85,8 +85,6 @@ function Login({onLogin}) {
     // 로그인 상태를 관리하기 위한 상태 변수와 업데이트 함수 설정
     const [loginStatus, setLoginStatus] = useState('');
 
-    // 로그인 성공 시 서버에서 받은 토큰을 저장할 상태 변수
-    const [userInfo, setUserInfo] = useState(null);
     // 폼 입력값 변경 시 이벤트 핸들러
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -128,26 +126,19 @@ function Login({onLogin}) {
 
             // fetchWithToken 함수를 사용하여 로그인 API 호출
             const response = await fetchWithToken(loginUrl, 'POST', loginData);
+            const token = response.headers.get("authorization");
+            const res = await response.json()
 
             // 응답을 처리하고 로그인이 성공했는지 확인하는 로직을 작성합니다.
-            if (response.accessToken) {
+            if (token) {
                 // 성공적으로 토큰을 받았을 경우
                 setLoginStatus('로그인 성공');
-                // 응답 데이터에서 사용자 정보 추출
-                const { userName, userId, userMajor, userGrade, userEmail, userPnum, authorities } = response;
 
-                // 사용자 정보를 userInfo 상태에 저장
-                setUserInfo({
-                    userName,
-                    userId,
-                    userMajor,
-                    userGrade,
-                    userEmail,
-                    userPnum,
-                    authorities,
-                });
-                localStorage.setItem('accessToken', response.accessToken); // 로컬 스토리지에 토큰 저장
-                alert(response.userName + '님 반갑습니다!');
+                localStorage.setItem("userInfo", JSON.stringify(res)); // 사용자 정보 저장
+                localStorage.setItem('token', token); // 로컬 스토리지에 토큰 저장
+
+                alert(res.userName + '님 반갑습니다!');
+
                 // 성공 시 리다이렉션 또는 다른 작업 수행
             } else {
                 // 토큰이 없는 경우

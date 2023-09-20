@@ -27,7 +27,8 @@ const BookAuthor = styled.p`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-`
+`;
+
 
 const ReserveBtn = styled.button`
   width: 130px;
@@ -38,6 +39,7 @@ const ReserveBtn = styled.button`
   border: none;
   font-weight: 600;
 `;
+
 const FormTable = styled.table`
   width: 700px;
   margin-top: 20px;
@@ -54,87 +56,81 @@ const ColGroup = styled.colgroup`
   }
 `;
 
-const TBody = styled.tbody`
-`;
+const TBody = styled.tbody``;
 
 const TableRow = styled.tr`
   td {
     padding: 10px;
   }
 `;
+
 const Info = styled.p`
   font-size: 14px;
   margin: 0;
   font-weight: bold;
 `;
+
 const InfoContent = styled.p`
   font-size: 14px;
   margin: 0;
 `;
-const BookInfo= () => {
-    return (
-        <Wrapper>
-            <BookTitle>1%를 읽는 힘</BookTitle>
-            <BookAuthor>메르</BookAuthor>
-            <ReserveBtn>예약하기</ReserveBtn>
-            <FormTable>
-                <ColGroup>
-                    <col />
-                    <col />
-                </ColGroup>
-                <TBody>
-                    <TableRow>
+
+const BookInfo = ({ bookInfo }) => {
+  return (
+    <Wrapper>
+      <BookTitle>{bookInfo.bookTitle}</BookTitle>
+      <BookAuthor>{bookInfo.author}</BookAuthor>
+      <ReserveBtn>예약하기</ReserveBtn>
+      <FormTable>
+        <ColGroup>
+          <col />
+          <col />
+        </ColGroup>
+        <TBody>
+          <TableRow>
+            <td>
+              <Info>자료유형</Info>
+            </td>
+            <td>
+              <InfoContent>{bookInfo.category}</InfoContent>
+            </td>
+          </TableRow>
+          <TableRow>
+             <td>
+             <Info>출판연도</Info>
+             </td>
+             <td>
+             <InfoContent>{bookInfo.publishedDate}</InfoContent>
+             </td>
+             </TableRow>
+           <TableRow>
                         <td>
-                            <Info>자료유형</Info>
+                        <Info>출판사</Info>
                         </td>
                         <td>
-                            <InfoContent>단행본</InfoContent>
+                        <InfoContent>{bookInfo.publisher}</InfoContent>
                         </td>
-                    </TableRow>
-                    <TableRow>
+                        </TableRow>
+           <TableRow>
                         <td>
-                            <Info>서명/저자사항</Info>
-                        </td>
-                        <td>
-                            <InfoContent>1%를 읽는 힘 : 세상의 정보를 연결해서 기회를 포착하는 생각 혁신/ 메르 지음</InfoContent>
-                        </td>
-                    </TableRow>
-                    <TableRow>
-                        <td>
-                            <Info>개인저자</Info>
+                        <Info>층수</Info>
                         </td>
                         <td>
-                            <InfoContent>메르</InfoContent>
+                        <InfoContent>{bookInfo.floor}</InfoContent>
                         </td>
-                    </TableRow>
-                    <TableRow>
+                        </TableRow>
+           <TableRow>
                         <td>
-                            <Info>발행사항</Info>
-                        </td>
-                        <td>
-                            <InfoContent>서울 : 토네이도 : 토네이도미디어그룹, 2023.</InfoContent>
-                        </td>
-                    </TableRow>
-                    <TableRow>
-                        <td>
-                            <Info>등록번호</Info>
+                        <Info>청구번호(아이디)</Info>
                         </td>
                         <td>
-                            <InfoContent>EM226192</InfoContent>
+                        <InfoContent>{bookInfo.bookId}</InfoContent>
                         </td>
-                    </TableRow>
-                    <TableRow>
-                        <td>
-                            <Info>청구기호</Info>
-                        </td>
-                        <td>
-                            <InfoContent>327.856메238ㅇ</InfoContent>
-                        </td>
-                    </TableRow>
-                </TBody>
-            </FormTable>
-        </Wrapper>
-    );
+                        </TableRow>
+        </TBody>
+      </FormTable>
+    </Wrapper>
+  );
 };
 
 export default BookInfo;

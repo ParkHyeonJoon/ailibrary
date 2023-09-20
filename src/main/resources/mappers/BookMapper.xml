@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lib.ailibrary.domain.book.BookMapper">
+
+    <!-- tb_book 테이블 전체 컬럼 -->
+    <sql id="bookColumns">
+          book_id
+        , book_title
+        , author
+        , published_date
+        , publisher
+        , category
+        , floor
+        , book_good
+        , book_date
+        , book_image
+    </sql>
+
+    <!-- 도서 검색 정보 조회 -->
+    <select id="findByTitle" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        WHERE
+            book_title = #{value}
+    </select>
+
+    <!-- 신착 도서 조회 -->
+    <select id="findNew" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        ORDER BY
+            book_date DESC
+        LIMIT 5
+    </select>
+
+    <!-- 인기 도서 조회 -->
+    <select id="findGood" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        ORDER BY
+            book_good DESC
+        LIMIT 5
+    </select>
+
+    <!-- 전체 도서 조회 -->
+    <select id="findAll" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        ORDER BY
+            book_id DESC
+    </select>
+
+    <!-- id별 도서 조회 -->
+    <select id="findById" parameterType="int" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        WHERE
+            book_id = #{value}
+    </select>
+
+    <!-- 키워드로 도서 검색 -->
+    <select id="find" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        WHERE
+         book_title LIKE CONCAT('%', #{keyword}, '%')
+        OR author LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+</mapper>

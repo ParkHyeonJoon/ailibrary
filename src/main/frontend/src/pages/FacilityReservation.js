@@ -76,6 +76,9 @@ function FacilityReservation() {
     const [selectedTimes, setSelectedTimes] = useState([]);
     const [searchResult, setSearchResult] = useState([]); // 배열로 초기화
 
+    const storedUserInfo = localStorage.getItem("userInfo");
+    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+
     const handleMenuClick = (menu) => {
         setSelectedMenu(menu);
     };
@@ -95,10 +98,12 @@ function FacilityReservation() {
             setSearchResult(result);
         } catch (error) {
             console.error("시설 검색 오류:", error);
+
         }
     };
 
     useEffect(() => {
+    console.log("userInfo:", userInfo.userName); // 테스트용
         handleFacilitySearch();
     }, [selectedMenu, selectedDate, selectedTimes]);
 

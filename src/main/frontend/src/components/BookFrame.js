@@ -28,15 +28,17 @@ const BookTitle = styled.p`
   margin-left: 2px;
 `;
 
-const BookFrame = (title) => {
+const BookFrame = ({ book }) => { // book 데이터를 props로 받음
     return (
-        <Link to="/book-detail">
+        <Link to={`/book-detail/${book.bookId}`}> {/* 각 책에 대한 고유한 URL로 연결 */}
         <BookWrapper>
-            <BookImage src={`${process.env.PUBLIC_URL}/assets/BookList/1.jpg`} alt={title}/>
-            <BookTitle>1%를 읽는 힘</BookTitle>
+            <BookImage src={book.bookImage} alt={book.bookTitle} />
+            <BookTitle>{book.bookTitle}</BookTitle>
         </BookWrapper>
         </Link>
     );
 };
+
+
 
 export default BookFrame;

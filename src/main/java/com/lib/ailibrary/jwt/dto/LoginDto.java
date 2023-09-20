@@ -12,10 +12,10 @@ import lombok.*;
 public class LoginDto {
 
     @NotNull
-    @Size(min = 3, max = 50)
-    private String username;
+    @Size(min = 3, max = 30)
+    private String userId;
 
     @NotNull
-    @Size(min = 3, max = 100)
-    private String password;
+    @Size(min = 3, max = 70)
+    private String userPw;
 }

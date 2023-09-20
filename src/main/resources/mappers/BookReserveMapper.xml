@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lib.ailibrary.domain.book.BookReserveMapper">
+
+    <!-- tb_room_rez 테이블 전체 컬럼 -->
+    <sql id="bookRezColumns">
+        book_rez_id
+        , user_stu_id
+        , book_id
+        , book_rez_date
+
+    </sql>
+
+
+    <!-- 예약 정보 저장 -->
+    <insert id="save" parameterType="com.lib.ailibrary.domain.book.BookReserveRequest" useGeneratedKeys="true" keyProperty="bookRezId">
+        INSERT INTO tb_book_rez (
+        <include refid="bookRezColumns"></include>
+        ) VALUES (
+        #{bookRezId}
+        , #{userStuId}
+        , #{bookId}
+        , #{bookRezDate}
+        )
+    </insert>
+
+
+    <!-- 예약 정보 조회 -->
+    <select id="findById" parameterType="long" resultType="com.lib.ailibrary.domain.book.BookReserveResponse">
+        SELECT
+            <include refid="bookRezColumns"></include>
+        FROM
+            tb_book_rez
+        WHERE
+            book_rez_id = #{value}
+    </select>
+
+
+    <!-- 예약 정보 수정 (보류) -->
+    <update id="update" parameterType="com.lib.ailibrary.domain.book.BookReserveRequest">
+    </update>
+
+
+    <!-- 예약 정보 삭제 or 취소 -->
+    <delete id="deleteById" parameterType="long">
+        DELETE
+        FROM
+            tb_book_rez
+        WHERE
+            book_rez_id = #{bookRezId}
+    </delete>
+
+
+    <!-- 예약 내역 조회 -->
+    <select id="findAll" resultType="com.lib.ailibrary.domain.book.BookReserveResponse">
+        SELECT
+            <include refid="bookRezColumns"></include>
+        FROM
+            tb_book_rez
+        ORDER BY
+            book_rez_id DESC
+    </select>
+
+    <!-- 도서 예약 상태 -->
+    <select id="checkBookRez" parameterType="int">
+        SELECT
+            <include refid="bookRezColumns"></include>
+        FROM
+            tb_book_rez
+        WHERE
+            book_id = #{bookId}
+    </select>
+</mapper>
