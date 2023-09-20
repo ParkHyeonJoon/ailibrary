@@ -1,7 +1,6 @@
 package com.lib.ailibrary.domain.book;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -43,12 +42,6 @@ public interface BookMapper {
      * @param keyword
      */
     List<Book> find(String keyword);
-
-    /**
-     * 도서 찜 누르기 기능
-     * @param - bookId
-     */
-    void increaseBookGood(int bookId);
 
 
 }

@@ -80,14 +80,4 @@
         OR author LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
-    <!-- 도서 좋아요 기능 -->
-    <update id="increaseBookGood" parameterType="int">
-        UPDATE
-            tb_book
-        SET
-            book_good = book_good + 1
-        WHERE
-            book_id = #{bookId}
-    </update>
-
 </mapper>
