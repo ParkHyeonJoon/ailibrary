@@ -38,6 +38,14 @@ public class BookService {
     }
 
     /**
+     * 소설 장르인 도서 조회
+     * @return - category = 소설, book_good 순으로
+     */
+    public List<Book> findGenreFiction() {
+        return bookMapper.findGenreFiction();
+    }
+
+    /**
      * 도서 목록 전체 조회
      * @return 도서 목록 전체
      */
@@ -63,6 +71,10 @@ public class BookService {
         return bookMapper.find(keyword);
     }
 
+    /**
+     * 도서 찜 누르기 기능(아직 보완해야함)
+     * @param bookId
+     */
     @Transactional
     public void increaseBookGood(int bookId) {
         try {

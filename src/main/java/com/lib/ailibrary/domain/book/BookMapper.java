@@ -27,6 +27,12 @@ public interface BookMapper {
     List<Book> findGood();
 
     /**
+     * 장르별 도서 조회 - 장르 : 소설
+     * @return - category = "소설" + book_good순으로
+     */
+    List<Book> findGenreFiction();
+
+    /**
      * 도서 목록 전체 조회
      * @return 도서 목록 전체
      */

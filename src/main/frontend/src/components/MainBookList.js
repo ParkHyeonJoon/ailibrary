@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import PopularBooks from '../pages/PopularBooks'; // 파일 경로에 따라 경로 수정 필요
+import AllBooks from '../pages/AllBooks'; // 파일 경로에 따라 경로 수정 필요
 
 
 const Wrapper = styled.div`
@@ -23,7 +23,7 @@ const MenuArea = styled.div`
     justify-content: flex-end;
     align-items: center;
     displey: flex;
-    margin-bottom: 30px;
+
 `;
 
 const MenuBtn = styled.button`
@@ -73,7 +73,7 @@ function MainBookList() {
                 <MenuBtn onClick={() => handleMenuClick("인기도서")}>인기도서</MenuBtn>
                 <MenuBtn onClick={() => handleMenuClick("신착도서")}>신착도서</MenuBtn>
             </MenuArea>
-            <PopularBooks />
+            <AllBooks />
         </Wrapper> 
     );
 }

@@ -33,6 +33,27 @@ public class BookController {
         return book;
     }
 
+    //인기순 도서 조회
+    @GetMapping("/top")
+    public List<Book> findGoodBook() {
+        List<Book> book = bookService.findGoodBook();
+        return book;
+    }
+
+    //신착순 도서 조회
+    @GetMapping("/new")
+    public List<Book> findNewBook() {
+        List<Book> book = bookService.findNewBook();
+        return book;
+    }
+
+    //소설 장르 도서 조회
+    @GetMapping("/fiction")
+    public List<Book> findGenreFiction() {
+        List<Book> book = bookService.findGenreFiction();
+        return book;
+    }
+
     //도서 키워드로 검색
     @GetMapping("/search")
     public List<Book> findBookByKeyword(@RequestParam String keyword) {

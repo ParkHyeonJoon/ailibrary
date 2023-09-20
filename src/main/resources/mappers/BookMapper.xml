@@ -35,7 +35,7 @@
         tb_book
         ORDER BY
         book_date DESC
-        LIMIT 5
+        LIMIT 10
     </select>
 
     <!-- 인기 도서 조회 -->
@@ -46,7 +46,20 @@
         tb_book
         ORDER BY
         book_good DESC
-        LIMIT 5
+        LIMIT 10
+    </select>
+
+    <!-- 소설 조회 -->
+    <select id="findGenreFiction" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+        <include refid="bookColumns"></include>
+        FROM
+        tb_book
+        WHERE
+        category = '소설'
+        ORDER BY
+        book_good DESC
+        LIMIT 10
     </select>
 
     <!-- 전체 도서 조회 -->

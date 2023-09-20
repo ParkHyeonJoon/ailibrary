@@ -54,6 +54,12 @@ function SearchArea() {
            navigate(`/results/${searchText}`);
         };
 
+    const handleKeyPress = (e) => {
+        if(e.key === "Enter") {
+            handleSearch();
+        }
+    };
+
     return (
         <Wrapper>
             <Link to="/">
@@ -65,6 +71,7 @@ function SearchArea() {
                     placeholder="검색어를 입력하세요"
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
+                    onKeyDown={handleKeyPress}
                 />
                 <SearchButton onClick={handleSearch}>
                     <FontAwesomeIcon icon={faSearch}  style={{ fontSize: '15px' }} />
