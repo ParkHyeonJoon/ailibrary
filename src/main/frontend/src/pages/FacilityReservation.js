@@ -128,13 +128,22 @@ function FacilityReservation() {
             <Header />
             <Title>시설예약</Title>
             <RoomTypeArea>
-                <RoomTypeBtn onClick={() => handleMenuClick("스터디룸")}>
+                <RoomTypeBtn
+                    onClick={() => handleMenuClick("스터디룸")}
+                    style={selectedMenu === "스터디룸" ? { background: "#a5b3ff", color: "#fff" } : {}}
+                >
                     스터디룸
                 </RoomTypeBtn>
-                <RoomTypeBtn onClick={() => handleMenuClick("VR룸")}>
+                <RoomTypeBtn
+                    onClick={() => handleMenuClick("VR룸")}
+                    style={selectedMenu === "VR룸" ? { background: "#a5b3ff", color: "#fff" } : {}}
+                >
                     VR룸
                 </RoomTypeBtn>
-                <RoomTypeBtn onClick={() => handleMenuClick("오디토리움")}>
+                <RoomTypeBtn
+                    onClick={() => handleMenuClick("오디토리움")}
+                    style={selectedMenu === "오디토리움" ? { background: "#a5b3ff", color: "#fff" } : {}}
+                >
                     오디토리움
                 </RoomTypeBtn>
             </RoomTypeArea>

@@ -39,6 +39,7 @@ function LoginArea() {
         alert('로그아웃되었습니다.');
         // 페이지를 새로고침
         window.location.reload();
+        // TODO: 서버측에서 로그아웃 수행하는 코드 추가
     };
 
     return (
