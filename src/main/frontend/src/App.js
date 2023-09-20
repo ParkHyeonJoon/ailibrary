@@ -1,7 +1,7 @@
 // App.js
 
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, {useState} from 'react';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Main from './pages/Main';
 import FacilityReservation from './pages/FacilityReservation';
 import Signup from "./pages/Signup";
@@ -17,13 +17,13 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Main/>}/>
-                                <Route path="/facility-reservation" element={<FacilityReservation/>}/>
-                                <Route path="/popularbooks" element={<PopularBooks/>}/>
-                                <Route path="/signup" element={<Signup/>}/>
-                                <Route path="/login" element={<Login/>}/>
-                                <Route path="/mypage" element={<MyPage/>}/>
-                                <Route path="/book-detail/:bookId" element={<BookDetail/>}/>
-                                <Route path="/results/:keyword" element={<SearchResult />} /> {/* SearchResult 컴포넌트 라우트 추가 */}
+                <Route path="/facility-reservation" element={<FacilityReservation/>}/>
+                <Route path="/popularbooks" element={<PopularBooks/>}/>
+                <Route path="/signup" element={<Signup/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/mypage" element={<MyPage/>}/>
+                <Route path="/book-detail/:bookId" element={<BookDetail/>}/>
+                <Route path="/results/:keyword" element={<SearchResult/>}/> {/* SearchResult 컴포넌트 라우트 추가 */}
             </Routes>
         </Router>
     );

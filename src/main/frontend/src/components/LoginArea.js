@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   gap: 26px;
   flex-shrink: 0;
   background: #B3C4FF;
+  color: white;
 `;
 
 const CustomLink = styled(Link)`
@@ -32,14 +33,30 @@ const Text = styled.p`
 `;
 
 function LoginArea() {
+    const handleLogout = () => {
+        // 로그아웃 클릭 시 실행할 로그아웃 코드
+        localStorage.clear(); // 로컬 스토리지 데이터 지우기
+        alert('로그아웃되었습니다.');
+        // 페이지를 새로고침
+        window.location.reload();
+    };
+
     return (
         <Wrapper>
-            <CustomLink to="/login">
-                <Text style={{ cursor: 'pointer' }}>로그인</Text>
-            </CustomLink>
-            <CustomLink to="/signup">
-                <Text style={{ cursor: 'pointer' }}>회원가입</Text>
-            </CustomLink>
+            {localStorage.getItem('token') ? (
+                <Text style={{ cursor: 'pointer' }} onClick={handleLogout}>
+                    로그아웃
+                </Text>
+            ) : (
+                <>
+                    <CustomLink to="/login">
+                        <Text style={{ cursor: 'pointer' }}>로그인</Text>
+                    </CustomLink>
+                    <CustomLink to="/signup">
+                        <Text style={{ cursor: 'pointer' }}>회원가입</Text>
+                    </CustomLink>
+                </>
+            )}
         </Wrapper>
     );
 }

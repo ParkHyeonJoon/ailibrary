@@ -1,5 +1,4 @@
-import React from "react";
-import Carousel from "react-multi-carousel";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Book from "./BookFrame";
 

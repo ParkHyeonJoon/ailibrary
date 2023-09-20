@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import Header from "../components/Header";
 import Button from "../common/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchWithToken } from "../api/api"; // api.js 모듈에서 fetchWithToken 함수를 가져옵니다.
 
 const Wrapper = styled.div`
@@ -72,7 +72,7 @@ const LoginForm = styled.form`
   margin-bottom: 50px;
 `;
 
-function Login() {
+function Login({onLogin}) {
     // 로그인 폼의 상태 관리
     const [formData, setFormData] = useState({
         userId: localStorage.getItem('savedId') || '', // 페이지 로드 시 저장된 아이디 불러오기
@@ -85,6 +85,7 @@ function Login() {
     // 로그인 상태를 관리하기 위한 상태 변수와 업데이트 함수 설정
     const [loginStatus, setLoginStatus] = useState('');
 
+    const navigate = useNavigate();
     // 폼 입력값 변경 시 이벤트 핸들러
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -139,7 +140,8 @@ function Login() {
 
                 alert(res.userName + '님 반갑습니다!');
 
-                // 성공 시 리다이렉션 또는 다른 작업 수행
+                // 성공 시 메인 페이지로 이동
+                navigate('/');
             } else {
                 // 토큰이 없는 경우
                 setLoginStatus('로그인 실패: 토큰 없음');

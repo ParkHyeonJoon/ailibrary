@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Button from '../common/Button';
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -89,6 +90,7 @@ function Signup() {
     // 비밀번호 확인 메시지 상태
     const [passwordMatch, setPasswordMatch] = useState('');
 
+    const navigate = useNavigate();
     const handlePasswordChange = (e) => {
         const password = e.target.value;
         setFormData({
@@ -164,8 +166,10 @@ function Signup() {
                 if (response.ok) {
                     const responseData = await response.json();
                     console.log('회원가입 성공:', responseData);
-                    alert('회원가입에 성공하셨습니다');
-                    // TODO: 회원가입 성공 후 추가 작업 수행
+                    alert('회원가입에 성공하셨습니다 확인을 누르시면 로그인페이지로 이동합니다.');
+                    // 회원가입 성공 시 로그인 페이지로 이동
+                    navigate('/login');
+
                 } else {
                     // 오류 처리
                     console.error('회원가입 실패:', response.statusText);
