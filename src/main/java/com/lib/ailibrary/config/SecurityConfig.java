@@ -30,6 +30,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login").permitAll()
                         .requestMatchers("/user").permitAll()
+                        .requestMatchers("/book/{bookId}").permitAll() //
+                        .requestMatchers("/book/all").permitAll() // 전체 도서 조회
+                        .requestMatchers("/book/search").permitAll() // 도서 검색
                         .requestMatchers("/api/authenticate").permitAll() // 로그인 api
                         .requestMatchers("/api/signup").permitAll() // 회원가입 api
                         .requestMatchers("/favicon.ico").permitAll()

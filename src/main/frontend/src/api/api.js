@@ -2,12 +2,12 @@
 // API 호출을 관리하는 모듈
 export const fetchWithToken = async (url, method, data) => {
     // 로컬 스토리지에서 저장된 JWT 토큰을 가져옵니다.
-    const storedToken = localStorage.getItem('accessToken');
+    const storedToken = localStorage.getItem('token');
 
     // 요청 헤더에 JWT 토큰을 포함합니다.
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${storedToken}`,
+        'Authorization': storedToken,
     };
 
     // 요청 옵션을 구성합니다.
@@ -27,7 +27,7 @@ export const fetchWithToken = async (url, method, data) => {
         }
 
         // JSON 형식으로 파싱한 응답 데이터를 반환합니다.
-        return response.json();
+        return response;
     } catch (error) {
         // 오류가 발생한 경우 오류를 던집니다.
         throw error;
