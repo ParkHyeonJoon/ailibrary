@@ -12,18 +12,6 @@ import BookDetail from "./pages/BookDetail";
 import SearchResult from "./components/SearchResult"; // SearchResult 컴포넌트
 
 function App() {
-    // 추출한 정보를 상태로 관리
-    const [userInfo, setUserInfo] = useState(null);
-
-    // 로그인 상태를 저장하는 함수
-    const handleLogin = (user) => {
-        setUserInfo(user);
-    };
-
-    // 로그아웃 상태를 저장하는 함수
-    const handleLogout = () => {
-        setUserInfo(null);
-    };
 
     return (
         <Router>

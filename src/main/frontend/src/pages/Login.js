@@ -85,8 +85,6 @@ function Login() {
     // 로그인 상태를 관리하기 위한 상태 변수와 업데이트 함수 설정
     const [loginStatus, setLoginStatus] = useState('');
 
-    // 로그인 성공 시 서버에서 받은 토큰을 저장할 상태 변수
-    const [userInfo, setUserInfo] = useState(null);
     // 폼 입력값 변경 시 이벤트 핸들러
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -135,21 +133,12 @@ function Login() {
             if (token) {
                 // 성공적으로 토큰을 받았을 경우
                 setLoginStatus('로그인 성공');
-                // 응답 데이터에서 사용자 정보 추출
-                const { userName, userId, userMajor, userGrade, userEmail, userPnum, authorities } = res;
 
-                // 사용자 정보를 userInfo 상태에 저장
-                setUserInfo({
-                    userName,
-                    userId,
-                    userMajor,
-                    userGrade,
-                    userEmail,
-                    userPnum,
-                    authorities,
-                });
+                localStorage.setItem("userInfo", JSON.stringify(res)); // 사용자 정보 저장
                 localStorage.setItem('token', token); // 로컬 스토리지에 토큰 저장
+
                 alert(res.userName + '님 반갑습니다!');
+
                 // 성공 시 리다이렉션 또는 다른 작업 수행
             } else {
                 // 토큰이 없는 경우
