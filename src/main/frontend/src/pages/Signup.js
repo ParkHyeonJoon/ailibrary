@@ -138,7 +138,7 @@ function Signup() {
             // 필수 입력 사항이 모두 입력된 경우, 회원가입 로직 수행
 
             // API 엔드포인트 URL
-            const apiUrl = 'http://localhost:8080/user';
+            const apiUrl = 'http://localhost:8080/api/signup';
 
             // 회원가입 요청 데이터 생성
             const requestBody = {

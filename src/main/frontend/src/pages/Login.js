@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import Header from "../components/Header";
 import Button from "../common/Button";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { fetchWithToken } from "../api/api"; // api.js 모듈에서 fetchWithToken 함수를 가져옵니다.
 
 const Wrapper = styled.div`
   width: 100%;
@@ -12,6 +13,7 @@ const Wrapper = styled.div`
   justify-content: center;
   margin-top: 150px;
 `;
+
 const LoginArea = styled.div`
   width: 40%;
   display: flex;
@@ -19,11 +21,13 @@ const LoginArea = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 const Title = styled.p`
   font-size: 30px;
   font-weight: bold;
   margin-top: 40px;
 `;
+
 const InputArea = styled.div`
   width: 300px;
   height: 40px;
@@ -43,6 +47,7 @@ const InputArea = styled.div`
     border-top: none;
   }
 `;
+
 const StyledInput = styled.input`
   border: none;
   width: 280px;
@@ -66,12 +71,6 @@ const LoginForm = styled.form`
   justify-content: center;
   margin-bottom: 50px;
 `;
-//TODO: 정규식 이용해서 아이디 형식 검증
-//const isValidId = (id) => {
-//   // 정규식을 사용하여 아이디 형식을 검증
-//   const idRegex = /^[a-zA-Z0-9]{4,16}$/; // 예: 길이가 4에서 16자 사이의 영문자와 숫자만 허용
-//   return idRegex.test(id);
-// };
 
 function Login() {
     // 로그인 폼의 상태 관리
@@ -86,9 +85,11 @@ function Login() {
     // 로그인 상태를 관리하기 위한 상태 변수와 업데이트 함수 설정
     const [loginStatus, setLoginStatus] = useState('');
 
+    // 로그인 성공 시 서버에서 받은 토큰을 저장할 상태 변수
+    const [userInfo, setUserInfo] = useState(null);
     // 폼 입력값 변경 시 이벤트 핸들러
     const handleInputChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value,
@@ -116,29 +117,41 @@ function Login() {
         e.preventDefault();
         // 클라이언트 사이드에서 서버로 로그인 정보를 전송
         try {
-            const response = await fetch('http://localhost:8080/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+            // 로그인 API 엔드포인트 URL
+            const loginUrl = 'http://localhost:8080/api/authenticate';
 
-            if (response.ok) {
-                const data = await response.json();
+            // 로그인에 필요한 사용자 정보 (예: 아이디와 비밀번호)
+            const loginData = {
+                userId: formData.userId,
+                userPw: formData.userPw,
+            };
 
-                if (data.userName != null) {
-                    // 성공적인 JSON 데이터 처리
-                    setLoginStatus('로그인 성공');
-                    alert(data.userName);
-                } else {
-                    // JSON 데이터가 비어 있는 경우 처리
-                    setLoginStatus('로그인 실패: 빈 응답');
-                }
+            // fetchWithToken 함수를 사용하여 로그인 API 호출
+            const response = await fetchWithToken(loginUrl, 'POST', loginData);
+
+            // 응답을 처리하고 로그인이 성공했는지 확인하는 로직을 작성합니다.
+            if (response.accessToken) {
+                // 성공적으로 토큰을 받았을 경우
+                setLoginStatus('로그인 성공');
+                // 응답 데이터에서 사용자 정보 추출
+                const { userName, userId, userMajor, userGrade, userEmail, userPnum, authorities } = response;
+
+                // 사용자 정보를 userInfo 상태에 저장
+                setUserInfo({
+                    userName,
+                    userId,
+                    userMajor,
+                    userGrade,
+                    userEmail,
+                    userPnum,
+                    authorities,
+                });
+                localStorage.setItem('accessToken', response.accessToken); // 로컬 스토리지에 토큰 저장
+                alert(response.userName + '님 반갑습니다!');
+                // 성공 시 리다이렉션 또는 다른 작업 수행
             } else {
-                // 서버에서 오류 응답을 보낸 경우 처리
-
-                setLoginStatus('로그인 실패: 서버 오류');
+                // 토큰이 없는 경우
+                setLoginStatus('로그인 실패: 토큰 없음');
             }
         } catch (error) {
             console.error('로그인 오류:', error);
@@ -157,7 +170,7 @@ function Login() {
 
     return (
         <Wrapper>
-            <Header/>
+            <Header />
             <LoginArea>
                 <Title>로그인</Title>
                 <LoginForm onSubmit={handleSubmit}>
@@ -194,12 +207,12 @@ function Login() {
                     <Button type="submit">로그인</Button>
                 </LoginForm>
                 <p>
-                    &nbsp;&nbsp;계정과 비밀번호 입력 없이<br/>카카오톡으로 로그인해보세요
+                    &nbsp;&nbsp;계정과 비밀번호 입력 없이<br />카카오톡으로 로그인해보세요
                 </p>
                 <Button backgroundColor="#FDDC3F" textColor="#3A2929" type="submit">
                     카카오톡으로 로그인
                 </Button>
-                <Link to="/signup" style={{textDecoration: 'none'}}>
+                <Link to="/signup" style={{ textDecoration: 'none' }}>
                     <Button border="1px solid #1D2B74" backgroundColor="white" textColor="black">
                         회원가입
                     </Button>

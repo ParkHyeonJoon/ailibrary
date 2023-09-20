@@ -1,5 +1,7 @@
-import React from 'react';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+// App.js
+
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Main from './pages/Main';
 import FacilityReservation from './pages/FacilityReservation';
 import Signup from "./pages/Signup";
@@ -7,21 +9,31 @@ import Login from "./pages/Login";
 import PopularBooks from "./pages/PopularBooks";
 import MyPage from "./pages/MyPage";
 import BookDetail from "./pages/BookDetail";
-import SearchResult from "./components/SearchResult"; // SearchResult 컴포넌트 import
-
 
 function App() {
+    // 추출한 정보를 상태로 관리
+    const [userInfo, setUserInfo] = useState(null);
+
+    // 로그인 상태를 저장하는 함수
+    const handleLogin = (user) => {
+        setUserInfo(user);
+    };
+
+    // 로그아웃 상태를 저장하는 함수
+    const handleLogout = () => {
+        setUserInfo(null);
+    };
+
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Main/>}/>
-                <Route path="/facility-reservation" element={<FacilityReservation/>}/>
-                <Route path="/popularbooks" element={<PopularBooks/>}/>
-                <Route path="/signup" element={<Signup/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/mypage" element={<MyPage/>}/>
-                <Route path="/book-detail/:bookId" element={<BookDetail/>}/>
-                <Route path="/results/:keyword" element={<SearchResult />} /> {/* SearchResult 컴포넌트 라우트 추가 */}
+                <Route path="/" element={<Main userInfo={userInfo} onLogout={handleLogout} />} />
+                <Route path="/facility-reservation" element={<FacilityReservation userInfo={userInfo} />} />
+                <Route path="/popularbooks" element={<PopularBooks userInfo={userInfo} />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/login" element={<Login onLogin={handleLogin} />} />
+                <Route path="/mypage" element={<MyPage userInfo={userInfo} />} />
+                <Route path="/book-detail" element={<BookDetail />} />
             </Routes>
         </Router>
     );

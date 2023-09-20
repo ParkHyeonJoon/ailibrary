@@ -1,3 +1,4 @@
+//src/components/Room.js
 import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "./Modal"; // Modal 컴포넌트 import

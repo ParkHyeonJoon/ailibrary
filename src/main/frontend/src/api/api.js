@@ -1,65 +1,35 @@
-// src/api/api.js
+// api.js
+// API 호출을 관리하는 모듈
+export const fetchWithToken = async (url, method, data) => {
+    // 로컬 스토리지에서 저장된 JWT 토큰을 가져옵니다.
+    const storedToken = localStorage.getItem('accessToken');
 
-const API_BASE_URL = "http://localhost:8080";
+    // 요청 헤더에 JWT 토큰을 포함합니다.
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${storedToken}`,
+    };
 
-// 시설 검색 API 요청 함수
-export const searchFacility = async (selectedMenu, selectedDate, selectedTimes) => {
+    // 요청 옵션을 구성합니다.
+    const options = {
+        method, // HTTP 메서드 (예: 'GET', 'POST', 'PUT', 'DELETE' 등)
+        headers, // 헤더 정보
+        body: data ? JSON.stringify(data) : undefined, // 요청 본문 (데이터)
+    };
+
     try {
-        const response = await fetch(`${API_BASE_URL}/reserve/search`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                roomType: selectedMenu,
-                rezDate: selectedDate,
-                rezTime: selectedTimes,
-            }),
-        });
+        // API 호출을 수행하고 응답을 받아옵니다.
+        const response = await fetch(url, options);
 
-        if (response.ok) {
-            const data = await response.json();
-            alert("성공")
-            // 성공적인 응답 처리
-            return data;
-        } else {
-            // 오류 응답 처리
-            alert("실패")
-            throw new Error("시설 검색에 실패했습니다.");
+        // 응답이 성공적인지 확인합니다.
+        if (!response.ok) {
+            throw new Error('API 요청 실패');
         }
-    } catch (error) {
-        // 오류 처리
-        console.error("API 오류:", error);
-        alert("오류")
-        throw error;
-    }
-};
 
-// 예약 생성 API 요청 함수
-export const createReservation = async (roomName, selectedDate, selectedTimes) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/reserve/save`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                roomName,
-                rezDate: selectedDate,
-                rezTime: selectedTimes,
-            }),
-        });
-
-        if (response.ok) {
-            // 성공적인 응답 처리
-            return "예약이 성공적으로 완료되었습니다.";
-        } else {
-            // 오류 응답 처리
-            throw new Error("예약 생성에 실패했습니다.");
-        }
+        // JSON 형식으로 파싱한 응답 데이터를 반환합니다.
+        return response.json();
     } catch (error) {
-        // 오류 처리
-        console.error("API 오류:", error);
+        // 오류가 발생한 경우 오류를 던집니다.
         throw error;
     }
 };

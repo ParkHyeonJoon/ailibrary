@@ -1,3 +1,4 @@
+//src/pages/FacilityReservation.js
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
@@ -5,7 +6,7 @@ import Room from "../components/Room";
 import MyDatePicker from "../components/MyDatePicker";
 import MyTimePicker from "../components/MyTimePicker";
 import Button from "../common/Button";
-import { searchFacility, createReservation } from "../api/api"; // createReservation 함수 추가
+import { searchFacility, createReservation } from "../api/FacilityReserveapi"; // createReservation 함수 추가
 
 const Wrapper = styled.div`
   width: 100%;
@@ -89,7 +90,7 @@ function FacilityReservation() {
             const result = await searchFacility(
                 selectedMenu,
                 selectedDate,
-                selectedTimes
+                selectedTimes,
             );
             setSearchResult(result);
         } catch (error) {
@@ -104,7 +105,7 @@ function FacilityReservation() {
     const handleReservation = async (roomData) => {
         try {
             const reservationData = {
-                roomType: roomData.roomType,
+                roomType: selectedMenu,
                 rezDate: selectedDate,
                 rezTime: selectedTimes,
             };
@@ -126,7 +127,9 @@ function FacilityReservation() {
                 <RoomTypeBtn onClick={() => handleMenuClick("스터디룸")}>
                     스터디룸
                 </RoomTypeBtn>
-                <RoomTypeBtn onClick={() => handleMenuClick("VR룸")}>VR룸</RoomTypeBtn>
+                <RoomTypeBtn onClick={() => handleMenuClick("VR룸")}>
+                    VR룸
+                </RoomTypeBtn>
                 <RoomTypeBtn onClick={() => handleMenuClick("오디토리움")}>
                     오디토리움
                 </RoomTypeBtn>
