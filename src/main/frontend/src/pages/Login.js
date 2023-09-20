@@ -72,7 +72,7 @@ const LoginForm = styled.form`
   margin-bottom: 50px;
 `;
 
-function Login() {
+function Login({onLogin}) {
     // 로그인 폼의 상태 관리
     const [formData, setFormData] = useState({
         userId: localStorage.getItem('savedId') || '', // 페이지 로드 시 저장된 아이디 불러오기
