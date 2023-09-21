@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from "styled-components";
 import Header from "../components/Header";
+import BookFrame from "./BookFrame";
+
 
 const Wrapper = styled.div`
     width: 100%;
@@ -63,10 +65,7 @@ function SearchResults() {
       <p>검색어: {keyword}</p>
       <ul>
         {searchResults.map((book) => (
-          <li>
-            <BookImage src={book.bookImage} alt={book.bookTitle} />
-            <BookTitle>{book.bookTitle}</BookTitle>
-          </li>
+          <BookFrame key={book.bookId} book={book} />
         ))}
       </ul>
     </div>

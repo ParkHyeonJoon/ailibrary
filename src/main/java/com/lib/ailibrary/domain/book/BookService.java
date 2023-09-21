@@ -1,5 +1,6 @@
 package com.lib.ailibrary.domain.book;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,14 @@ public class BookService {
     }
 
     /**
+     * 소설 장르인 도서 조회
+     * @return - category = 소설, book_good 순으로
+     */
+    public List<Book> findGenreFiction() {
+        return bookMapper.findGenreFiction();
+    }
+
+    /**
      * 도서 목록 전체 조회
      * @return 도서 목록 전체
      */
@@ -60,5 +69,21 @@ public class BookService {
     public List<Book> findBookByKeyword(String keyword) {
         keyword = "%" + keyword + "%";
         return bookMapper.find(keyword);
+    }
+
+    /**
+     * 도서 찜 누르기 기능(아직 보완해야함)
+     * @param bookId
+     */
+    @Transactional
+    public void increaseBookGood(int bookId) {
+        try {
+            bookMapper.increaseBookGood(bookId);
+            System.out.println("성공");
+        } catch(Exception e) {
+            System.out.println("여기서 에러");
+            System.out.println(bookId);
+            e.printStackTrace(); // 예외 정보 출력
+        }
     }
 }

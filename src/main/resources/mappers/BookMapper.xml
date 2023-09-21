@@ -5,7 +5,7 @@
 
     <!-- tb_book 테이블 전체 컬럼 -->
     <sql id="bookColumns">
-          book_id
+        book_id
         , book_title
         , author
         , published_date
@@ -20,64 +20,87 @@
     <!-- 도서 검색 정보 조회 -->
     <select id="findByTitle" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
         SELECT
-            <include refid="bookColumns"></include>
+        <include refid="bookColumns"></include>
         FROM
-            tb_book
+        tb_book
         WHERE
-            book_title = #{value}
+        book_title = #{value}
     </select>
 
     <!-- 신착 도서 조회 -->
     <select id="findNew" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
         SELECT
-            <include refid="bookColumns"></include>
+        <include refid="bookColumns"></include>
         FROM
-            tb_book
+        tb_book
         ORDER BY
-            book_date DESC
-        LIMIT 5
+        book_date DESC
+        LIMIT 10
     </select>
 
     <!-- 인기 도서 조회 -->
     <select id="findGood" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
         SELECT
-            <include refid="bookColumns"></include>
+        <include refid="bookColumns"></include>
         FROM
-            tb_book
+        tb_book
         ORDER BY
-            book_good DESC
-        LIMIT 5
+        book_good DESC
+        LIMIT 10
+    </select>
+
+    <!-- 소설 조회 -->
+    <select id="findGenreFiction" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+        <include refid="bookColumns"></include>
+        FROM
+        tb_book
+        WHERE
+        category = '소설'
+        ORDER BY
+        book_good DESC
+        LIMIT 10
     </select>
 
     <!-- 전체 도서 조회 -->
     <select id="findAll" resultType="com.lib.ailibrary.domain.book.Book">
         SELECT
-            <include refid="bookColumns"></include>
+        <include refid="bookColumns"></include>
         FROM
-            tb_book
+        tb_book
         ORDER BY
-            book_id DESC
+        book_id DESC
     </select>
 
     <!-- id별 도서 조회 -->
     <select id="findById" parameterType="int" resultType="com.lib.ailibrary.domain.book.Book">
         SELECT
-            <include refid="bookColumns"></include>
+        <include refid="bookColumns"></include>
         FROM
-            tb_book
+        tb_book
         WHERE
-            book_id = #{value}
+        book_id = #{value}
     </select>
 
     <!-- 키워드로 도서 검색 -->
     <select id="find" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
         SELECT
-            <include refid="bookColumns"></include>
+        <include refid="bookColumns"></include>
         FROM
-            tb_book
+        tb_book
         WHERE
-         book_title LIKE CONCAT('%', #{keyword}, '%')
+        book_title LIKE CONCAT('%', #{keyword}, '%')
         OR author LIKE CONCAT('%', #{keyword}, '%')
     </select>
+
+    <!-- 도서 좋아요 기능 -->
+    <update id="increaseBookGood" parameterType="int">
+        UPDATE
+        tb_book
+        SET
+        book_good = book_good + 1
+        WHERE
+        book_id = #{bookId}
+    </update>
 
 </mapper>
