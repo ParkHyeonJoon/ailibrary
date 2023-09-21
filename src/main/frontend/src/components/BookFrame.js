@@ -21,7 +21,7 @@ const BookImage = styled.img`
 `;
 
 const BookTitle = styled.p`
-  color: black;
+  color: white;
   font-size: 15px;
   font-weight: 600;
   margin-top: 5px;

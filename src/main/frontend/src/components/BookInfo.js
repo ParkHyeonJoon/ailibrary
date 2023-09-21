@@ -118,7 +118,7 @@ const BookInfo = ({ bookInfo }) => {
     <Wrapper>
       <BookTitle>{bookInfo.bookTitle}</BookTitle>
       <BookAuthor>{bookInfo.author}</BookAuthor>
-      <ReserveBtn>예약하기</ReserveBtn>
+
       <FormTable>
         <ColGroup>
           <col />
@@ -159,6 +159,7 @@ const BookInfo = ({ bookInfo }) => {
           </TableRow>
           <TableRow>
             <td>
+            <ReserveBtn>예약하기</ReserveBtn>
               <GoodBtn onClick={handleLikeClick}>찜</GoodBtn>
             </td>
           </TableRow>
