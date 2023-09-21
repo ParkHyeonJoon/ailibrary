@@ -54,7 +54,13 @@ const DateText = styled.span`
 `;
 
 const MyDatePicker = () => {
-    const [selectedDate, setSelectedDate] = useState();
+    // 현재 날짜를 가져오는 함수
+    const getCurrentDate = () => {
+        const currentDate = new Date();
+        return currentDate;
+    };
+
+    const [selectedDate, setSelectedDate] = useState(getCurrentDate()); // 초기값 현재 날짜로 설정
   return (
     <CustomDatePicker>
       <DateText>날짜</DateText>
