@@ -72,7 +72,7 @@ const PickerArea = styled.div`
 
 function FacilityReservation() {
     const [selectedMenu, setSelectedMenu] = useState("스터디룸");
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTimes, setSelectedTimes] = useState([]);
     const [searchResult, setSearchResult] = useState([]); // 배열로 초기화
 
