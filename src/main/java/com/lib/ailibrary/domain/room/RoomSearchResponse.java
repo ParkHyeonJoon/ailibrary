@@ -8,7 +8,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class RoomSearchResponse {
+        private int roomId;
         private int roomFloor;
         private String roomName;
         private String image;
+
 }

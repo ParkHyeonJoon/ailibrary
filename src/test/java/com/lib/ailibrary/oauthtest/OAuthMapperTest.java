@@ -1,4 +1,4 @@
-package com.lib.ailibrary;
+package com.lib.ailibrary.oauthtest;
 
 import com.lib.ailibrary.oauth.OAuthMapper;
 import com.lib.ailibrary.user.UserResponse;

@@ -1,9 +1,8 @@
 package com.lib.ailibrary.jwt.controller;
 
-import com.lib.ailibrary.jwt.JwtFilter;
-import com.lib.ailibrary.jwt.TokenProvider;
+import com.lib.ailibrary.jwt.common.JwtFilter;
+import com.lib.ailibrary.jwt.common.TokenProvider;
 import com.lib.ailibrary.jwt.dto.LoginDto;
-import com.lib.ailibrary.jwt.dto.TokenDto;
 import com.lib.ailibrary.jwt.entity.User;
 import com.lib.ailibrary.jwt.service.UserJwtService;
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.lib.ailibrary;
+package com.lib.ailibrary.usertest;
 
 import com.lib.ailibrary.user.UserLoginRequest;
 import com.lib.ailibrary.user.UserMapper;

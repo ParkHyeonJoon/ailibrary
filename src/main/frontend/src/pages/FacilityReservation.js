@@ -6,7 +6,7 @@ import Room from "../components/Room";
 import MyDatePicker from "../components/MyDatePicker";
 import MyTimePicker from "../components/MyTimePicker";
 import Button from "../common/Button";
-import { searchFacility, createReservation } from "../api/FacilityReserveapi"; // createReservation 함수 추가
+import { searchFacility } from "../api/FacilityReserveapi"; // createReservation 함수 추가
 
 const Wrapper = styled.div`
   width: 100%;
@@ -72,12 +72,9 @@ const PickerArea = styled.div`
 
 function FacilityReservation() {
     const [selectedMenu, setSelectedMenu] = useState("스터디룸");
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTimes, setSelectedTimes] = useState([]);
     const [searchResult, setSearchResult] = useState([]); // 배열로 초기화
-
-    const storedUserInfo = localStorage.getItem("userInfo");
-    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
     const handleMenuClick = (menu) => {
         setSelectedMenu(menu);
@@ -87,9 +84,10 @@ function FacilityReservation() {
         try {
             if (!selectedDate || selectedTimes.length === 0) {
                 console.error("날짜와 시간을 선택해주세요.");
+
                 return; // 선택한 날짜나 시간이 없다면 더 이상 진행하지 않음
             }
-
+            console.log(selectedMenu + " " + selectedDate + " " + selectedTimes)
             const result = await searchFacility(
                 selectedMenu,
                 selectedDate,
@@ -98,43 +96,39 @@ function FacilityReservation() {
             setSearchResult(result);
         } catch (error) {
             console.error("시설 검색 오류:", error);
-
+            console.log(selectedMenu + " " + selectedDate + " " + selectedTimes)
         }
     };
 
     useEffect(() => {
+        if (selectedTimes.length === 0) {
+            setSearchResult([]);
+        } else {
         handleFacilitySearch();
-    }, [selectedMenu, selectedDate, selectedTimes]);
-
-    const handleReservation = async (roomData) => {
-        try {
-            const reservationData = {
-                roomType: selectedMenu,
-                rezDate: selectedDate,
-                rezTime: selectedTimes,
-            };
-
-            // createReservation 함수를 호출하여 예약 정보를 서버로 전송
-            await createReservation(reservationData);
-
-            console.log("예약이 성공적으로 완료되었습니다.");
-        } catch (error) {
-            console.error("예약 오류:", error);
         }
-    };
+    }, [selectedMenu, selectedDate, selectedTimes]);
 
     return (
         <Wrapper>
             <Header />
             <Title>시설예약</Title>
             <RoomTypeArea>
-                <RoomTypeBtn onClick={() => handleMenuClick("스터디룸")}>
+                <RoomTypeBtn
+                    onClick={() => handleMenuClick("스터디룸")}
+                    style={selectedMenu === "스터디룸" ? { background: "#a5b3ff", color: "#fff" } : {}}
+                >
                     스터디룸
                 </RoomTypeBtn>
-                <RoomTypeBtn onClick={() => handleMenuClick("VR룸")}>
+                <RoomTypeBtn
+                    onClick={() => handleMenuClick("VR룸")}
+                    style={selectedMenu === "VR룸" ? { background: "#a5b3ff", color: "#fff" } : {}}
+                >
                     VR룸
                 </RoomTypeBtn>
-                <RoomTypeBtn onClick={() => handleMenuClick("오디토리움")}>
+                <RoomTypeBtn
+                    onClick={() => handleMenuClick("오디토리움")}
+                    style={selectedMenu === "오디토리움" ? { background: "#a5b3ff", color: "#fff" } : {}}
+                >
                     오디토리움
                 </RoomTypeBtn>
             </RoomTypeArea>
@@ -145,19 +139,14 @@ function FacilityReservation() {
                     setSelectedTimes={setSelectedTimes}
                 />
             </PickerArea>
-            <Button
-                backgroundColor="#b3c4ff"
-                textColor="#fff"
-                type="button"
-                onClick={handleFacilitySearch}
-            >
-                시설검색
-            </Button>
+
             {searchResult.map((roomData, index) => (
                 <Room
                     key={index}
-                    roomData={roomData}
-                    onReservation={handleReservation} // 예약하기 콜백 전달
+                    roomData={{...roomData,
+                    date: selectedDate.toISOString().split('T')[0],
+                    time: selectedTimes,}}
+
                 />
             ))}
         </Wrapper>
