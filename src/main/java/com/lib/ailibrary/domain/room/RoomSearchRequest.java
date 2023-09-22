@@ -12,16 +12,10 @@ import java.util.List;
 @Getter
 public class RoomSearchRequest {
     private String roomType;
-
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate rezDate;
-
     private String[] rezTime;
 
-    /*public String[] timeSplit() {
-        String[] times = rezTime.split("\\s");
-        return times;
-    }*/
 
 
 }

@@ -18,6 +18,6 @@ public class RoomReserveSaveRequest {
 
     private String rezTime;     // 예약 시간
     private int roomId;         // 시설번호
-    private int userStuId;   // 예약자 학번
+    private Long userStuId;   // 예약자 학번
     private String userName;    // 예약자 성명
 }

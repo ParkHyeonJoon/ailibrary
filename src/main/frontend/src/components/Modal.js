@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { createReservation } from "../api/FacilityReserveapi";
 
 const ModalOverlay = styled.div`
     position: fixed;
@@ -53,11 +54,37 @@ const ReservationBtn = styled.button`
     height: 40px;
     margin-bottom: 10px;
 `;
-function Modal({ isOpen, onClose, onReservation }) {
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+function Modal({ isOpen, onClose, onReservation, date, time, roomData}) {
+  const rezDate = date;
+  const rezTime = time;
+
+  const [rezPeopleNum, setRezPeopleNum] = useState(3);
+
+  const storedUserInfo = localStorage.getItem("userInfo");           // 로컬에 저장된 사용자 정보 가져오기
+  const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
   if (!isOpen) return null;
+
+  const handleReservation = async () => {
+          try {
+
+              // createReservation 함수를 호출하여 예약 정보를 서버로 전송
+              await createReservation(
+              parseInt(rezPeopleNum, 10),
+              rezDate,
+              rezTime,
+              roomData.roomId,
+              parseInt(userInfo.userStuId, 10),
+              userInfo.userName);
+
+              alert("예약이 완료되었습니다.")
+              onReservation();
+              window.location.reload();
+              console.log("예약이 성공적으로 완료되었습니다.");
+          } catch (error) {
+              console.error("예약 오류:", error);
+          }
+      };
 
   return (
     <ModalOverlay onClick={onClose}>
@@ -66,10 +93,23 @@ function Modal({ isOpen, onClose, onReservation }) {
             <ModalTitle>예약 확인</ModalTitle>
             <CloseButton onClick={onClose}>닫기</CloseButton>
         </ModalHeader>
-        <p>날짜: {date}</p>
-        <p>시간: {time}</p>
+        <p>시설명: {roomData.roomFloor}층 {roomData.roomName}</p>
+        <p>날짜: {rezDate}</p>
+        <div style={{ textAlign: 'center' }}>
+            <p>시간:</p>
+            {rezTime.map((slot, index) => (
+                <p key={index}>{slot}</p>
+            ))}
+        </div>
+        <p> 참여인원: {"\n"}
+        <input
+                type="text"
+                value={rezPeopleNum}
+                onChange={(e) => setRezPeopleNum(e.target.value)}
+
+              /> </p>
         <p>위 시설을 예약하시겠습니까?</p>
-        <ReservationBtn onClick={() => onReservation(date, time)}>예약하기</ReservationBtn>
+        <ReservationBtn onClick={handleReservation}>예약하기</ReservationBtn>
       </ModalContent>
     </ModalOverlay>
   );

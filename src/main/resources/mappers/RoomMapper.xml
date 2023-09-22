@@ -75,6 +75,7 @@
             room_floor
           , room_name
           , image
+          , room_id
         FROM
             tb_room
         WHERE

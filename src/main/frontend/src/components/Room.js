@@ -42,6 +42,9 @@ function Room({roomData}) { // roomData 프로퍼티로 데이터 전달 받음
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const [reservationInfo, setReservationInfo] = useState({}); // 예약 정보
 
+  const date = roomData.date;
+  const time = roomData.time;
+
   // Room 클릭 시 모달 열기
   const handleRoomClick = () => {
     setIsModalOpen(true);
@@ -53,9 +56,7 @@ function Room({roomData}) { // roomData 프로퍼티로 데이터 전달 받음
   };
 
   // 모달에서 예약하기 버튼 클릭 시
-  const handleReservation = (date, time) => {
-    // 예약 정보를 저장하거나 서버로 전송할 수 있습니다.
-    setReservationInfo({ date, time });
+  const handleReservation = () => {
     setIsModalOpen(false); // 모달 닫기
   };
 
@@ -63,13 +64,16 @@ function Room({roomData}) { // roomData 프로퍼티로 데이터 전달 받음
     <>
       <RoomWrapper onClick={handleRoomClick}>
         <RoomImage src={roomData.image} alt="이미지" /> {/* 이미지 프로퍼티 사용 */}
-        <RoomFloor>{roomData.floor}층</RoomFloor> {/* 층수 프로퍼티 사용 */}
-        <RoomType>{roomData.name}</RoomType> {/* 이름 프로퍼티 사용 */}
+        <RoomFloor>{roomData.roomFloor}층</RoomFloor> {/* 층수 프로퍼티 사용 */}
+        <RoomType>{roomData.roomName}</RoomType> {/* 이름 프로퍼티 사용 */}
       </RoomWrapper>
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
         onReservation={handleReservation} // 예약하기 버튼 클릭 시 콜백
+        date={roomData.date}
+        time={roomData.time}
+        roomData = {roomData}
       />
     </>
   );

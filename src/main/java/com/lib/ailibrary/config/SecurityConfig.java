@@ -1,13 +1,14 @@
 package com.lib.ailibrary.config;
 
-import com.lib.ailibrary.jwt.JwtAccessDeniedHandler;
-import com.lib.ailibrary.jwt.JwtAuthenticationEntryPoint;
-import com.lib.ailibrary.jwt.JwtSecurityConfig;
-import com.lib.ailibrary.jwt.TokenProvider;
+import com.lib.ailibrary.jwt.common.JwtAccessDeniedHandler;
+import com.lib.ailibrary.jwt.common.JwtAuthenticationEntryPoint;
+import com.lib.ailibrary.jwt.common.JwtSecurityConfig;
+import com.lib.ailibrary.jwt.common.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -30,6 +31,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login").permitAll()
                         .requestMatchers("/user").permitAll()
+                        .requestMatchers("/images/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/book/{bookId}").permitAll() // 도서 상세정보
                         .requestMatchers("/book/all").permitAll() // 전체 도서 조회
                         .requestMatchers("/book/search").permitAll() // 도서 검색

@@ -1,4 +1,4 @@
-package com.lib.ailibrary;
+package com.lib.ailibrary.roomtest;
 
 import com.lib.ailibrary.domain.room.*;
 import org.junit.jupiter.api.Test;
