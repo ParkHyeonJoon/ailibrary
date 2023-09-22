@@ -103,4 +103,38 @@
         book_id = #{bookId}
     </update>
 
+    <update id="decreaseBookGood" parameterType="int">
+        UPDATE
+        tb_book
+        SET
+        book_good = book_good - 1
+        WHERE
+        book_id = #{bookId}
+    </update>
+
+    <select id="checkUserLike" parameterType="map" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_like
+        WHERE
+            user_id = #{userId, jdbcType=VARCHAR} AND book_id = #{bookId, jdbcType=INTEGER}
+    </select>
+
+    <insert id="isLike" parameterType="map">
+        INSERT INTO tb_like (
+            user_id, book_id
+        ) VALUES (
+        #{userId, jdbcType=VARCHAR},
+        #{bookId, jdbcType=INTEGER})
+    </insert>
+
+    <delete id="unLike" parameterType="map">
+        DELETE
+        FROM
+            tb_like
+        WHERE
+            user_id = #{userId, jdbcType=VARCHAR} AND book_id = #{bookId, jdbcType=INTEGER}
+    </delete>
+
 </mapper>

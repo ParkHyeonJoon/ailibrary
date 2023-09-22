@@ -13,6 +13,7 @@ const SectionWrapper = styled.div`
 `;
 
 const Title = styled.p`
+  color : black;
   font-size: 30px;
   font-weight: 700;
 `;

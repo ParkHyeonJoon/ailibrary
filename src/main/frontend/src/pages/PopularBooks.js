@@ -14,18 +14,10 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
   margin-top: 150px;
-  background-color: #333; /* 원하는 어두운 색상 코드를 사용하세요 */
+  background-color: #E6E6E6; /* 원하는 어두운 색상 코드를 사용하세요 */
       color: #fff; /* 텍스트 색상을 밝게 설정할 수 있습니다. */
     `;
-const Title = styled.p`
-    text-align: left;
-    color: #000;
-    font-family: Inter;
-    font-size: 25px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-`;
+
 function PopularBooks() {
    const [popularBooks, setPopularBooks] = useState([]);
    //const location = useLocation();
