@@ -4,22 +4,21 @@ const API_BASE_URL = "http://localhost:8080";
 
 // 시설 검색 API 요청 함수
 export const searchFacility = async (selectedMenu, selectedDate, selectedTimes) => {
+    const roomType = selectedMenu;
+    const rezDate = selectedDate.toISOString();
+    const rezTime = selectedTimes
+    const storedToken = localStorage.getItem('token');
     try {
-        const response = await fetch(`${API_BASE_URL}/reserve/search`, {
-            method: "POST",
+        const response = await fetch(`${API_BASE_URL}/reserve/search?roomType=${roomType}&rezDate=${rezDate}&rezTime=${rezTime}`, {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                'Authorization': storedToken,
             },
-            body: JSON.stringify({
-                roomType: selectedMenu,
-                rezDate: selectedDate,
-                rezTime: selectedTimes,
-            }),
         });
 
         if (response.ok) {
             const data = await response.json();
-            alert("성공")
             // 성공적인 응답 처리
             console.log('post 성공:', data);
             return data;
@@ -31,24 +30,30 @@ export const searchFacility = async (selectedMenu, selectedDate, selectedTimes) 
     } catch (error) {
         // 오류 처리
         console.error("API 오류:", error);
-        alert("오류")
+        alert("오류" + storedToken)
         throw error;
     }
 };
 
 // 예약 생성 API 요청 함수
-export const createReservation = async (selectedMenu, selectedDate, selectedTimes) => {
+export const createReservation = async (rezPeopleNum, rezDate, rezTime, roomId, userStuId, userName) => {
+    const storedToken = localStorage.getItem('token');
+    const requestBody ={
+        rezPeopleNum,
+        rezDate,
+        rezTime,
+        roomId,
+        userStuId,
+        userName
+    }
     try {
         const response = await fetch(`${API_BASE_URL}/reserve/save`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                'Authorization': storedToken,
             },
-            body: JSON.stringify({
-                roomType: selectedMenu,
-                rezDate: selectedDate,
-                rezTime: selectedTimes,
-            }),
+            body: JSON.stringify(requestBody),
         });
 
         if (response.ok) {

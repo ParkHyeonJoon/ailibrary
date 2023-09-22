@@ -1,7 +1,7 @@
 package com.lib.ailibrary.jwt.service;
 
 
-import com.lib.ailibrary.jwt.SecurityUtil;
+import com.lib.ailibrary.jwt.common.SecurityUtil;
 import com.lib.ailibrary.jwt.repository.UserRepository;
 import com.lib.ailibrary.jwt.dto.UserDto;
 import com.lib.ailibrary.jwt.entity.Authority;

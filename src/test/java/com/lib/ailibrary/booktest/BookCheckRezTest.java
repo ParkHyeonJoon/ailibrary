@@ -1,4 +1,4 @@
-package com.lib.ailibrary.BookTest;
+package com.lib.ailibrary.booktest;
 
 import com.lib.ailibrary.domain.book.BookReserveMapper;
 import com.lib.ailibrary.domain.book.BookReserveRequest;
@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @SpringBootTest
 public class BookCheckRezTest {

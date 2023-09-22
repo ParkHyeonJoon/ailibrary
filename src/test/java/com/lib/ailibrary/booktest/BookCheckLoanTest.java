@@ -1,10 +1,9 @@
-package com.lib.ailibrary.BookTest;
+package com.lib.ailibrary.booktest;
 
 import com.lib.ailibrary.domain.book.BookLoanMapper;
 import com.lib.ailibrary.domain.book.BookLoanRequest;
 import com.lib.ailibrary.domain.book.BookLoanResponse;
 import com.lib.ailibrary.domain.book.BookLoanService;
-import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

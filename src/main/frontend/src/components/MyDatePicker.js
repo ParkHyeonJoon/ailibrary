@@ -53,12 +53,17 @@ const DateText = styled.span`
   align-items: center; /* 텍스트와 아이콘을 세로 중앙 정렬 */
 `;
 
-const MyDatePicker = () => {
+const MyDatePicker = ({onDateChange}) => {
     // 현재 날짜를 가져오는 함수
     const getCurrentDate = () => {
         const currentDate = new Date();
         return currentDate;
     };
+
+    const handleDateChange = (date) => {
+            setSelectedDate(date);
+            onDateChange(date); // 새로운 날짜를 상위 컴포넌트로 전달
+        };
 
     const [selectedDate, setSelectedDate] = useState(getCurrentDate()); // 초기값 현재 날짜로 설정
   return (
@@ -70,7 +75,7 @@ const MyDatePicker = () => {
         </CustomIcon>
         <StyledDatePicker
             selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)} // 선택한 날짜를 상위 컴포넌트로 전달
+            onChange={handleDateChange} // 변경된 부분
             dateFormat="yyyy-MM-dd"
         />
       </StyledDatePickerWrapper>

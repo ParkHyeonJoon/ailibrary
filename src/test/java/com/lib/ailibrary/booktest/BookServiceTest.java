@@ -1,4 +1,4 @@
-package com.lib.ailibrary.BookTest;
+package com.lib.ailibrary.booktest;
 
 import com.lib.ailibrary.domain.book.Book;
 import com.lib.ailibrary.domain.book.BookService;

@@ -1,14 +1,11 @@
-package com.lib.ailibrary.BookTest;
+package com.lib.ailibrary.booktest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lib.ailibrary.domain.book.Book;
 import com.lib.ailibrary.domain.book.BookMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.SQLOutput;
 import java.util.List;
 
 @SpringBootTest

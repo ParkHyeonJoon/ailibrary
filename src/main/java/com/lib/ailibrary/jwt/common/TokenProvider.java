@@ -1,4 +1,4 @@
-package com.lib.ailibrary.jwt;
+package com.lib.ailibrary.jwt.common;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

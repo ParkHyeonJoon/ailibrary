@@ -79,7 +79,7 @@ function Signup() {
         studentID: '',
         userName: '',
         major: '',
-        grade: '',
+        grade: '1학년',
         email: '',
         phoneNumber: '',
         userID: '',
