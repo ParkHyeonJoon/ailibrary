@@ -101,7 +101,11 @@ function FacilityReservation() {
     };
 
     useEffect(() => {
+        if (selectedTimes.length === 0) {
+            setSearchResult([]);
+        } else {
         handleFacilitySearch();
+        }
     }, [selectedMenu, selectedDate, selectedTimes]);
 
     return (
