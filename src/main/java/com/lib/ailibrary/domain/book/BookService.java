@@ -86,4 +86,38 @@ public class BookService {
             e.printStackTrace(); // 예외 정보 출력
         }
     }
+
+    @Transactional
+    public void decreaseBookGood(int bookId) {
+        try {
+            bookMapper.decreaseBookGood(bookId);
+        } catch (Exception e) {
+            System.out.println("이곳에서 에러");
+            e.printStackTrace();
+        }
+    }
+
+    public int checkUserLikeBook(String userId, int bookId) {
+        int count = bookMapper.checkUserLike(userId, bookId);
+        return count;
+    }
+
+    public void likeBook(String userId, int bookId) {
+        try {
+            bookMapper.isLike(userId, bookId);
+            bookMapper.increaseBookGood(bookId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void unlikeBook(String userId, int bookId) {
+        try{
+            bookMapper.unLike(userId, bookId);
+            bookMapper.decreaseBookGood(bookId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

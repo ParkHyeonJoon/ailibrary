@@ -19,6 +19,8 @@ public class BookController {
 
     private final BookService bookService;
 
+    private static final Logger logger = LoggerFactory.getLogger(BookController.class);
+
     //도서관에 있는 모든 도서 조회
     @GetMapping("/all")
     public List<Book> findAllBook() {
@@ -64,14 +66,25 @@ public class BookController {
 
     //도서 찜 누르기
     @PostMapping("/like")
-    public String likeBook(@RequestBody Book bookRequest) {
+    public ResponseEntity<Integer> likeBook(@RequestBody BookLikeRequest request) {
         try {
-            int bookId = bookRequest.getBookId();
-            bookService.increaseBookGood(bookId);
-            return "찜 성공";
-        } catch (Exception e) {
-            return "에러";
-        }
+            String userId = request.getUserId();
+            int bookId = request.getBookId();
 
+            int likeStatus = bookService.checkUserLikeBook(userId, bookId);
+
+            if(likeStatus == 0) {
+                bookService.likeBook(userId, bookId);
+                return ResponseEntity.ok(1); //찜 성공을 의미
+            } else if (likeStatus == 1) {
+                bookService.unlikeBook(userId, bookId);
+                return ResponseEntity.ok(0); //찜 해제를 의미
+            } else {
+                return ResponseEntity.ok(-1); //다른 상황
+            }
+        } catch (Exception e) {
+            logger.error("예외 발생: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(-1);
+        }
     }
 }

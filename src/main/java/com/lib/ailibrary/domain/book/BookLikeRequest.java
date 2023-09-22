@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BookLikeRequest {
-    private int likeId; //찜 아이디
-    private Long userStuId; //학번
-    private Long bookKid;   //도서 아이디
+
+    private String userId; //사용자 아이디
+    private int bookId;   //도서 아이디
 }

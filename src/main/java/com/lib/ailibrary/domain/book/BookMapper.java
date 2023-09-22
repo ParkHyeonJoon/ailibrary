@@ -56,5 +56,28 @@ public interface BookMapper {
      */
     void increaseBookGood(int bookId);
 
+    /**
+     * 도서 찜 취소 기능
+     * @param - bookId
+     */
+    void decreaseBookGood(int bookId);
+
+    /**
+     * 찜하기 정보 저장
+     * @param - userStuId, bookId
+     */
+    void isLike(@Param("userId") String userId, @Param("bookId") int bookId);
+
+    /**
+     * 찜하기 정보 삭제
+     * @param - userStuId, bookId
+     */
+    void unLike(@Param("userId") String userId, @Param("bookId") int bookId);
+
+
+    /**
+     * 찜 중복 체크
+     */
+    int checkUserLike(@Param("userId") String userId, @Param("bookId") int bookId);
 
 }

@@ -42,7 +42,7 @@ const ReserveBtn = styled.button`
 `;
 
 const GoodBtn = styled.button`
-  width: 30px;
+  width: 65px;
   height: 30px;
   background: #FF0000;
   color: white;
@@ -89,22 +89,34 @@ const InfoContent = styled.p`
 const BookInfo = ({ bookInfo }) => {
   const [isLiked, setIsLiked] = useState(false);
 
+  const storedUserInfo = localStorage.getItem("userInfo");
+  const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+
   // 찜 버튼 클릭 이벤트 핸들러
   const handleLikeClick = () => {
     // 클라이언트에서 서버로 bookId를 보냅니다.
     const bookId = bookInfo.bookId;
+    const userId = userInfo.userId;
 
     // HTTP POST 요청을 보냅니다.
     axios
-      .post('http://localhost:8080/book/like', { bookId }, {
+      .post('http://localhost:8080/book/like', { bookId, userId }, {
       headers: {
          'Content-Type': 'application/json',
          },
       })
       .then((response) => {
+        const likeStatus = response.data;
         // 요청 성공 시 처리
-        setIsLiked(true); // 버튼 상태 변경 등
-        alert("찜 되었습니다!!");
+        if(likeStatus === 1) {
+            setIsLiked(true); // 버튼 상태 변경 등
+            alert("찜 등록 되었습니다");
+        } else if(likeStatus === 0) {
+            setIsLiked(false);
+            alert("찜 해제 되었습니다");
+        } else {
+            alert("에러");
+        }
         console.log(response.data);
       })
       .catch((error) => {
@@ -160,7 +172,9 @@ const BookInfo = ({ bookInfo }) => {
           <TableRow>
             <td>
             <ReserveBtn>예약하기</ReserveBtn>
-              <GoodBtn onClick={handleLikeClick}>찜</GoodBtn>
+              <GoodBtn onClick={handleLikeClick}>
+                {isLiked ? "찜 취소" : "찜 등록"}
+              </GoodBtn>
             </td>
           </TableRow>
         </TBody>
