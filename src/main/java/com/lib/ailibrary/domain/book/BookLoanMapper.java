@@ -16,7 +16,7 @@ public interface BookLoanMapper {
      * @param - bookLoanId(대출 아이디)
      * @return - 대출 정보
      */
-    BookLoanResponse findById(Long bookLoanId);
+    BookLoanResponse findById(int bookLoanId);
 
     /**
      * 대출 정보 수정
@@ -28,12 +28,12 @@ public interface BookLoanMapper {
      * 대출 정보 삭제
      * @param - bookLaonId
      */
-    void deleteById(Long bookLoanId);
+    void deleteById(int bookLoanId);
 
     /**
      * 대출 상태 확인
      * @param - bookId
      * @return - return_state
      */
-    BookLoanResponse checkBookLoan(Long bookId);
+    int checkBookLoan(int bookId);
 }

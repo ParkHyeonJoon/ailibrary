@@ -6,7 +6,7 @@
     <!-- tb_room_rez 테이블 전체 컬럼 -->
     <sql id="bookLoanColumns">
         book_loan_id
-        , user_stu_id
+        , user_id
         , book_id
         , loan_date
         , return_date
@@ -21,7 +21,7 @@
         <include refid="bookLoanColumns"></include>
         ) VALUES (
         #{bookLoanId}
-        , #{userStuId}
+        , #{userId}
         , #{bookId}
         , #{loanDate}
         , #{returnDate}
@@ -57,12 +57,12 @@
 
 
     <!-- 도서 대출 상태 -->
-    <select id="checkBookLoan" parameterType="long" resultType="com.lib.ailibrary.domain.book.BookLoanResponse">
+    <select id="checkBookLoan" parameterType="int" resultType="int">
         SELECT
-        <include refid="bookLoanColumns"></include>
+            COUNT(*)
         FROM
-        tb_book_loan
+            tb_book_loan
         WHERE
-        book_id = #{bookId}
+            book_id = #{bookId}
     </select>
 </mapper>

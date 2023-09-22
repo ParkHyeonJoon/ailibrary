@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/book")
@@ -18,8 +20,14 @@ public class BookLoanController {
     @PostMapping("/loan")
     public ResponseEntity<String> LoanBook(@RequestBody BookLoanRequest request) {
         try {
-            bookLoanService.LoanBook(request);
-            return ResponseEntity.ok("도서 대출이 완료되었습니다.");
+            int bookId = request.getBookId();
+            int LoanStatus = bookLoanService.checkBookLoan(bookId);
+            if(LoanStatus == 0 || request.getReturnDate().isBefore(LocalDate.now())) {
+                bookLoanService.saveLoan(request);
+                return ResponseEntity.ok("도서 대출이 완료되었습니다.");
+            } else {
+                return ResponseEntity.ok("도서가 대출 중");
+            }
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

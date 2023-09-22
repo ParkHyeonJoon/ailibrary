@@ -18,7 +18,7 @@ public class BookReserveService {
      * @return bookRezId - PK
      */
     @Transactional
-    public Long saveRez(BookReserveRequest params) {
+    public int saveRez(BookReserveRequest params) {
         bookReserveMapper.save(params);
         return params.getBookRezId();
     }
@@ -28,7 +28,7 @@ public class BookReserveService {
      * @param bookRezId - PK
      * @return 예약 정보
      */
-    public BookReserveResponse findRezById(final Long bookRezId) {
+    public BookReserveResponse findRezById(final int bookRezId) {
         return bookReserveMapper.findById(bookRezId);
     }
 
@@ -41,7 +41,7 @@ public class BookReserveService {
      * @param bookRezId - PK
      * @return bookRezId
      */
-    public Long deleteRezById(final Long bookRezId) {
+    public int deleteRezById(final int bookRezId) {
         bookReserveMapper.deletebyId(bookRezId);
         return bookRezId;
     }
@@ -71,7 +71,7 @@ public class BookReserveService {
         }
     }
 
-    public BookReserveResponse getReservationInfo(Long bookRezId) {
+    public BookReserveResponse getReservationInfo(int bookRezId) {
         // 도서 예약 정보 조회
         return bookReserveMapper.findById(bookRezId);
     }

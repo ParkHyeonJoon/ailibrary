@@ -41,6 +41,16 @@ const ReserveBtn = styled.button`
   font-weight: 600;
 `;
 
+const LoanBtn = styled.button`
+  width: 130px;
+  height: 50px;
+  background: #000F5F;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  font-weight: 600;
+`;
+
 const GoodBtn = styled.button`
   width: 65px;
   height: 30px;
@@ -50,6 +60,7 @@ const GoodBtn = styled.button`
   border: none;
   font-weight: 600;
 `;
+
 
 const FormTable = styled.table`
   width: 700px;
@@ -172,6 +183,13 @@ const BookInfo = ({ bookInfo }) => {
           <TableRow>
             <td>
             <ReserveBtn>예약하기</ReserveBtn>
+            </td>
+            <td>
+            <LoanBtn>대출하기</LoanBtn>
+            </td>
+            </TableRow>
+           <TableRow>
+           <td>
               <GoodBtn onClick={handleLikeClick}>
                 {isLiked ? "찜 취소" : "찜 등록"}
               </GoodBtn>
