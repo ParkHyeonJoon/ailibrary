@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -39,5 +40,14 @@ public class BookLoanService {
         else {
             request.setReturnState("대출 중");
         } */
+    }
+    public String checkBookState(int bookId) {
+        String bookState = bookLoanMapper.checkBookState(bookId);
+        return bookState;
+    }
+
+    public LocalDate getReturnDate(int bookId) {
+        LocalDate date = bookLoanMapper.getReturnDate(bookId);
+        return date;
     }
 }

@@ -92,7 +92,6 @@ public class BookController {
     @GetMapping("/checkLike")
     public ResponseEntity<String> checkLikeBook(@RequestParam String userId, @RequestParam int bookId) {
         try {
-
             int likeStatus = bookService.checkUserLikeBook(userId, bookId);
 
             if(likeStatus == 0) {

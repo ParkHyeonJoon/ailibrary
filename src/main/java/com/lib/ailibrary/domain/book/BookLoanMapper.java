@@ -2,6 +2,8 @@ package com.lib.ailibrary.domain.book;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.time.LocalDate;
+
 @Mapper
 public interface BookLoanMapper {
 
@@ -36,4 +38,8 @@ public interface BookLoanMapper {
      * @return - return_state
      */
     int checkBookLoan(int bookId);
+
+    String checkBookState(int bookId);
+
+    LocalDate getReturnDate(int bookId);
 }

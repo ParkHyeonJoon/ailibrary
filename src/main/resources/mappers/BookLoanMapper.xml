@@ -23,9 +23,9 @@
         #{bookLoanId}
         , #{userId}
         , #{bookId}
-        , #{loanDate}
-        , #{returnDate}
-        , #{returnState}
+        , CURDATE()
+        , DATE_ADD(CURDATE(), INTERVAL 2 WEEK)
+        , '대출 중'
         )
     </insert>
 
@@ -60,6 +60,24 @@
     <select id="checkBookLoan" parameterType="int" resultType="int">
         SELECT
             COUNT(*)
+        FROM
+            tb_book_loan
+        WHERE
+            book_id = #{bookId}
+    </select>
+
+    <select id="checkBookState" parameterType="int" resultType="string">
+        SELECT
+            return_state
+        FROM
+            tb_book_loan
+        WHERE
+            book_id = #{bookId}
+    </select>
+
+    <select id="getReturnDate" parameterType="int" resultType="java.time.LocalDate">
+        SELECT
+            return_date
         FROM
             tb_book_loan
         WHERE
