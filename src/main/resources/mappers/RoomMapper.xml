@@ -40,7 +40,7 @@
         FROM
             tb_room_rez
         WHERE
-            rez_id = #{value}
+            user_stu_id = #{value}
     </select>
 
 
@@ -55,7 +55,7 @@
         FROM
             tb_room_rez
         WHERE
-            rezid = #{rezId}
+            rez_id = #{rezId}
     </delete>
 
 

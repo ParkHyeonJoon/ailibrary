@@ -47,4 +47,16 @@ public class RoomController {
         }
         return "잘됐슈";     // 미완성
     }
+
+    // 예약 정보 삭제
+    @PostMapping("/reserve/delete")
+    public void deleteReserve(@RequestParam final Long rezId) {
+        roomService.deleteReserve(rezId);
+    }
+
+    // 예약 정보 조회
+    @GetMapping("/reserve/list")
+    public List<RoomReserveResponse> selectReserve(@RequestParam final Long userStuId) {
+        return roomService.findRezById(userStuId);
+    }
 }

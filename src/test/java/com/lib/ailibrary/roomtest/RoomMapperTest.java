@@ -44,7 +44,7 @@ public class RoomMapperTest {
 
     @Test
     void findById() {
-        RoomReserveResponse room = roomMapper.findById(2L);
+        List<RoomReserveResponse> room = roomMapper.findById(20233562L);
         try {
             String roomJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(room);
             System.out.println(roomJson);
