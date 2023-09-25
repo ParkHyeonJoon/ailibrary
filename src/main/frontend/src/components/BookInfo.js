@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -41,16 +42,6 @@ const ReserveBtn = styled.button`
   font-weight: 600;
 `;
 
-const LoanBtn = styled.button`
-  width: 130px;
-  height: 50px;
-  background: #000F5F;
-  color: white;
-  border-radius: 5px;
-  border: none;
-  font-weight: 600;
-`;
-
 const GoodBtn = styled.button`
   width: 65px;
   height: 30px;
@@ -60,7 +51,6 @@ const GoodBtn = styled.button`
   border: none;
   font-weight: 600;
 `;
-
 
 const FormTable = styled.table`
   width: 700px;
@@ -99,12 +89,41 @@ const InfoContent = styled.p`
 
 const BookInfo = ({ bookInfo }) => {
   const [isLiked, setIsLiked] = useState(false);
+  const [likeButtonText, setLikeButtonText] = useState("찜 등록");
+
+  const { bookId } = useParams();
 
   const storedUserInfo = localStorage.getItem("userInfo");
   const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
+  useEffect(() => {
+      if (userInfo && bookId) {
+        // 사용자 정보가 있을 때만 API 호출
+        const userId = userInfo.userId;
+
+        // 백엔드 API 호출하여 초기 찜 상태 확인
+        axios
+          .get(`http://localhost:8080/book/checkLike?userId=${userId}&bookId=${bookId}`)
+          .then((response) => {
+            const likeStatus = response.data;
+            if (likeStatus === "on") {
+              setLikeButtonText("찜 취소");
+              setIsLiked(true);
+            }
+          })
+          .catch((error) => {
+            console.error("Error checking like status: ", error);
+          });
+      }
+    }, [userInfo, bookId]);
+
   // 찜 버튼 클릭 이벤트 핸들러
   const handleLikeClick = () => {
+    if(!userInfo) {
+        alert("로그인이 필요합니다");
+        return;
+    }
+
     // 클라이언트에서 서버로 bookId를 보냅니다.
     const bookId = bookInfo.bookId;
     const userId = userInfo.userId;
@@ -183,13 +202,6 @@ const BookInfo = ({ bookInfo }) => {
           <TableRow>
             <td>
             <ReserveBtn>예약하기</ReserveBtn>
-            </td>
-            <td>
-            <LoanBtn>대출하기</LoanBtn>
-            </td>
-            </TableRow>
-           <TableRow>
-           <td>
               <GoodBtn onClick={handleLikeClick}>
                 {isLiked ? "찜 취소" : "찜 등록"}
               </GoodBtn>

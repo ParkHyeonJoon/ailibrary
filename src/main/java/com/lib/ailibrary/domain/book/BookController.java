@@ -87,4 +87,27 @@ public class BookController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(-1);
         }
     }
+
+    //BookInfo 들어가자마자 찜 되어있는지 확인하기.
+    @GetMapping("/checkLike")
+    public ResponseEntity<String> checkLikeBook(@RequestParam String userId, @RequestParam int bookId) {
+        try {
+
+            int likeStatus = bookService.checkUserLikeBook(userId, bookId);
+
+            if(likeStatus == 0) {
+                //bookService.likeBook(userId, bookId);
+                return ResponseEntity.ok("off"); //찜이 안 되어있다는 것을 의미
+            } else if (likeStatus == 1) {
+                //bookService.unlikeBook(userId, bookId);
+                return ResponseEntity.ok("on"); //찜이 되어있다는 것을 의미
+            } else {
+                return ResponseEntity.ok("Fuck no"); //다른 상황
+            }
+        } catch (Exception e) {
+            logger.error("예외 발생: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal Server Error");
+        }
+    }
 }
