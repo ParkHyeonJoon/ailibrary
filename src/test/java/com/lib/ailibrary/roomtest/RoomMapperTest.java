@@ -82,4 +82,18 @@ public class RoomMapperTest {
             System.out.println(remainRoom.get(i).getRoomName());
         }*/
     }
+
+    @Test
+    void 전체예약내역조회() {
+        List<RoomReserveResponse> list = roomMapper.findAll();
+
+        for(int i=0; i<list.size(); i++) {
+            try {
+                String roomJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(list.get(i));
+                System.out.println(roomJson);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }
