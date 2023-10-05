@@ -8,15 +8,15 @@ import BookList from "../components/BookList";
 import { useLocation } from 'react-router-dom';
 
 const Wrapper = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 150px;
-  background-color: #E6E6E6; /* 원하는 어두운 색상 코드를 사용하세요 */
-      color: #fff; /* 텍스트 색상을 밝게 설정할 수 있습니다. */
-    `;
+  background-color: #000000; /* 원하는 어두운 색상 코드를 사용하세요 */
+  color: #fff; /* 텍스트 색상을 밝게 설정할 수 있습니다. */
+`;
 
 function PopularBooks() {
    const [popularBooks, setPopularBooks] = useState([]);

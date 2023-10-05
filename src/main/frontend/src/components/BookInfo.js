@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import HeartButton from "../common/HeartButton";
 
 const Wrapper = styled.div`
   width: 50%;
@@ -8,17 +9,18 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  margin: 40px 150px;
+  margin: -120px 150px;
 `;
 
 const BookTitle = styled.p`
-  text-align: left;
-  font-family: Inter;
-  font-size: 40px;
+  font-family: 'PilseungGothic';
+  font-weight: normal;
   font-style: normal;
-  font-weight: 700;
+  text-align: left;
+  font-size: 60px;
   line-height: normal;
-  margin: 0;
+  margin-top:0;
+  margin-bottom: 0px;
 `;
 
 const BookAuthor = styled.p`
@@ -28,34 +30,32 @@ const BookAuthor = styled.p`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  color: rgba(255, 255, 255, 0.77)
 `;
-
+const BtnArea = styled.div`
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  `
 
 const ReserveBtn = styled.button`
-  width: 130px;
-  height: 50px;
-  background: #000F5F;
-  color: white;
+  width: 300px;
+  height: 60px;
+  background: #ffffff;
+  color: #000000;
   border-radius: 5px;
   border: none;
-  font-weight: 600;
-`;
-
-const GoodBtn = styled.button`
-  width: 65px;
-  height: 30px;
-  background: #FF0000;
-  color: white;
-  border-radius: 5px;
-  border: none;
-  font-weight: 600;
+  font-weight: bolder;
+  font-size: 17px;
 `;
 
 const FormTable = styled.table`
   width: 700px;
-  margin-top: 20px;
   border-collapse: collapse;
-  margin-bottom: 40px;
+  color: rgba(255, 255, 255, 0.77);
+  margin-top: 30px;
 `;
 
 const ColGroup = styled.colgroup`
@@ -71,7 +71,7 @@ const TBody = styled.tbody``;
 
 const TableRow = styled.tr`
   td {
-    padding: 10px;
+    padding-bottom: 20px;
   }
 `;
 
@@ -84,6 +84,8 @@ const Info = styled.p`
 const InfoContent = styled.p`
   font-size: 14px;
   margin: 0;
+
+  font-weight: bold;
 `;
 
 const BookInfo = ({ bookInfo }) => {
@@ -130,7 +132,10 @@ const BookInfo = ({ bookInfo }) => {
     <Wrapper>
       <BookTitle>{bookInfo.bookTitle}</BookTitle>
       <BookAuthor>{bookInfo.author}</BookAuthor>
-
+      <BtnArea>
+        <ReserveBtn>예약하기</ReserveBtn>
+        <HeartButton isLiked={isLiked} onClick={handleLikeClick}/>
+      </BtnArea>
       <FormTable>
         <ColGroup>
           <col />
@@ -167,14 +172,6 @@ const BookInfo = ({ bookInfo }) => {
             </td>
             <td>
               <InfoContent>{bookInfo.floor}</InfoContent>
-            </td>
-          </TableRow>
-          <TableRow>
-            <td>
-            <ReserveBtn>예약하기</ReserveBtn>
-              <GoodBtn onClick={handleLikeClick}>
-                {isLiked ? "찜 취소" : "찜 등록"}
-              </GoodBtn>
             </td>
           </TableRow>
         </TBody>

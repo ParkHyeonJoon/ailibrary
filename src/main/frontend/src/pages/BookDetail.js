@@ -4,16 +4,18 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import BookInfo from "../components/BookInfo";
 
-
 const Wrapper = styled.div`
+  position: relative; /* 포지션 설정 */
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 150px;
-  background: #000;
   color: #fff;
+  min-height: 100vh;
+  background: black;
+  z-index: -100;
 `;
 
 const ContentWrapper = styled.div`
@@ -23,17 +25,18 @@ const ContentWrapper = styled.div`
 `;
 
 const BackgroundImage = styled.div`
-  background: url(${process.env.PUBLIC_URL}/assets/BookList/1.jpg); /* 배경 이미지 설정 */
-  background-size: cover; /* 이미지를 컨테이너에 맞게 확대/축소 */
-  width: 100%;
-  height: 100%; /* 화면 높이로 설정 (뷰포트 높이) */
   position: absolute;
-  z-index: -1; /* 배경 이미지는 다른 요소 뒤에 표시되도록 */
+  z-index: -1;
   top: -30px;
+  width: 100%;
+  height: 100%;
+  background-image: url(${(props) => props.imageUrl});
+  background-size: cover;
+  filter: blur(30px) brightness(0.4); /* 흐리게 처리하고 어둡게 처리 */
 `;
 
 const BookImage = styled.img`
-  margin-top: 40px;
+  margin-top: -120px;
   width: 300px;
   height: 450px;
   border-radius: 5px;
@@ -55,9 +58,9 @@ const BookDetail = () => {
         <Wrapper>
             <Header />
             <ContentWrapper>
-                <BackgroundImage style={{ backgroundImage: `url(${bookInfo.bookImage})` }} /> {/* 이미지 URL 사용 */}
+                <BackgroundImage imageUrl={bookInfo.bookImage} />
                 <BookInfo bookInfo={bookInfo} />
-                <BookImage src={bookInfo.bookImage} alt="Book" /> {/* 이미지 URL 사용 */}
+                <BookImage src={bookInfo.bookImage} alt="Book" />
             </ContentWrapper>
         </Wrapper>
     );
