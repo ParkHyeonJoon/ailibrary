@@ -4,7 +4,8 @@ import styled from "styled-components";
 import Modal from "./Modal"; // Modal 컴포넌트 import
 
 const RoomWrapper = styled.div`
-  margin-top: 30px;
+  margin-top: 0;
+  margin-right: 70px;
   width: 150px;
   height: 150px;
   display: flex;

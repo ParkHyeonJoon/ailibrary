@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import PopularBooks from "./pages/PopularBooks";
 import MyPage from "./pages/MyPage";
 import BookDetail from "./pages/BookDetail";
-import SearchResult from "./components/SearchResult"; // SearchResult 컴포넌트
+import SearchResult from "./pages/SearchResult"; // SearchResult 컴포넌트
 
 function App() {
     const [closingWindow, setClosingWindow] = useState(false);

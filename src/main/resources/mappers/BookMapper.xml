@@ -81,7 +81,6 @@
         WHERE
         book_id = #{value}
     </select>
-
     <!-- 키워드로 도서 검색 -->
     <select id="find" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
         SELECT

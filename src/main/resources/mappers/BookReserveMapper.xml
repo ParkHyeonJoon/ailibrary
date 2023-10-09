@@ -3,10 +3,10 @@
 
 <mapper namespace="com.lib.ailibrary.domain.book.BookReserveMapper">
 
-    <!-- tb_room_rez 테이블 전체 컬럼 -->
+    <!-- tb_book_rez 테이블 전체 컬럼 -->
     <sql id="bookRezColumns">
         book_rez_id
-        , user_stu_id
+        , user_id
         , book_id
         , book_rez_date
 
@@ -14,12 +14,12 @@
 
 
     <!-- 예약 정보 저장 -->
-    <insert id="save" parameterType="com.lib.ailibrary.domain.book.BookReserveRequest" useGeneratedKeys="true" keyProperty="bookRezId">
+    <insert id="save" parameterType="com.lib.ailibrary.domain.book.BookReserveRequest">
         INSERT INTO tb_book_rez (
         <include refid="bookRezColumns"></include>
         ) VALUES (
         #{bookRezId}
-        , #{userStuId}
+        , #{userId}
         , #{bookId}
         , #{bookRezDate}
         )

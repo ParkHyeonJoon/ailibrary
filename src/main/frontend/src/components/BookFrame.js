@@ -6,7 +6,7 @@ const BookWrapper = styled.div`
   position: relative;
   width: 180px; /* 책 컴포넌트의 너비 설정 */
   height: 270px;
-  margin-right: 0px;
+  margin-right: -20px;
   transition: transform 0.3s ease; /* 마우스 오버시 애니메이션 효과 */
 
   &:hover {
@@ -22,7 +22,7 @@ const BookImage = styled.img`
 `;
 
 const BookTitle = styled.p`
-  color: white;
+  color: black;
   font-size: 15px;
   font-weight: 600;
   margin-top: 5px;

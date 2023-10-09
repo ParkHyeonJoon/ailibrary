@@ -4,7 +4,7 @@ import BookFrame from "../components/BookFrame";
 
 const Wrapper = styled.div`
   width: 100%;
-  color: #fff;
+  color: #000000;
 `;
 
 const SectionWrapper = styled.div`
@@ -15,7 +15,7 @@ const SectionWrapper = styled.div`
 
 const Title = styled.p`
   margin-left: 20px;
-  color : #fff;
+  color: #000000;
   font-size: 30px;
   font-weight: 700;
   margin-bottom: 10px;

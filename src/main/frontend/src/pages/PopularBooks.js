@@ -14,8 +14,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 150px;
-  background-color: #000000; /* 원하는 어두운 색상 코드를 사용하세요 */
-  color: #fff; /* 텍스트 색상을 밝게 설정할 수 있습니다. */
+  background-color: #ffffff; /* 원하는 어두운 색상 코드를 사용하세요 */
+  color: #000000; /* 텍스트 색상을 밝게 설정할 수 있습니다. */
 `;
 
 function PopularBooks() {

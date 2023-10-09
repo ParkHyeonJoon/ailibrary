@@ -17,7 +17,7 @@ public interface BookReserveMapper {
      * @params bookRezId - PK
      * @return 예약 정보
      */
-    BookReserveResponse findById(Long bookRezId);
+    BookReserveResponse findById(int bookRezId);
 
     /**
      * 도서 예약 정보 수정
@@ -29,7 +29,7 @@ public interface BookReserveMapper {
      * 도서 예약 정보 삭제
      * @params bookRezId - PK
      */
-    void deletebyId(Long bookRezId);
+    void deletebyId(int bookRezId);
 
     /**
      * 도서 예약 내역 전체 조회
