@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
-import HeartImg from "../assets/heart.png"; // 이미지 파일의 상대 경로 설정
-import EmptyHeartImg from "../assets/emptyheart.png"; // 이미지 파일의 상대 경로 설정
+import ReserveImg from "../assets/booking.png";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,7 +14,7 @@ const Wrapper = styled.div`
   cursor: pointer;
 `;
 
-const Heart = styled.img`
+const Reserve = styled.img`
     margin-bottom: -10px;
 `;
 
@@ -27,13 +26,13 @@ const Text = styled.p`
   font-weight: 800;
 `;
 
-const HeartButton = ({ isLiked, onClick }) => {
+const ReserveButton = ({ onClick }) => {
     return (
         <Wrapper onClick={onClick}>
-            <Heart src={isLiked ? HeartImg : EmptyHeartImg} />
-            <Text>찜</Text>
+            <Reserve src={ReserveImg} />
+            <Text>예약</Text>
         </Wrapper>
     );
 };
 
-export default HeartButton;
+export default ReserveButton;

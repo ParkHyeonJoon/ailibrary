@@ -14,8 +14,6 @@ const Wrapper = styled.div`
   margin-top: 150px;
   color: #fff;
   min-height: 100vh;
-  background: black;
-  z-index: -100;
 `;
 
 const ContentWrapper = styled.div`

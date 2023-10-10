@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import HeartButton from "../common/HeartButton";
+import ReserveButton from "../common/ReserveButton";
 
 const Wrapper = styled.div`
   width: 50%;
@@ -11,6 +12,7 @@ const Wrapper = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   margin: -120px 150px;
+  z-index: 1000;
 `;
 
 const BookTitle = styled.p`
@@ -34,6 +36,7 @@ const BookAuthor = styled.p`
   color: rgba(255, 255, 255, 0.77)
 `;
 const BtnArea = styled.div`
+  position: relative;;
   height: 80px;
   display: flex;
   flex-direction: row;
@@ -240,7 +243,7 @@ const BookInfo = ({ bookInfo }) => {
           <LoanBtn onClick={handleLoanClick}>
               {isBookLoaned ? "대출 중" : "대출하기"}
           </LoanBtn>
-        <ReserveBtn>예약하기</ReserveBtn>
+        <ReserveButton ></ReserveButton>
 
         <HeartButton isLiked={isLiked} onClick={handleLikeClick}/>
       </BtnArea>
