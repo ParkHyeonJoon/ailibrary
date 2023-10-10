@@ -42,10 +42,6 @@ dependencies {
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-	implementation 'ch.qos.logback:logback-classic:1.2.6' // Logback 의존성 추가
-	implementation 'org.springframework.boot:spring-boot-starter-log4j2' // Log4j2 의존성 추가
-	
-
 }
 
 tasks.named('test') {
