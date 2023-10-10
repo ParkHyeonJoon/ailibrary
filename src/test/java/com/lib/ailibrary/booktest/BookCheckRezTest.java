@@ -17,9 +17,8 @@ public class BookCheckRezTest {
     @Test
     void checkAndSave() {
         BookReserveRequest params = new BookReserveRequest();
-        params.setBookRezId(3L);
-        params.setUserStuId(11111111);
-        params.setBookId(2);
+        params.setUserId("green");
+        params.setBookId(3);
         params.setBookRezDate(LocalDate.now());
 
         int checkId = params.getBookId();

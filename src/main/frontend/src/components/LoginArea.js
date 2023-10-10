@@ -30,6 +30,15 @@ const Text = styled.p`
   &:last-child {
     margin-right: 20px;
   }
+
+  /* 마우스 오버 시 스타일 변경 */
+
+  &:hover {
+    color: ${(props) => props.hoverBackgroundColor || "rgba(0,30,65,0.8)"};
+    /* 원하는 다른 스타일 변경도 추가 가능 */
+  }
+
+\` ;
 `;
 
 function LoginArea() {

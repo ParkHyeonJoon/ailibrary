@@ -9,9 +9,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class BookLoanRequest {
-    private Long bookLoanId; //대출 아이디
-    private Long userStuId; //학생 학번
-    private Long bookId; //도서 아이디
+    private int bookLoanId; //대출 아이디
+    private String userId; //학생 아이디
+    private int bookId; //도서 아이디
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate loanDate; //대출 날짜

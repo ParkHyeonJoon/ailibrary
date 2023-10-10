@@ -2,6 +2,8 @@ package com.lib.ailibrary.domain.book;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.time.LocalDate;
+
 @Mapper
 public interface BookLoanMapper {
 
@@ -16,7 +18,7 @@ public interface BookLoanMapper {
      * @param - bookLoanId(대출 아이디)
      * @return - 대출 정보
      */
-    BookLoanResponse findById(Long bookLoanId);
+    BookLoanResponse findById(int bookLoanId);
 
     /**
      * 대출 정보 수정
@@ -28,12 +30,16 @@ public interface BookLoanMapper {
      * 대출 정보 삭제
      * @param - bookLaonId
      */
-    void deleteById(Long bookLoanId);
+    void deleteById(int bookLoanId);
 
     /**
      * 대출 상태 확인
      * @param - bookId
      * @return - return_state
      */
-    BookLoanResponse checkBookLoan(Long bookId);
+    int checkBookLoan(int bookId);
+
+    String checkBookState(int bookId);
+
+    LocalDate getReturnDate(int bookId);
 }

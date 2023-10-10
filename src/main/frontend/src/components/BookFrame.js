@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 
 const BookWrapper = styled.div`
   position: relative;
-  width: 140px; /* 책 컴포넌트의 너비 설정 */
-  margin: 10px;
+  width: 180px; /* 책 컴포넌트의 너비 설정 */
+  height: 270px;
+  margin-right: -20px;
   transition: transform 0.3s ease; /* 마우스 오버시 애니메이션 효과 */
 
   &:hover {
@@ -15,7 +16,7 @@ const BookWrapper = styled.div`
 
 const BookImage = styled.img`
   width: 100%;
-  height: auto;
+  height: 250px;
   border-radius: 5px;
   box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.2);
 `;
@@ -26,7 +27,7 @@ const BookTitle = styled.p`
   font-weight: 600;
   margin-top: 5px;
   margin-left: 2px;
-  text-decoration: none; /* 밑줄 제거 */
+  text-decoration: none;
 `;
 
 const BookFrame = ({ book }) => { // book 데이터를 popularBooks에서 props로 받음

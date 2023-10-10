@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { createReservation } from "../api/FacilityReserveapi";
+import {darken} from "polished";
 
 const ModalOverlay = styled.div`
     position: fixed;
@@ -45,14 +46,22 @@ const ModalTitle = styled.p`
     font-weight: 700;
 `;
 const ReservationBtn = styled.button`
-    justify-content: center;
-    background: #A5B3FF;
-    color: #FFF;
-    border: none;
-    border-radius: 5px;
-    width: 80%;
-    height: 40px;
-    margin-bottom: 10px;
+  justify-content: center;
+  background: #A5B3FF;
+  color: #FFF;
+  border: none;
+  border-radius: 5px;
+  width: 80%;
+  height: 40px;
+  margin-bottom: 10px;
+
+  &:hover {
+    background: ${(props) =>
+            props.backgroundColor
+                    ? darken(0.1, props.backgroundColor) // 어둡게 만드는 함수를 적용
+                    : "#123456"};
+    /* 원하는 다른 스타일 변경도 추가 가능 */
+  }
 `;
 function Modal({ isOpen, onClose, onReservation, date, time, roomData}) {
   const rezDate = date;

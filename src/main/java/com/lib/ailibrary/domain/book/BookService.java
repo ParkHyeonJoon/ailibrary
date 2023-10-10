@@ -72,7 +72,7 @@ public class BookService {
     }
 
     /**
-     * 도서 찜 누르기 기능(아직 보완해야함)
+     * 도서 찜 수 증가
      * @param bookId
      */
     @Transactional
@@ -87,6 +87,10 @@ public class BookService {
         }
     }
 
+    /**
+     * 도서 찜 수 감소
+     * @param bookId
+     */
     @Transactional
     public void decreaseBookGood(int bookId) {
         try {
@@ -97,11 +101,22 @@ public class BookService {
         }
     }
 
+    /**
+     * 해당 사용자가 해당 도서를 찜 했는지 확인
+     * @param userId
+     * @param bookId
+     * @return
+     */
     public int checkUserLikeBook(String userId, int bookId) {
         int count = bookMapper.checkUserLike(userId, bookId);
         return count;
     }
 
+    /**
+     * 찜 테이블에 찜 생성
+     * @param userId
+     * @param bookId
+     */
     public void likeBook(String userId, int bookId) {
         try {
             bookMapper.isLike(userId, bookId);
@@ -112,6 +127,11 @@ public class BookService {
 
     }
 
+    /**
+     * 찜 테이블에서 찜 삭제
+     * @param userId
+     * @param bookId
+     */
     public void unlikeBook(String userId, int bookId) {
         try{
             bookMapper.unLike(userId, bookId);

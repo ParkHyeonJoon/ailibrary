@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from "styled-components";
 import Header from "../components/Header";
-import BookFrame from "./BookFrame";
+import BookFrame from "../components/BookFrame";
 
 
 const Wrapper = styled.div`
@@ -28,7 +28,25 @@ const BookTitle = styled.p`
   margin-top: 5px;
   margin-left: 2px;
 `;
-
+const ContentWrapper = styled.div`
+  width: 1000px;
+`;
+const Title = styled.h2`
+  margin: 50px 0;
+`;
+const Keyword = styled.span`
+  color: #1d5d90;
+`;
+const BookList = styled.ul`
+  display: flex; 
+  flex-wrap: wrap;
+  gap: 20px; 
+  list-style: none;
+  padding: 0; 
+`;
+const BookItem = styled.li`
+  margin-right: 20px; /* 검색 결과들 간의 간격을 조절 */
+`;
 function SearchResults() {
   const { keyword } = useParams(); // URL에서 키워드 파라미터 가져오기
   const [searchResults, setSearchResults] = useState([]);
@@ -60,15 +78,16 @@ function SearchResults() {
   return (
   <Wrapper>
     <Header/>
-    <div>
-      <h2>검색 결과 페이지</h2>
-      <p>검색어: {keyword}</p>
-      <ul>
+    <ContentWrapper>
+      <Title><Keyword>'{keyword}'</Keyword> 에 대한 검색 결과</Title>
+      <BookList>
         {searchResults.map((book) => (
-          <BookFrame key={book.bookId} book={book} />
+            <BookItem key={book.bookId}>
+              <BookFrame book={book} />
+            </BookItem>
         ))}
-      </ul>
-    </div>
+      </BookList>
+    </ContentWrapper>
     </Wrapper>
   );
 }

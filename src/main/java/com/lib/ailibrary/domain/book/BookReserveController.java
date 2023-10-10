@@ -22,7 +22,7 @@ public class BookReserveController {
     }
 
     @GetMapping("/reserve/{bookRezId}")
-    public ResponseEntity<BookReserveResponse> getReservationInfo(@PathVariable Long bookRezId) {
+    public ResponseEntity<BookReserveResponse> getReservationInfo(@PathVariable int bookRezId) {
         BookReserveResponse reservationInfo = bookReserveService.getReservationInfo(bookRezId);
         if (reservationInfo != null) {
             return ResponseEntity.ok(reservationInfo);
