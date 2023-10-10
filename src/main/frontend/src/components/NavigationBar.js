@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
     display: flex;
     gap: 20px;
-    height: 50px;
+    height: 55px;
     align-items: center;
     justify-content: center;
     flex-direction: row;
@@ -21,7 +21,7 @@ const NavItem = styled.a`
     padding: 10px;
     color: black;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     &:not(:last-child) {

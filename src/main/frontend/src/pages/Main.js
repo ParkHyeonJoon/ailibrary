@@ -6,21 +6,22 @@ import ChatArea from "../components/ChatArea";
 import MainBookList from '../components/MainBookList';
 
 const Wrapper = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 150px;
-    `;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 180px;
+`;
+
 function Main() {
-  
-  return (
-    <Wrapper>
-        <Header/>
-        <ChatArea/>
-        <MainBookList/>
-    </Wrapper>
+
+    return (
+        <Wrapper>
+            <Header/>
+            <ChatArea/>
+            <MainBookList/>
+        </Wrapper>
     );
 }
 

@@ -5,26 +5,26 @@ import { Link } from "react-router-dom";
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 20px;
+  height: 32px;
   justify-content: flex-end;
   align-items: center;
   gap: 26px;
   flex-shrink: 0;
-  background: #B3C4FF;
-  color: white;
+  background: #e3e9ff;
+  color: #909090;
 `;
 
 const CustomLink = styled(Link)`
   text-decoration: none; /* 밑줄 제거 */
-  color: white;
+  color: #909090;
 `;
 
 const Text = styled.p`
   cursor: pointer;
-  font-size: 7px;
+  font-size: 13px;
   margin-right: 0;
   font-family: Inter;
-  font-weight: 700;
+  font-weight: 600;
   word-wrap: break-word;
 
   &:last-child {
