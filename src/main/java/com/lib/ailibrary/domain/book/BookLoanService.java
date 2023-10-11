@@ -31,23 +31,19 @@ public class BookLoanService {
         int bookLoanState = bookLoanMapper.checkBookLoan(bookId);
         return bookLoanState;
 
-        //대출 가능한 경우. bookId로 봤을 때 loan 테이블에 없거나, 있다면 반납날짜가 모두 현재보다 과거일 경우.
-        /**if(bookState == null || bookState.getReturnDate().isBefore(LocalDate.now())) {
-            request.setReturnState("대출 중");
-            bookLoanMapper.save(request);
-        }
-        //대출 불가능할 경우.
-        else {
-            request.setReturnState("대출 중");
-        } */
-    }
-    public String checkBookState(int bookId) {
-        String bookState = bookLoanMapper.checkBookState(bookId);
-        return bookState;
     }
 
-    public LocalDate getReturnDate(int bookId) {
-        LocalDate date = bookLoanMapper.getReturnDate(bookId);
-        return date;
+    public int checkBook(String userId, int bookId) {
+        int bookLoan = bookLoanMapper.checkBook(userId, bookId);
+        return bookLoan;
+    }
+
+    public int checkBookCount(String userId) {
+        int bookLoanCount = bookLoanMapper.checkBookCount(userId);
+        return bookLoanCount;
+    }
+
+    public void checkBookReturn(String userId, int bookId) {
+        bookLoanMapper.checkBookReturn(userId, bookId);
     }
 }
