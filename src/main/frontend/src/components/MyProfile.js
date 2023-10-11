@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   width: 1000px;
   height: 350px;
   border-radius: 20px;
-  background: rgba(231, 235, 255, 0.80);
+  background: rgba(217, 224, 255, 0.9);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   margin-top: 20px;
   display: flex;
@@ -60,12 +60,15 @@ const Title = styled.p`
   margin-left: 10px;
 `;
 function MyProfile() {
+
+    const storedUserInfo = localStorage.getItem("userInfo");
+    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
     return (
         <Wrapper>
             <InformArea>
-                <Name>박정은 님</Name>
-                <Major>컴퓨터소프트웨어공학과</Major>
-                <Grade>4학년 YK반</Grade>
+                <Name>{userInfo.userName} 님</Name>
+                <Major>{userInfo.userMajor}</Major>
+                <Grade>{userInfo.userGrade}학년</Grade>
             </InformArea>
             <AlarmArea>
                 <Title>알림</Title>

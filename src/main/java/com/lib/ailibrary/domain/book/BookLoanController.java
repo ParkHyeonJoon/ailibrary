@@ -3,10 +3,9 @@ package com.lib.ailibrary.domain.book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -80,4 +79,12 @@ public class BookLoanController {
                     .body("Internal Server Error");
         }
     }
+
+    @GetMapping("/loaning")
+    public List<BookLoanResponse> checkBookLoaning(@RequestParam String userId) {
+        List<BookLoanResponse> loaningBook = bookLoanService.checkBookLoaning(userId);
+        return loaningBook;
+
+    }
+
 }

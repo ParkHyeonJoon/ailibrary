@@ -5,31 +5,40 @@ import { Link } from "react-router-dom";
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 20px;
+  height: 32px;
   justify-content: flex-end;
   align-items: center;
   gap: 26px;
   flex-shrink: 0;
-  background: #B3C4FF;
-  color: white;
+  background: #e3e9ff;
+  color: #909090;
 `;
 
 const CustomLink = styled(Link)`
   text-decoration: none; /* 밑줄 제거 */
-  color: white;
+  color: #909090;
 `;
 
 const Text = styled.p`
   cursor: pointer;
-  font-size: 7px;
+  font-size: 13px;
   margin-right: 0;
   font-family: Inter;
-  font-weight: 700;
+  font-weight: 600;
   word-wrap: break-word;
 
   &:last-child {
     margin-right: 20px;
   }
+
+  /* 마우스 오버 시 스타일 변경 */
+
+  &:hover {
+    color: ${(props) => props.hoverBackgroundColor || "rgba(0,30,65,0.8)"};
+    /* 원하는 다른 스타일 변경도 추가 가능 */
+  }
+
+\` ;
 `;
 
 function LoginArea() {

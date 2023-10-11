@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -45,5 +46,9 @@ public class BookLoanService {
 
     public void checkBookReturn(String userId, int bookId) {
         bookLoanMapper.checkBookReturn(userId, bookId);
+    }
+
+    public List<BookLoanResponse> checkBookLoaning(String userId) {
+        return bookLoanMapper.checkBookLoaning(userId);
     }
 }

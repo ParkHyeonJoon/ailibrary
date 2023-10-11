@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import Header from "../components/Header";
 import MyProfile from "../components/MyProfile";
+import LoaningBookList from "../components/LoaningBookList";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -9,7 +10,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 150px;
+  margin-top: 180px;
 `;
 
 function MyPage() {
@@ -17,6 +18,7 @@ function MyPage() {
         <Wrapper>
             <Header/>
             <MyProfile/>
+            <LoaningBookList/>
         </Wrapper>
     );
 }

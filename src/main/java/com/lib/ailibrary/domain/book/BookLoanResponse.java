@@ -6,10 +6,9 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-public class BookLoanResponse {
+public class BookLoanResponse extends Book{
     private int bookLoanId;
     private String userId;
-    private int bookId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate loanDate; //대출 날짜

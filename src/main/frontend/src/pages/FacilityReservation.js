@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 150px;
+  margin-top: 180px;
 `;
 
 const Title = styled.p`
@@ -69,7 +69,20 @@ const PickerArea = styled.div`
   justify-content: center;
   margin-bottom: 20px;
 `;
-
+const Result = styled.div`
+  width: 880px;
+`;
+function groupByRoomFloor(searchResult) {
+    const groupedResult = {};
+    searchResult.forEach((roomData) => {
+        const roomFloor = roomData.roomFloor;
+        if (!groupedResult[roomFloor]) {
+            groupedResult[roomFloor] = [];
+        }
+        groupedResult[roomFloor].push(roomData);
+    });
+    return groupedResult;
+}
 function FacilityReservation() {
     const [selectedMenu, setSelectedMenu] = useState("스터디룸");
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -108,6 +121,9 @@ function FacilityReservation() {
         }
     }, [selectedMenu, selectedDate, selectedTimes]);
 
+    // 검색 결과를 그룹화
+    const groupedSearchResult = groupByRoomFloor(searchResult);
+
     return (
         <Wrapper>
             <Header />
@@ -140,14 +156,22 @@ function FacilityReservation() {
                 />
             </PickerArea>
 
-            {searchResult.map((roomData, index) => (
-                <Room
-                    key={index}
-                    roomData={{...roomData,
-                    date: selectedDate.toISOString().split('T')[0],
-                    time: selectedTimes,}}
-
-                />
+            {Object.entries(groupedSearchResult).map(([floor, rooms]) => (
+                <Result key={floor}>
+                    <h2>{`${floor}층`}</h2>
+                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                        {rooms.map((roomData, index) => (
+                            <Room
+                                key={index}
+                                roomData={{
+                                    ...roomData,
+                                    date: selectedDate.toISOString().split('T')[0],
+                                    time: selectedTimes,
+                                }}
+                            />
+                        ))}
+                    </div>
+                </Result>
             ))}
         </Wrapper>
     );

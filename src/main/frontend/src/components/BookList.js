@@ -4,6 +4,7 @@ import BookFrame from "../components/BookFrame";
 
 const Wrapper = styled.div`
   width: 100%;
+  color: #000000;
 `;
 
 const SectionWrapper = styled.div`
@@ -13,9 +14,11 @@ const SectionWrapper = styled.div`
 `;
 
 const Title = styled.p`
-  color : black;
+  margin-left: 20px;
+  color: #000000;
   font-size: 30px;
   font-weight: 700;
+  margin-bottom: 10px;
 `;
 
 function BookList({ book }) {
@@ -62,6 +65,7 @@ function BookList({ book }) {
                 {topBooks.map((book, index) => (
                     <div style={{ display: 'inline-block', margin: '20px' }} key={index}>
                         <BookFrame book={book} />
+
                     </div>
                 ))}
             </SectionWrapper>
