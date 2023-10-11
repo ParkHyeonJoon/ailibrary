@@ -56,7 +56,7 @@
     </delete>
 
 
-    <!-- 도서 대출 상태 -->
+    <!-- 타인의 도서 대출 상태 -->
     <select id="checkBookLoan" parameterType="int" resultType="int">
         SELECT
             COUNT(*)
@@ -66,21 +66,41 @@
             book_id = #{bookId}
     </select>
 
-    <select id="checkBookState" parameterType="int" resultType="string">
+    <!-- 본인의 도서 대출 상태 체크 -->
+    <select id="checkBook" parameterType="map" resultType="int">
         SELECT
-            return_state
+            COUNT(*)
         FROM
             tb_book_loan
         WHERE
-            book_id = #{bookId}
+            user_id = #{userId, jdbcType=VARCHAR} AND book_id = #{bookId, jdbcType=INTEGER}
     </select>
 
-    <select id="getReturnDate" parameterType="int" resultType="java.time.LocalDate">
+    <!-- 본인이 도서 몇 권을 대여했는지 -->
+    <select id="checkBookCount" parameterType="string" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_book_loan
+        WHERE
+            user_id = #{userId}
+    </select>
+
+    <!-- 도서 반납 -->
+    <delete id="checkBookReturn" parameterType="map">
+        DELETE
+        FROM
+            tb_book_loan
+        WHERE
+            user_id = #{userId, jdbcType=VARCHAR} AND book_id = #{bookId, jdbcType=INTEGER}
+    </delete>
+
+    <select id="getReturnDate" parameterType="map" resultType="java.time.LocalDate">
         SELECT
             return_date
         FROM
             tb_book_loan
         WHERE
-            book_id = #{bookId}
+            user_id = #{userId, jdbcType=VARCHAR} AND book_id = #{bookId, jdbcType=INTEGER}
     </select>
 </mapper>

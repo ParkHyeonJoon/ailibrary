@@ -92,14 +92,14 @@ public class BookController {
     @GetMapping("/checkLike")
     public ResponseEntity<String> checkLikeBook(@RequestParam String userId, @RequestParam int bookId) {
         try {
-            int likeStatus = bookService.checkUserLikeBook(userId, bookId);
+                    int likeStatus = bookService.checkUserLikeBook(userId, bookId);
 
-            if(likeStatus == 0) {
-                //bookService.likeBook(userId, bookId);
-                return ResponseEntity.ok("off"); //찜이 안 되어있다는 것을 의미
-            } else if (likeStatus == 1) {
-                //bookService.unlikeBook(userId, bookId);
-                return ResponseEntity.ok("on"); //찜이 되어있다는 것을 의미
+                    if(likeStatus == 0) {
+                        //bookService.likeBook(userId, bookId);
+                        return ResponseEntity.ok("off"); //찜이 안 되어있다는 것을 의미
+                    } else if (likeStatus == 1) {
+                        //bookService.unlikeBook(userId, bookId);
+                        return ResponseEntity.ok("on"); //찜이 되어있다는 것을 의미
             } else {
                 return ResponseEntity.ok("Fuck no"); //다른 상황
             }
