@@ -80,6 +80,7 @@ public class BookLoanController {
         }
     }
 
+    //사용자가 현재 대출 중인 도서 목록
     @GetMapping("/loaning")
     public List<BookLoanResponse> checkBookLoaning(@RequestParam String userId) {
         List<BookLoanResponse> loaningBook = bookLoanService.checkBookLoaning(userId);
