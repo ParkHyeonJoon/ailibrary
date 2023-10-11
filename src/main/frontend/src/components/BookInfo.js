@@ -6,12 +6,11 @@ import HeartButton from "../common/HeartButton";
 import ReserveButton from "../common/ReserveButton";
 
 const Wrapper = styled.div`
-  width: 50%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  margin: -120px 150px;
   z-index: 1000;
 `;
 
@@ -20,10 +19,11 @@ const BookTitle = styled.p`
   font-weight: normal;
   font-style: normal;
   text-align: left;
-  font-size: 60px;
+  font-size: 63px;
   line-height: normal;
   margin-top:0;
   margin-bottom: 0px;
+  word-wrap: break-word;
 `;
 
 const BookAuthor = styled.p`
@@ -42,29 +42,17 @@ const BtnArea = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  `
-
-const ReserveBtn = styled.button`
-  width: 130px;
-  height: 50px;
-  background: #000F5F;
-  color: white;
-  border-radius: 5px;
-  border: none;
-  font-weight: 600;
 `;
 
 const LoanBtn = styled.button`
   width: 300px;
-  height: 60px;
+  height: 65px;
   background: #ffffff;
   color: #000000;
   border-radius: 5px;
   border: none;
   font-weight: 700;
-  font-weight: 700;
-  font-size: 15px;
-  font-size: 15px;
+  font-size: 17px;
   cursor: pointer;
 `;
 

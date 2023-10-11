@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import {useParams} from "react-router-dom";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import BookInfo from "../components/BookInfo";
@@ -10,31 +10,35 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 180px;
   color: #fff;
   min-height: 100vh;
 `;
 
 const ContentWrapper = styled.div`
-  width: 100%;
+  width: 1000px;
   display: flex;
   flex-direction: row;
+  margin-top: 50px;
 `;
 
 const BackgroundImage = styled.div`
   position: absolute;
   z-index: -1;
   top: -30px;
-  width: 100%;
-  height: 100%;
+  right: -30px; /* 오른쪽에 -30px 여백 추가 */
+  bottom: -30px; /* 아래에 -30px 여백 추가 */
+  left: -30px; /* 왼쪽에 -30px 여백 추가 */
+  width: calc(100% + 60px); /* 가로 너비에 60px 여백 추가 */
+  height: calc(100% + 60px); /* 세로 높이에 60px 여백 추가 */
   background-image: url(${(props) => props.imageUrl});
   background-size: cover;
-  filter: blur(30px) brightness(0.4); /* 흐리게 처리하고 어둡게 처리 */
+  filter: blur(30px) brightness(0.5); /* 흐리게 처리하고 어둡게 처리 */
 `;
 
+
 const BookImage = styled.img`
-  margin-top: -120px;
   width: 300px;
   height: 450px;
   border-radius: 5px;
@@ -42,7 +46,7 @@ const BookImage = styled.img`
 `;
 
 const BookDetail = () => {
-    const { bookId } = useParams();
+    const {bookId} = useParams();
     const [bookInfo, setBookInfo] = useState({});
 
     useEffect(() => {
@@ -54,11 +58,11 @@ const BookDetail = () => {
 
     return (
         <Wrapper>
-            <Header />
+            <Header/>
+            <BackgroundImage imageUrl={bookInfo.bookImage}/>
             <ContentWrapper>
-                <BackgroundImage imageUrl={bookInfo.bookImage} />
-                <BookInfo bookInfo={bookInfo} />
-                <BookImage src={bookInfo.bookImage} alt="Book" />
+                <BookInfo bookInfo={bookInfo}/>
+                <BookImage src={bookInfo.bookImage} alt="Book"/>
             </ContentWrapper>
         </Wrapper>
     );
