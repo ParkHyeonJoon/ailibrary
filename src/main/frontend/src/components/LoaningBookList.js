@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import BookFrame from "../components/BookFrame";
+import LoaningBookFrame from "./LoaningBookFrame";
 
 const Wrapper = styled.div`
   margin-top: 20px;
@@ -53,7 +53,7 @@ function LoaningBookList({ book }) {
             <SectionWrapper>
                 {loanBooks.map((book, index) => (
                     <div style={{ display: 'inline-block', margin: '20px' }} key={index}>
-                        <BookFrame book={book} />
+                        <LoaningBookFrame book={book} />
 
                     </div>
                 ))}

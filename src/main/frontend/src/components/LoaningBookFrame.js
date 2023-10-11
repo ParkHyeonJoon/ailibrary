@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const BookWrapper = styled.div`
   position: relative;
@@ -27,18 +27,25 @@ const BookTitle = styled.p`
   font-weight: 600;
   margin-top: 5px;
   margin-left: 2px;
+  text-decoration: none;
 `;
-
-const BookFrame = ({book}) => { // book 데이터를 popularBooks에서 props로 받음
+const ReturnDate = styled.p`
+  color: red;
+  font-size: 10px;
+  font-weight: 600;
+`;
+const LoaningBookFrame = ({ book }) => {
     return (
-        <Link to={`/book-detail/${book.bookId}`} style={{ textDecoration: 'none' }}>
+        <Link to={`/book-detail/${book.bookId}`}> {/* 각 책에 대한 고유한 URL로 연결 */}
             <BookWrapper>
-                <BookImage src={book.bookImage} alt={book.bookTitle}/>
+                <BookImage src={book.bookImage} alt={book.bookTitle} />
                 <BookTitle>{book.bookTitle}</BookTitle>
+                <ReturnDate></ReturnDate> //TODO: 반납일자 불러오기
             </BookWrapper>
         </Link>
     );
 };
 
 
-export default BookFrame;
+
+export default LoaningBookFrame;

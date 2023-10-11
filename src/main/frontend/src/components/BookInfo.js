@@ -2,24 +2,28 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import HeartButton from "../common/HeartButton";
+import ReserveButton from "../common/ReserveButton";
 
 const Wrapper = styled.div`
-  width: 50%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  margin: 40px 150px;
+  z-index: 1000;
 `;
 
 const BookTitle = styled.p`
-  text-align: left;
-  font-family: Inter;
-  font-size: 40px;
+  font-family: 'PilseungGothic';
+  font-weight: normal;
   font-style: normal;
-  font-weight: 700;
+  text-align: left;
+  font-size: 63px;
   line-height: normal;
-  margin: 0;
+  margin-top:0;
+  margin-bottom: 0px;
+  word-wrap: break-word;
 `;
 
 const BookAuthor = styled.p`
@@ -29,44 +33,44 @@ const BookAuthor = styled.p`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  color: rgba(255, 255, 255, 0.77)
 `;
-
-
-const ReserveBtn = styled.button`
-  width: 130px;
-  height: 50px;
-  background: #000F5F;
-  color: white;
-  border-radius: 5px;
-  border: none;
-  font-weight: 600;
+const BtnArea = styled.div`
+  position: relative;;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
 `;
 
 const LoanBtn = styled.button`
-  width: 130px;
-  height: 50px;
-  background: #000F5F;
-  color: white;
+  width: 300px;
+  height: 65px;
+  background: #ffffff;
+  color: #000000;
   border-radius: 5px;
   border: none;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 17px;
+  cursor: pointer;
 `;
 
-const GoodBtn = styled.button`
-  width: 65px;
-  height: 30px;
-  background: #FF0000;
-  color: white;
-  border-radius: 5px;
-  border: none;
-  font-weight: 600;
-`;
+// const GoodBtn = styled.button`
+//   width: 65px;
+//   height: 30px;
+//   background: #FF0000;
+//   color: white;
+//   border-radius: 5px;
+//   border: none;
+//   font-weight: 600;
+// `;
 
 const FormTable = styled.table`
   width: 700px;
-  margin-top: 20px;
   border-collapse: collapse;
-  margin-bottom: 40px;
+  color: rgba(255, 255, 255, 0.77);
+  margin-top: 30px;
 `;
 
 const ColGroup = styled.colgroup`
@@ -82,7 +86,7 @@ const TBody = styled.tbody``;
 
 const TableRow = styled.tr`
   td {
-    padding: 10px;
+    padding-bottom: 20px;
   }
 `;
 
@@ -95,11 +99,12 @@ const Info = styled.p`
 const InfoContent = styled.p`
   font-size: 14px;
   margin: 0;
+
+  font-weight: bold;
 `;
 
 const BookInfo = ({ bookInfo }) => {
   const [isLiked, setIsLiked] = useState(false);
-  const [likeButtonText, setLikeButtonText] = useState("찜 등록");
   const [isBookLoaned, setIsBookLoaned] = useState(false);
   const [loanButtonText, setLoanButtonText] = useState("대출하기");
 
@@ -119,7 +124,6 @@ const BookInfo = ({ bookInfo }) => {
           .then((response) => {
             const likeStatus = response.data;
             if (likeStatus === "on") {
-              setLikeButtonText("찜 취소");
               setIsLiked(true);
             }
           })
@@ -134,9 +138,6 @@ const BookInfo = ({ bookInfo }) => {
               if (loanStatus === "able") {
                 setLoanButtonText("대출하기");
                 setIsBookLoaned(false);
-              } else if(loanStatus === "return") {
-                setLoanButtonText("반납하기");
-                setIsBookLoaned(true);
               } else if(loanStatus === "unable") {
                 setLoanButtonText("대출 중");
                 setIsBookLoaned(true);
@@ -170,10 +171,10 @@ const BookInfo = ({ bookInfo }) => {
         const likeStatus = response.data;
         // 요청 성공 시 처리
         if(likeStatus === 1) {
-            setIsLiked(true); // 버튼 상태 변경 등
+            setIsLiked(!isLiked); // 버튼 상태 변경 등
             alert("찜 등록 되었습니다");
         } else if(likeStatus === 0) {
-            setIsLiked(false);
+            setIsLiked(!isLiked);
             alert("찜 해제 되었습니다");
         } else {
             alert("에러");
@@ -193,6 +194,11 @@ const BookInfo = ({ bookInfo }) => {
         return;
       }
 
+      if (isBookLoaned) {
+        alert("이 책은 이미 대출 중입니다");
+        return;
+      }
+
       const userId = userInfo.userId;
 
       axios
@@ -203,19 +209,13 @@ const BookInfo = ({ bookInfo }) => {
         })
         .then((response) => {
           const loanStatus = response.data;
-          if(loanStatus === 99) {
-            alert("대여 권수 제한입니다")
-          } else if (loanStatus === 0) {
-                setIsBookLoaned(true);
-                setLoanButtonText("반납하기");
-                alert("대출 완료되었습니다");
-             } else if(loanStatus === 1) {
-                setLoanButtonText("대출하기");
-                alert("반납 완료되었습니다.");
-             } else if(loanStatus === -1) {
-                setLoanButtonText("대출 중");
-                alert("대출 중입니다.");
-             }
+          if (loanStatus === 0) {
+            setIsBookLoaned(true);
+            setLoanButtonText("대출 중");
+            alert("대출 완료되었습니다");
+          } else if(loanStatus === 1) {
+            alert("이 도서는 대출 중입니다.");
+          }
         })
         .catch((error) => {
           console.error(error);
@@ -227,7 +227,14 @@ const BookInfo = ({ bookInfo }) => {
     <Wrapper>
       <BookTitle>{bookInfo.bookTitle}</BookTitle>
       <BookAuthor>{bookInfo.author}</BookAuthor>
+      <BtnArea>
+          <LoanBtn onClick={handleLoanClick}>
+              {isBookLoaned ? "대출 중" : "대출하기"}
+          </LoanBtn>
+        <ReserveButton ></ReserveButton>
 
+        <HeartButton isLiked={isLiked} onClick={handleLikeClick}/>
+      </BtnArea>
       <FormTable>
         <ColGroup>
           <col />
@@ -265,26 +272,6 @@ const BookInfo = ({ bookInfo }) => {
             <td>
               <InfoContent>{bookInfo.floor}</InfoContent>
             </td>
-          </TableRow>
-          <TableRow>
-            <td>
-                <LoanBtn onClick={handleLoanClick}>
-
-                {isBookLoaned
-                    ? loanButtonText === "대출 중"
-                      ? "대출 중"
-                      : "반납하기"
-                    : "대출하기"}
-                </LoanBtn>
-            </td>
-            <td>
-                <ReserveBtn>예약하기</ReserveBtn>
-            </td>
-          </TableRow>
-          <TableRow>
-              <GoodBtn onClick={handleLikeClick}>
-                {isLiked ? "찜 취소" : "찜 등록"}
-              </GoodBtn>
           </TableRow>
         </TBody>
       </FormTable>

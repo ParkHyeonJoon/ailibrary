@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 150px;
+  margin-top: 180px;
   background-color: #ffffff; /* 원하는 어두운 색상 코드를 사용하세요 */
   color: #000000; /* 텍스트 색상을 밝게 설정할 수 있습니다. */
 `;
