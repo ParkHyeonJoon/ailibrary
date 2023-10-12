@@ -104,6 +104,7 @@
         book_id = #{bookId}
     </update>
 
+    <!-- 찜 취소 기능 -->
     <update id="decreaseBookGood" parameterType="int">
         UPDATE
         tb_book
@@ -113,6 +114,7 @@
         book_id = #{bookId}
     </update>
 
+    <!-- 사용자가 찜을 한 도서인지 확인 기능 -->
     <select id="checkUserLike" parameterType="map" resultType="int">
         SELECT
             COUNT(*)
@@ -122,6 +124,7 @@
             user_id = #{userId, jdbcType=VARCHAR} AND book_id = #{bookId, jdbcType=INTEGER}
     </select>
 
+    <!-- 찜 테이블에 찜 추가 -->
     <insert id="isLike" parameterType="map">
         INSERT INTO tb_like (
             user_id, book_id
@@ -130,6 +133,7 @@
         #{bookId, jdbcType=INTEGER})
     </insert>
 
+    <!-- 찜 테이블에서 삭제 -->
     <delete id="unLike" parameterType="map">
         DELETE
         FROM
@@ -137,5 +141,17 @@
         WHERE
             user_id = #{userId, jdbcType=VARCHAR} AND book_id = #{bookId, jdbcType=INTEGER}
     </delete>
+
+    <!-- 사용자가 찜 한 도서 목록 조회 -->
+    <select id="checkLikeBook" parameterType="string" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            A.book_id, A.book_title, A.book_image, A.book_good
+        FROM
+            tb_book A
+        LEFT JOIN
+            tb_like B ON A.book_id = B.book_id
+        WHERE
+            B.user_id = #{userId}
+    </select>
 
 </mapper>
