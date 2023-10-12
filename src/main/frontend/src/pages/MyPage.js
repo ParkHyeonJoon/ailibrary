@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import MyProfile from "../components/MyProfile";
 import LoaningBookList from "../components/LoaningBookList";
+import BookSlider from "../components/BookSlider";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -18,6 +19,7 @@ function MyPage() {
         <Wrapper>
             <Header/>
             <MyProfile/>
+            <BookSlider/>
             <LoaningBookList/>
         </Wrapper>
     );
