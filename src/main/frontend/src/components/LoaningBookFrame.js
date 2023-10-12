@@ -31,7 +31,7 @@ const BookTitle = styled.p`
 `;
 const ReturnDate = styled.p`
   color: red;
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 600;
 `;
 const LoaningBookFrame = ({ book }) => {
@@ -40,7 +40,7 @@ const LoaningBookFrame = ({ book }) => {
             <BookWrapper>
                 <BookImage src={book.bookImage} alt={book.bookTitle} />
                 <BookTitle>{book.bookTitle}</BookTitle>
-                <ReturnDate></ReturnDate> //TODO: 반납일자 불러오기
+                <ReturnDate>반납 날짜 : {book.returnDate}</ReturnDate>
             </BookWrapper>
         </Link>
     );

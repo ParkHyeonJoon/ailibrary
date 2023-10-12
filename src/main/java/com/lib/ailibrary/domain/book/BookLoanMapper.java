@@ -1,8 +1,10 @@
 package com.lib.ailibrary.domain.book;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Mapper
 public interface BookLoanMapper {
@@ -35,11 +37,14 @@ public interface BookLoanMapper {
     /**
      * 대출 상태 확인
      * @param - bookId
-     * @return - return_state
      */
     int checkBookLoan(int bookId);
 
-    String checkBookState(int bookId);
+    int checkBook(@Param("userId") String userId, @Param("bookId") int bookId);
 
-    LocalDate getReturnDate(int bookId);
+    int checkBookCount(String userId);
+
+    void checkBookReturn(@Param("userId") String userId, @Param("bookId") int bookId);
+
+    List<BookLoanResponse> checkBookLoaning(String userId);
 }

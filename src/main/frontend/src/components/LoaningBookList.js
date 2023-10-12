@@ -25,11 +25,16 @@ const Title = styled.p`
 function LoaningBookList({ book }) {
     const [loanBooks, setLoanBooks] = useState([]);
 
+    const storedUserInfo = localStorage.getItem("userInfo");
+    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+
+    const userId = userInfo.userId;
     useEffect(() => {
+
         // 두 개의 API를 병렬로 호출하는 함수
         const fetchData = async () => {
             try {
-                const loanResponse = await fetch("http://localhost:8080/book/loan");
+                const loanResponse = await fetch(`http://localhost:8080/book/loaning?userId=${userId}`);
 
                 if (!loanResponse.ok) {
                     throw new Error("Network response was not ok");
@@ -45,7 +50,7 @@ function LoaningBookList({ book }) {
 
         // 데이터 가져오는 함수 호출
         fetchData();
-    }, []);
+    }, [userId]);
 
     return (
         <Wrapper>
