@@ -5,6 +5,7 @@ import com.lib.ailibrary.domain.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -39,6 +40,8 @@ public class RoomController {
             rezTimeCheck[i] = Integer.parseInt(rezTime[i].substring(0, 2));
             if ( (parseRezDate.isBefore(LocalDate.now())) || (rezTimeCheck[i] <= LocalTime.now().getHour() && parseRezDate.isEqual(LocalDate.now())) ) {
                 throw new IllegalArgumentException("예약 가능일이 아닙니다.");
+            } else if(parseRezDate.getDayOfWeek() == DayOfWeek.SATURDAY || parseRezDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                throw new IllegalArgumentException("주말은 예약이 불가합니다.");
             }
         }
 
