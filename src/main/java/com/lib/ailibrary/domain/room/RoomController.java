@@ -3,14 +3,9 @@ package com.lib.ailibrary.domain.room;
 import com.lib.ailibrary.domain.notification.NotificationRequest;
 import com.lib.ailibrary.domain.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -67,9 +62,10 @@ public class RoomController {
     }
 
     // 예약 정보 삭제
-    @PostMapping("/reserve/delete")
-    public void deleteReserve(@RequestParam final Long rezId) {
+    @DeleteMapping("/reserve/delete")
+    public String deleteReserve(@RequestBody final Long rezId) {
         roomService.deleteReserve(rezId);
+        return "삭제 완료";
     }
 
     // 예약 정보 조회

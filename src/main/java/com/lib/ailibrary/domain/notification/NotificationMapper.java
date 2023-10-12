@@ -17,5 +17,17 @@ public interface NotificationMapper {
      * 알림 내역 조회
      * @param userStuId - 학번
      */
-    List<NotificationResponse> findById(Long userStuId);
+    List<NotificationResponse> findById(final Long userStuId);
+
+    /**
+     * 알림 삭제
+     * @param notiId - PK
+     */
+    void deleteById(final Long notiId);
+
+    /**
+     * 알림 개수
+     * @param userStuId - 학번 FK
+     */
+    int count(final Long userStuId);
 }

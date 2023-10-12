@@ -1,10 +1,7 @@
 package com.lib.ailibrary.domain.notification;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,8 +12,8 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
-    @GetMapping("/notification/list")
-    public List<NotificationResponse> getNotification(@RequestParam final Long userStuId) {
+    @PostMapping("/notification/list")
+    public List<NotificationResponse> getNotification(@RequestBody final Long userStuId) {
 
         List<NotificationResponse> notiResponses = notificationService.findById(userStuId);
         for(int i=0; i<notiResponses.size(); i++) {
@@ -24,5 +21,17 @@ public class NotificationController {
         }
 
         return notiResponses;
+    }
+
+    @PutMapping("/notification/delete")
+    public String deleteNotification(@RequestBody final Long notiId) {
+        notificationService.deleteNotification(notiId);
+
+        return "삭제가 완료되었습니다.";
+    }
+
+    @PostMapping("/notification/count")
+    public int notificationCount(@RequestBody final Long userStuId) {
+        return notificationService.notificationCount(userStuId);
     }
 }

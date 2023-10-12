@@ -43,4 +43,14 @@ public class NotificationMapperTest {
             }
         }
     }
+
+    @Test
+    void 알림삭제() {
+        notificationMapper.deleteById(20L);
+    }
+
+    @Test
+    void 알림개수() {
+        System.out.println(notificationMapper.count(20233562L));
+    }
 }

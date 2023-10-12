@@ -30,4 +30,18 @@ public class NotificationService {
     public List<NotificationResponse> findById(final Long userStuId) {
         return notificationMapper.findById(userStuId);
     }
+
+    /**
+     * @param notiId - PK
+     */
+    public void deleteNotification(final Long notiId) {
+        notificationMapper.deleteById(notiId);
+    }
+
+    /**
+     * @param userStuId - 학번 FK
+     */
+    public int notificationCount(final Long userStuId) {
+        return notificationMapper.count(userStuId);
+    }
 }
