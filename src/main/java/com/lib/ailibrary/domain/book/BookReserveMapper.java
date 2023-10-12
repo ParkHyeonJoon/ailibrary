@@ -10,7 +10,7 @@ public interface BookReserveMapper {
      * 도서 예약 정보 저장
      * @params param - 예약 정보
      */
-    void save(BookReserveRequest param);
+    void save(BookReserveRequest request);
 
     /**
      * 도서 예약 정보 조회
@@ -38,10 +38,12 @@ public interface BookReserveMapper {
     List<BookReserveResponse> findAll();
 
     /**
-     * 도서 예약 상태 확인
-     * @param bookId
-     * @return bookRezId
+     * 도서 예약 내역 확인
+     * @params bookId
+     * @return count
      */
-    Long checkBookRez(int bookId);
+    int checkReserve(int bookId);
+
+
 
 }

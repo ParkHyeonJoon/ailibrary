@@ -62,10 +62,10 @@
             book_rez_id DESC
     </select>
 
-    <!-- 도서 예약 상태 -->
-    <select id="checkBookRez" parameterType="int">
+    <!-- 예약 되어있는 도서인지 확인 -->
+    <select id="checkReserve" parameterType="int" resultType="int">
         SELECT
-            <include refid="bookRezColumns"></include>
+            COUNT(*)
         FROM
             tb_book_rez
         WHERE
