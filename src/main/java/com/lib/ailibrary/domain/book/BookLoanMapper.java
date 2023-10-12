@@ -6,7 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import java.time.LocalDate;
 
 @Mapper
-public interface BookLoanMapper {
+public interface
+BookLoanMapper {
 
     /**
      * 대출 정보 저장

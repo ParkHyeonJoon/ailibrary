@@ -14,6 +14,7 @@ public class NotificationResponse {
     private Long userStuId; // 학번
     private String notiContent; // 알림 내용
     private LocalDateTime notiTime; // 알림 등록 시간
+    private boolean leadCheck; // 알림 열람 여부
     private String dateMessage; // 날짜메시지 ex) 1일전, 5분전 등
     // 알림 등록 시간 처리
     public void getDaysBetweenNotificationAndCurrentTime() {

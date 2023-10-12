@@ -4,6 +4,7 @@ import com.lib.ailibrary.domain.notification.NotificationRequest;
 import com.lib.ailibrary.domain.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -56,12 +57,13 @@ public class RoomController {
             notificationRequest.setNotiContent("스터디룸 이용 예약이 완료되었습니다.");
         } else if(params.getRoomId() == 14) {
             notificationRequest.setNotiContent("오디토리움 이용 예약이 완료되었습니다.");
-        } else
+        } else {
             notificationRequest.setNotiContent("VR룸 이용 예약이 완료되었습니다.");
+        }
         notificationRequest.setNotiTime(LocalDateTime.now());
 
         notificationService.saveNotification(notificationRequest);
-        return "잘됐슈";     // 미완성
+        return "잘됐슈";
     }
 
     // 예약 정보 삭제
