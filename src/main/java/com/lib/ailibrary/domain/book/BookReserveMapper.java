@@ -44,6 +44,20 @@ public interface BookReserveMapper {
      */
     int checkReserve(int bookId);
 
+    /**
+     * 도서 예약 취소
+     * @param bookId
+     */
+    int cancelReserve(int bookId);
+
+    /**
+     * 해당 사용자가 예약한 도서 목록 조회
+     * @param - userId
+     * @return - BookReserveResponse
+     */
+    List<BookReserveResponse> checkBookReserve(String userId);
+
+
 
 
 }

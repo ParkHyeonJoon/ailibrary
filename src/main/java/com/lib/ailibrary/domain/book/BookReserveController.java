@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/book")
@@ -60,6 +62,13 @@ public class BookReserveController {
         else {
             return ResponseEntity.ok("그냥 도서");
         }
+    }
+
+    //사용자 예약 도서 조회
+    @GetMapping("/reserving")
+    public List<BookReserveResponse> reserveBook(String userId) {
+        List<BookReserveResponse> reserveBookList = bookReserveService.checkBookReserve(userId);
+        return reserveBookList;
     }
 }
 

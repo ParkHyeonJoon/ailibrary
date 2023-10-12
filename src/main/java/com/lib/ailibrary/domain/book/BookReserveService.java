@@ -71,5 +71,21 @@ public class BookReserveService {
         return bookReserve;
     }
 
+    /**
+     * bookId로 예약 취소
+     */
+    public int cancelReserve(int bookId) {
+        return bookReserveMapper.cancelReserve(bookId);
+    }
+
+    /**
+     * 사용자가 예약한 도서 조회
+     * userId로 조회
+     */
+    public List<BookReserveResponse> checkBookReserve(String userId) {
+        List<BookReserveResponse> reserveBookList = bookReserveMapper.checkBookReserve(userId);
+        return reserveBookList;
+    }
+
 }
 
