@@ -5,11 +5,11 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 
+//도서 정보가 있는 Book을 상속 받으면서 bookId는 Book 클래스에 있는 거 사용
 @Getter
-public class BookLoanResponse {
+public class BookLoanResponse extends Book{
     private int bookLoanId;
     private String userId;
-    private int bookId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate loanDate; //대출 날짜

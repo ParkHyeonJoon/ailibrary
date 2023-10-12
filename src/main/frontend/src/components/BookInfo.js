@@ -229,7 +229,8 @@ const BookInfo = ({ bookInfo }) => {
       <BookAuthor>{bookInfo.author}</BookAuthor>
       <BtnArea>
           <LoanBtn onClick={handleLoanClick}>
-              {isBookLoaned ? "대출 중" : "대출하기"}
+              {isBookLoaned ? loanButtonText === "대출 중" ? "대출 중"
+               : "반납하기" : "대출하기"}
           </LoanBtn>
         <ReserveButton ></ReserveButton>
 

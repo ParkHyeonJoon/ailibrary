@@ -68,7 +68,7 @@ const BlackTextBookFrame = styled(BookFrame)`
 function MainBookList() {
     const [topBooks, setTopBooks] = useState([]);
     const [newBooks, setNewBooks] = useState([]);
-    const [selectedMenu, setSelectedMenu] = useState("추천도서"); // 초기값: 추천도서
+    const [selectedMenu, setSelectedMenu] = useState("인기도서"); // 초기값: 추천도서
 
     const handleMenuClick = (menu) => {
         setSelectedMenu(menu);
