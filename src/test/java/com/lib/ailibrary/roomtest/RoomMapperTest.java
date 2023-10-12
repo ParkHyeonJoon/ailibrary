@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -95,5 +96,14 @@ public class RoomMapperTest {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @Test
+    void 예약개수출력() {
+        RoomCountRequest params = new RoomCountRequest();
+        params.setUserStuId(20233562L);
+        params.setRezDate(LocalDate.parse("2023-10-10"));
+
+        System.out.println(roomMapper.count(params));
     }
 }

@@ -64,4 +64,13 @@ public class RoomService {
 
         return roomMapper.searchRoom(params);
     }
+
+    /**
+     * 예약 개수 (예약하려는 날짜의 기존 예약 개수)
+     * @param params - 학번, 예약날짜
+     * @return 예약 개수
+     */
+    public int reserveCount(final RoomCountRequest params) {
+        return roomMapper.count(params);
+    }
 }
