@@ -19,10 +19,10 @@ public interface RoomMapper {
 
     /**
      * 예약 정보 조회
-     * @param rezId - PK
+     * @param userStuId - PK
      * @return 예약 정보
      */
-    RoomReserveResponse findById(Long rezId);
+    List<RoomReserveResponse> findById(Long userStuId);
 
     /**
      * 예약 정보 수정
@@ -44,9 +44,10 @@ public interface RoomMapper {
 
     /**
      * 예약 정보 수 카운팅
+     * @param params - 학번, 예약 날짜
      * @return 예약 정보 수
      */
-    int count();
+    int count(RoomCountRequest params);
 
     /**
      * 잔여 시설 조회

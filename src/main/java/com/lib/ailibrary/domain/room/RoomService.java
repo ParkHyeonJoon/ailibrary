@@ -28,11 +28,12 @@ public class RoomService {
 
     /**
      * 예약 정보 조회
-     * @param roomRezId - PK
+     * @param userStuId - UK
      * @return 예약 정보
      */
-    public RoomReserveResponse findRezById(final Long roomRezId) {
-        return roomMapper.findById(roomRezId);
+    public List<RoomReserveResponse> findRezById(final Long userStuId) {
+
+        return roomMapper.findById(userStuId);
     }
 
     /**
@@ -41,12 +42,10 @@ public class RoomService {
 
     /**
      * 예약 정보 삭제
-     * @param roomRezId - PK
-     * @return PK
+     * @param rezId - PK
      */
-    public Long deleteReserve(final Long roomRezId) {
-        roomMapper.deleteById(roomRezId);
-        return roomRezId;
+    public void deleteReserve(final Long rezId) {
+        roomMapper.deleteById(rezId);
     }
 
     /**
@@ -64,5 +63,14 @@ public class RoomService {
     public List<RoomSearchResponse> findRemainRoom(final RoomSearchRequest params) {
 
         return roomMapper.searchRoom(params);
+    }
+
+    /**
+     * 예약 개수 (예약하려는 날짜의 기존 예약 개수)
+     * @param params - 학번, 예약날짜
+     * @return 예약 개수
+     */
+    public int reserveCount(final RoomCountRequest params) {
+        return roomMapper.count(params);
     }
 }

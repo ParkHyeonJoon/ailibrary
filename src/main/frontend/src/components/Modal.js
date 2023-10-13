@@ -92,6 +92,8 @@ function Modal({ isOpen, onClose, onReservation, date, time, roomData}) {
               console.log("예약이 성공적으로 완료되었습니다.");
           } catch (error) {
               console.error("예약 오류:", error);
+              alert(error);
+              window.location.reload();
           }
       };
 
