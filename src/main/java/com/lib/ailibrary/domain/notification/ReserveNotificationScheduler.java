@@ -18,26 +18,39 @@ public class ReserveNotificationScheduler {
     private final RoomService roomService;
     private final NotificationService notificationService;
 
-    @Scheduled(cron = "0 0 8 * * 1-6") // 매일 8시에 실행 ( 토요일은 제외 )
+    @Scheduled(cron = "0 0 8 * * 1-6")
     public void checkReservations() {
-        List<RoomReserveResponse> result = roomService.findAllReserve();
+        List<RoomReserveResponse> reservations = roomService.findAllReserve();
+
         LocalDate currentDate = LocalDate.now();
-        Duration duration;
-        for(int i=0; i< result.size(); i++) {
-            LocalDateTime reserveDateTime = result.get(i).getRezDate().atStartOfDay();
-            duration = Duration.between(currentDate.atStartOfDay(), reserveDateTime);
-            if(duration.toDays() == 1) {
+
+        for (RoomReserveResponse reservation : reservations) {
+            LocalDateTime reserveDateTime = reservation.getRezDate().atStartOfDay();
+            Duration duration = Duration.between(currentDate.atStartOfDay(), reserveDateTime);
+
+            if (duration.toDays() == 0) {
+                String roomName = getRoomName(reservation.getRoomId());
+                String roomFloor = getRoomFloor(reservation.getRoomId());
+
                 NotificationRequest params = new NotificationRequest();
-                params.setUserStuId(result.get(i).getUserStuId());
-                if(result.get(i).getRoomId() <= 13) {
-                    params.setNotiContent("스터디룸 이용 예약 날짜가 하루 남았습니다..");
-                } else if(result.get(i).getRoomId() == 14) {
-                    params.setNotiContent("오디토리움 이용 예약 날짜가 하루 남았습니다.");
-                } else
-                    params.setNotiContent("VR룸 이용 예약 날짜가 하루 남았습니다.");
+                params.setUserStuId(reservation.getUserStuId());
+                params.setNotiContent("금일 " + reservation.getRezTime() + "에 " + roomFloor + " " + roomName + " 예약이 있습니다.");
                 params.setNotiTime(LocalDateTime.now());
+
                 notificationService.saveNotification(params);
             }
         }
+    }
+
+    private String getRoomName(int roomId) {
+        String[] roomNames = {"1번 스터디룸", "2번 스터디룸", "3번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
+                "1번 스터디룸", "2번스터디룸", "3번 스터디룸", "4번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
+                "오디토리움", "VR룸"};
+        return roomNames[roomId];
+    }
+
+    private String getRoomFloor(int roomId) {
+        String[] roomFloors = {"2층", "2층", "2층", "3층", "3층", "3층", "4층", "4층", "4층", "4층", "5층", "5층", "5층", "5층", "5층"};
+        return roomFloors[roomId];
     }
 }
