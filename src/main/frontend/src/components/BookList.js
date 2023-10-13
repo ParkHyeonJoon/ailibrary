@@ -69,7 +69,6 @@ function BookList({ book }) {
                     </div>
                 ))}
             </SectionWrapper>
-M
             {/* 소설 도서 */}
             <Title>마법 같은 세계로 초대하는 소설들</Title>
             <SectionWrapper>

@@ -24,13 +24,13 @@ export const searchFacility = async (selectedMenu, selectedDate, selectedTimes) 
             return data;
         } else {
             // 오류 응답 처리
-            alert("실패")
-            throw new Error("시설 검색에 실패했습니다.");
+            const errorResponse = await response.json();
+            const errorMessage = errorResponse.message;
+            throw errorMessage;
         }
     } catch (error) {
         // 오류 처리
         console.error("API 오류:", error);
-        alert("오류" + storedToken)
         throw error;
     }
 };
@@ -61,7 +61,9 @@ export const createReservation = async (rezPeopleNum, rezDate, rezTime, roomId, 
             return "예약이 성공적으로 완료되었습니다.";
         } else {
             // 오류 응답 처리
-            throw new Error("예약 생성에 실패했습니다.");
+            const errorResponse = await response.json();
+            const errorMessage = errorResponse.message;
+            throw errorMessage;
         }
     } catch (error) {
         // 오류 처리

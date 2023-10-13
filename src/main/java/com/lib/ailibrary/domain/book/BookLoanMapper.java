@@ -7,7 +7,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
-public interface BookLoanMapper {
+public interface
+BookLoanMapper {
 
     /**
      * 대출 정보 저장

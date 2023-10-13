@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class RoomMapperTest {
 
     @Test
     void findById() {
-        RoomReserveResponse room = roomMapper.findById(2L);
+        List<RoomReserveResponse> room = roomMapper.findById(20233562L);
         try {
             String roomJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(room);
             System.out.println(roomJson);
@@ -81,5 +82,28 @@ public class RoomMapperTest {
         for(int i=0; i<remainRoom.size(); i++) {
             System.out.println(remainRoom.get(i).getRoomName());
         }*/
+    }
+
+    @Test
+    void 전체예약내역조회() {
+        List<RoomReserveResponse> list = roomMapper.findAll();
+
+        for(int i=0; i<list.size(); i++) {
+            try {
+                String roomJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(list.get(i));
+                System.out.println(roomJson);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Test
+    void 예약개수출력() {
+        RoomCountRequest params = new RoomCountRequest();
+        params.setUserStuId(20233562L);
+        params.setRezDate(LocalDate.parse("2023-10-10"));
+
+        System.out.println(roomMapper.count(params));
     }
 }

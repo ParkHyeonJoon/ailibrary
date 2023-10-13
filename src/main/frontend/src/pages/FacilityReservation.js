@@ -109,7 +109,9 @@ function FacilityReservation() {
             setSearchResult(result);
         } catch (error) {
             console.error("시설 검색 오류:", error);
-            console.log(selectedMenu + " " + selectedDate + " " + selectedTimes)
+            console.log(selectedMenu + " " + selectedDate + " " + selectedTimes);
+            alert(error);
+            setSelectedTimes([]);
         }
     };
 

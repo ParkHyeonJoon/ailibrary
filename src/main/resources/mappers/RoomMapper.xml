@@ -40,7 +40,7 @@
         FROM
             tb_room_rez
         WHERE
-            rez_id = #{value}
+            user_stu_id = #{value}
     </select>
 
 
@@ -55,7 +55,7 @@
         FROM
             tb_room_rez
         WHERE
-            rezid = #{rezId}
+            rez_id = #{rezId}
     </delete>
 
 
@@ -104,4 +104,13 @@
 
     </select>
 
+    <!-- 시설 예약 개수 -->
+    <select id="count" parameterType="com.lib.ailibrary.domain.room.RoomCountRequest" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM
+            tb_room_rez
+        WHERE
+            user_stu_id = #{userStuId} and rez_date = #{rezDate}
+    </select>
 </mapper>
