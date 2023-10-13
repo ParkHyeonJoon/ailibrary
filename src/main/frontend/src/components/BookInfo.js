@@ -218,7 +218,7 @@ const BookInfo = ({ bookInfo }) => {
                 alert("반납 완료되었습니다.");
              } else if(loanStatus === -1) {
                 setLoanButtonText("대출 중");
-                alert("대출 중입니다.");
+                alert("이미 대출 중인 도서입니다.");
              }
         })
         .catch((error) => {

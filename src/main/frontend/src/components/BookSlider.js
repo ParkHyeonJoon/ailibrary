@@ -8,9 +8,8 @@ import rightArrowImage from "../assets/next.png";
 import leftArrowImage from "../assets/back.png";
 
 const Container = styled.div`
-  width: 1000px;
+  width: 1100px;
   color: #000000;
-  background: magenta;
 `;
 
 const Title = styled.p`
@@ -21,10 +20,34 @@ const Title = styled.p`
   margin-bottom: 20px;
 `;
 const CustomSlider = styled(Slider)`
-  /* Slider 컴포넌트에 스타일 적용 */
-  background: blueviolet;
-  width: 980px;
-  left:10px;
+  width: 1090px;
+  left: 10px;
+  position: relative;
+
+  .slick-prev {
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.3s;
+    left: 15px;
+  }
+
+  .slick-next {
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.3s;
+    right: 5px;
+  }
+  
+  &:hover {
+    .slick-prev, .slick-next {
+      opacity: 1;
+
+    }
+  }
+
+  //TODO: 배경 검고 투명하게 나오는 거 하기
 `;
 function BookSlider({book}) {
     const settings = {
@@ -36,33 +59,37 @@ function BookSlider({book}) {
         slidesToShow: 5,
         slidesToScroll: 5,
         initialSlide: 0,
+        centerMode: true, // Enable center mode
+        centerPadding: "15px", // Adjust the value as needed
+        prevArrow: <img src={leftArrowImage} alt="Previous" />, // 이전 화살표 이미지 지정
+        nextArrow: <img src={rightArrowImage} alt="Next" />, // 다음 화살표 이미지 지정
         responsive: [
             {
                 breakpoint: 1440,
+                settings: {
+                    slidesToShow: 5,
+                    slidesToScroll: 5,
+                },
+            },
+            {
+                breakpoint: 1024,
                 settings: {
                     slidesToShow: 4,
                     slidesToScroll: 4,
                 },
             },
             {
-                breakpoint: 1024,
+                breakpoint: 720,
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 3,
                 },
             },
             {
-                breakpoint: 720,
+                breakpoint: 480,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
                 },
             },
             {

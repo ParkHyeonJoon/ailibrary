@@ -3,7 +3,7 @@ import styled from "styled-components";
 import RecentAlarm from "./RecentAlarm";
 
 const Wrapper = styled.div`
-  width: 1000px;
+  width: 1050px;
   height: 350px;
   border-radius: 20px;
   background: rgba(217, 224, 255, 0.9);
