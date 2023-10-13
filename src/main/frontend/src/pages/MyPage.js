@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import MyProfile from "../components/MyProfile";
 import LoaningBookList from "../components/LoaningBookList";
+import ReserveBookList from "../components/ReserveBookList";
+import LikeBookList from "../components/LikeBookList";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -19,6 +21,8 @@ function MyPage() {
             <Header/>
             <MyProfile/>
             <LoaningBookList/>
+            <ReserveBookList/>
+            <LikeBookList/>
         </Wrapper>
     );
 }

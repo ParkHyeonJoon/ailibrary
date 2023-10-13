@@ -109,4 +109,10 @@ public class BookController {
                     .body("Internal Server Error");
         }
     }
+
+    @GetMapping("/likeBooklist")
+    public List<Book> likeBooklist(String userId) {
+        List<Book> likeBookList = bookService.checkLikeBook(userId);
+        return likeBookList;
+    }
 }
