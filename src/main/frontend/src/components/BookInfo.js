@@ -152,6 +152,9 @@ const BookInfo = ({ bookInfo }) => {
               } else if(loanStatus === "unable") {
                 setLoanButtonText("대출 중");
                 setIsBookLoaned(true);
+              } else if(loanStatus === "return") {
+                setLoanButtonText("반납하기");
+                setIsBookLoaned(true);
               }
             })
             .catch((error) => {
@@ -219,11 +222,6 @@ const BookInfo = ({ bookInfo }) => {
         return;
       }
 
-      if (isBookLoaned) {
-        alert("이 책은 이미 대출 중입니다");
-        return;
-      }
-
       const userId = userInfo.userId;
 
       axios
@@ -234,14 +232,20 @@ const BookInfo = ({ bookInfo }) => {
         })
         .then((response) => {
           const loanStatus = response.data;
-          if (loanStatus === 0) {
+          if(loanStatus === 99) {
+             alert("대여 권수 제한입니다")
+          } else if (loanStatus === 0) {
             setIsBookLoaned(true);
-            setLoanButtonText("대출 중");
+            setLoanButtonText("반납하기");
             alert("대출 완료되었습니다");
           } else if(loanStatus === 1) {
-            alert("이 도서는 대출 중입니다.");
-          }
-        })
+             setLoanButtonText("대출하기");
+             alert("반납 완료되었습니다.");
+           } else if(loanStatus === -1) {
+              setLoanButtonText("대출 중");
+              alert("대출 중입니다.");
+              }
+           })
         .catch((error) => {
           console.error(error);
           alert("ERROR");
