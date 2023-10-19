@@ -27,7 +27,9 @@ const BookTitle = styled.p`
   font-weight: 600;
   margin-top: 5px;
   margin-left: 2px;
-  text-decoration: none;
+  white-space: nowrap; /* 줄 바꿈 방지 */
+  overflow: hidden; /* 내용이 넘칠 때 숨김 처리 */
+  text-overflow: ellipsis; /* 넘친 내용에 "..." 표시 */
 `;
 const ReturnDate = styled.p`
   color: red;
@@ -36,7 +38,7 @@ const ReturnDate = styled.p`
 `;
 const LoaningBookFrame = ({ book }) => {
     return (
-        <Link to={`/book-detail/${book.bookId}`}> {/* 각 책에 대한 고유한 URL로 연결 */}
+        <Link to={`/book-detail/${book.bookId}`} style={{ textDecoration: "none" }}> {/* 각 책에 대한 고유한 URL로 연결 */}
             <BookWrapper>
                 <BookImage src={book.bookImage} alt={book.bookTitle} />
                 <BookTitle>{book.bookTitle}</BookTitle>

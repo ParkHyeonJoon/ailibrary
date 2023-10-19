@@ -14,61 +14,79 @@ public class BookReserveController {
     private final BookReserveService bookReserveService;
     private final BookLoanService bookLoanService;
 
-    //예약 버튼을 클릭하면 실행
     @PostMapping("/reserve")
     public ResponseEntity<String> reserveBook(@RequestBody BookReserveRequest request) {
         String userId = request.getUserId();
         int bookId = request.getBookId();
 
-        int loanStatus = bookLoanService.checkBookLoan(bookId);
+        // 1. 사용자가 대출 중인 도서인지 확인
         int loan = bookLoanService.checkBook(userId, bookId);
 
-        //reserveStatus가 0이면 예약 가능, 그 외면 예약 불가능
-        int reserveStatus = bookReserveService.checkReserve(bookId);
+        if (loan > 0) {
+            // 2. 본인이 대출 중
+            return ResponseEntity.ok("대출 중");
+        }
 
-        // 사용자가 대출 하지 않은 상태
-        if(loan == 0) {
-            // 다른 사용자가 대출 한 상태
-            if(loanStatus == 1) {
-                // 예약 하지 않은 상태
-                if(reserveStatus == 0) {
-                    bookReserveService.reserveBook(request);
-                    return ResponseEntity.ok("예약 성공");
-                } else {
-                    return ResponseEntity.ok("이미 예약");
-                }
-            }
-            // 아무도 대출 하지 않은 상태
-            else {
-                return ResponseEntity.ok("예약 불가능");
+        // 3. 본인이 대출 안 함 다른 사용자 대출 중인지 확인
+        int loanStatus = bookLoanService.checkBookLoan(bookId);
+
+        if (loanStatus == 1) {
+            // 4. 본인이 대출 안 하고 다른 사용자가 대출 중
+            int reserveStatus = bookReserveService.checkReserve(bookId);
+            // 다른 사용자가 예약중인지 확인
+            if (reserveStatus == 1) {
+                // 5. 다른 사용자가 대출 중이고 다른 사용자가 예약 중
+                return ResponseEntity.ok("예약 중");
+            } else {
+                // 6. 다른 사용자가 대출 중이고 다른 사용자가 예약 안 함
+                bookReserveService.reserveBook(request);
+                return ResponseEntity.ok("예약 가능");
             }
         }
-        //사용자가 대출 한 상태
-        else {
-            return ResponseEntity.ok("대출");
-        }
+
+        // 7. 대출 중이 아니고 다른 사용자도 대출 중이 아님
+        bookReserveService.reserveBook(request);
+        return ResponseEntity.ok("예약 불가");
     }
 
-    //화면에 들어갔을 때
     @GetMapping("/reserve")
-    public ResponseEntity<String> checkAndReserve(int bookId) {
-        int reserveStatus = bookReserveService.checkReserve(bookId);
+    public ResponseEntity<String> checkAndReserve(@RequestParam int bookId, @RequestParam String userId) {
+        // 1. 사용자가 대출 중인 도서인지 확인
+        int loan = bookLoanService.checkBook(userId, bookId);
 
-        if(reserveStatus == 1) {
-            // 예약 중인 도서
-            return ResponseEntity.ok("예약 도서");
+        if (loan > 0) {
+            // 2. 본인이 대출 중
+            return ResponseEntity.ok("대출 중");
         }
-        // 예약이 안되어있는 도서
-        else {
-            return ResponseEntity.ok("그냥 도서");
+
+        // 3. 본인이 대출 안 함 다른 사용자 대출 중인지 확인
+        int loanStatus = bookLoanService.checkBookLoan(bookId);
+
+        if (loanStatus == 1) {
+            // 4. 본인이 대출 안 하고 다른 사용자가 대출 중
+            int reserveStatus = bookReserveService.checkReserve(bookId);
+            // 다른 사용자가 예약중인지 확인
+            if (reserveStatus == 1) {
+                // 5. 다른 사용자가 대출 중이고 다른 사용자가 예약 중
+                return ResponseEntity.ok("예약 중");
+            } else {
+                // 6. 다른 사용자가 대출 중이고 다른 사용자가 예약 안 함
+                bookReserveService.reserveBook(new BookReserveRequest(userId, bookId)); // 예약 진행
+                return ResponseEntity.ok("예약 가능");
+            }
         }
+
+        // 7. 대출 중이 아니고 다른 사용자도 대출 중이 아님
+        bookReserveService.reserveBook(new BookReserveRequest(userId, bookId)); // 예약 진행
+        return ResponseEntity.ok("예약 불가");
     }
 
-    //사용자 예약 도서 조회
+
     @GetMapping("/reserving")
-    public List<BookReserveResponse> reserveBook(String userId) {
+    public List<BookReserveResponse> reserveBook(@RequestParam String userId) {
         List<BookReserveResponse> reserveBookList = bookReserveService.checkBookReserve(userId);
         return reserveBookList;
     }
-}
 
+    // ... (다른 메소드들은 그대로 유지)
+}

@@ -69,15 +69,14 @@ function BookList({ book }) {
                     </div>
                 ))}
             </SectionWrapper>
-
             {/* 소설 도서 */}
             <Title>마법 같은 세계로 초대하는 소설들</Title>
             <SectionWrapper>
-            {fictionBooks.map((book, index) => (
-            <div style={{ display: 'inline-block', margin: '20px' }} key={index}>
-            <BookFrame book={book} />
-            </div>
-            ))}
+                {fictionBooks.map((book, index) => (
+                    <div style={{ display: 'inline-block', margin: '20px' }} key={index}>
+                        <BookFrame book={book} />
+                    </div>
+                ))}
             </SectionWrapper>
 
             {/* 신규 도서 */}

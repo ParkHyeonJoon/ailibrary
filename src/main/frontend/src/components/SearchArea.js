@@ -26,7 +26,7 @@ const SearchBar = styled.div`
   height: 48px;
   flex-shrink: 0;
   border-radius: 120px;
-  border: 1.7px solid #1859cb;
+  border: 1.5px solid #1859cb;
   opacity: 0.699999988079071;
   background: #FFFBFB;
 `;

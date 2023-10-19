@@ -9,13 +9,13 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  padding-top: 30px;
+  padding-top: 20px;
 `;
 
 const TitleArea = styled.div`
   padding-left: 20px;
   height: 40px;
-  width: 900px;
+  width: 1050px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -38,7 +38,7 @@ const StyledTitle = styled.p`
 `;
 
 const ChatFrame = styled.div`
-    width: 900px;
+    width: 1050px;
     height: 480px;
     border: none;
     border-radius: 15px;
@@ -50,7 +50,7 @@ const ChatFrame = styled.div`
     align-items: center;
 `;
 const ChatInput = styled.input`
-    width: 800px;
+    width: 1000px;
     height: 25px;
     padding: 10px;
     margin-top: 10px;

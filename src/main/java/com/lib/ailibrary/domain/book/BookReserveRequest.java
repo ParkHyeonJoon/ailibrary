@@ -15,4 +15,9 @@ public class BookReserveRequest {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate bookRezDate;
+
+    public BookReserveRequest(String userId, int bookId) {
+        this.userId = userId;
+        this.bookId = bookId;
+    }
 }

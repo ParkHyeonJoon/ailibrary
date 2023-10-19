@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 
 const StyledChatWindow = styled.div`
-  width: 870px;
+  width: 1000px;
   height: 380px;
   overflow-y: scroll;
   padding: 10px;

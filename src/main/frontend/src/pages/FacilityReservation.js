@@ -17,6 +17,14 @@ const Wrapper = styled.div`
   margin-top: 180px;
 `;
 
+const ContentWrapper = styled.div`
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Title = styled.p`
   text-align: left;
   color: #000;
@@ -71,6 +79,11 @@ const PickerArea = styled.div`
 `;
 const Result = styled.div`
   width: 880px;
+`;
+const StyledText = styled.span`
+  font-size: 15px;
+  display: flex; /* 왼쪽 정렬을 위해 추가 */
+  align-items: center; /* 텍스트와 아이콘을 세로 중앙 정렬 */
 `;
 function groupByRoomFloor(searchResult) {
     const groupedResult = {};
@@ -129,6 +142,7 @@ function FacilityReservation() {
     return (
         <Wrapper>
             <Header />
+            <ContentWrapper>
             <Title>시설예약</Title>
             <RoomTypeArea>
                 <RoomTypeBtn
@@ -151,7 +165,9 @@ function FacilityReservation() {
                 </RoomTypeBtn>
             </RoomTypeArea>
             <PickerArea>
+                <StyledText>날짜</StyledText>
                 <MyDatePicker onDateChange={(date) => setSelectedDate(date)} />
+                <StyledText>시간</StyledText>
                 <MyTimePicker
                     selectedTimes={selectedTimes}
                     setSelectedTimes={setSelectedTimes}
@@ -175,6 +191,7 @@ function FacilityReservation() {
                     </div>
                 </Result>
             ))}
+            </ContentWrapper>
         </Wrapper>
     );
 }

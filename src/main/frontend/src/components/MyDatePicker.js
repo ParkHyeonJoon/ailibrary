@@ -11,6 +11,7 @@ const CustomDatePicker = styled.div`
   flex-direction: column;
   align-items: flex-start; /* 텍스트를 왼쪽으로 정렬 */
   justify-content: flex-start;
+  margin-bottom: 20px;
 `;
 
 const StyledDatePickerWrapper = styled.div`
@@ -31,7 +32,7 @@ const StyledDatePicker = styled(DatePicker)`
   font-size: 15px;
 
   & .react-datepicker__header {
-    background-color: transparent;
+    background-color: white;
   }
 
   & .react-datepicker__day--selected {
@@ -45,12 +46,6 @@ const CustomIcon = styled.div`
   cursor: pointer;
   margin-right: 10px;
   color: #6F8FFF;
-`;
-
-const DateText = styled.span`
-  font-size: 15px;
-  display: flex; /* 왼쪽 정렬을 위해 추가 */
-  align-items: center; /* 텍스트와 아이콘을 세로 중앙 정렬 */
 `;
 
 const MyDatePicker = ({onDateChange}) => {
@@ -68,7 +63,6 @@ const MyDatePicker = ({onDateChange}) => {
     const [selectedDate, setSelectedDate] = useState(getCurrentDate()); // 초기값 현재 날짜로 설정
   return (
     <CustomDatePicker>
-      <DateText>날짜</DateText>
       <StyledDatePickerWrapper>
         <CustomIcon>
           <FontAwesomeIcon icon={faCalendar} />
