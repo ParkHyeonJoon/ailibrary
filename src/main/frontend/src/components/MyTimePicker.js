@@ -83,9 +83,6 @@ const MyTimePicker = ({ selectedTimes, setSelectedTimes }) => {
 
   return (
       <TimePickerContainer>
-        <TextContainer>
-          <TimeSlotText>시간</TimeSlotText>
-        </TextContainer>
         <TimeSlotRow>
           {timeSlots.map((timeSlot, index) => (
               <TimeSlot

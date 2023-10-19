@@ -62,13 +62,34 @@
             book_rez_id DESC
     </select>
 
-    <!-- 도서 예약 상태 -->
-    <select id="checkBookRez" parameterType="int">
+    <!-- 예약 되어있는 도서인지 확인 -->
+    <select id="checkReserve" parameterType="int" resultType="int">
         SELECT
-            <include refid="bookRezColumns"></include>
+            COUNT(*)
         FROM
             tb_book_rez
         WHERE
             book_id = #{bookId}
+    </select>
+
+    <!-- 예약 취소 기능 -->
+    <delete id="cancelReserve" parameterType="int">
+        DELETE
+        FROM
+            tb_book_rez
+        WHERE
+            book_id = #{bookId}
+    </delete>
+
+    <!-- 사용자가 예약 중인 도서 조회 기능 -->
+    <select id="checkBookReserve" parameterType="string" resultType="com.lib.ailibrary.domain.book.BookReserveResponse">
+        SELECT
+            A.book_id, A.book_title, A.book_image, B.book_rez_date
+        FROM
+            tb_book A
+        LEFT JOIN
+            tb_book_rez B ON A.book_id = B.book_id
+        WHERE
+            B.user_id = #{userId}
     </select>
 </mapper>

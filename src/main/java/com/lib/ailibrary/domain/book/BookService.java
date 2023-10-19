@@ -140,4 +140,14 @@ public class BookService {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 사용자가 찜한 도서 목록 조회
+     * @param userId
+     * @return List<Book>
+     */
+    public List<Book> checkLikeBook(String userId) {
+        List<Book> likeBooklist = bookMapper.checkLikeBook(userId);
+        return likeBooklist;
+    }
 }

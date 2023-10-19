@@ -72,6 +72,11 @@ const PickerArea = styled.div`
 const Result = styled.div`
   width: 880px;
 `;
+const StyledText = styled.span`
+  font-size: 15px;
+  display: flex; /* 왼쪽 정렬을 위해 추가 */
+  align-items: center; /* 텍스트와 아이콘을 세로 중앙 정렬 */
+`;
 function groupByRoomFloor(searchResult) {
     const groupedResult = {};
     searchResult.forEach((roomData) => {
@@ -151,7 +156,9 @@ function FacilityReservation() {
                 </RoomTypeBtn>
             </RoomTypeArea>
             <PickerArea>
+                <StyledText>날짜</StyledText>
                 <MyDatePicker onDateChange={(date) => setSelectedDate(date)} />
+                <StyledText>시간</StyledText>
                 <MyTimePicker
                     selectedTimes={selectedTimes}
                     setSelectedTimes={setSelectedTimes}

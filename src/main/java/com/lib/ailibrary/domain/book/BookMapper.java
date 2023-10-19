@@ -80,4 +80,10 @@ public interface BookMapper {
      */
     int checkUserLike(@Param("userId") String userId, @Param("bookId") int bookId);
 
+    /**
+     * 사용자가 찜한 도서 목록 조회
+     * @params - userId
+     */
+    List<Book> checkLikeBook(String userId);
+
 }

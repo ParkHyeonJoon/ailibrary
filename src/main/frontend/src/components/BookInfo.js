@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import HeartButton from "../common/HeartButton";
@@ -21,7 +21,7 @@ const BookTitle = styled.p`
   text-align: left;
   font-size: 63px;
   line-height: normal;
-  margin-top:0;
+  margin-top: 0;
   margin-bottom: 0px;
   word-wrap: break-word;
 `;
@@ -56,16 +56,6 @@ const LoanBtn = styled.button`
   cursor: pointer;
 `;
 
-// const GoodBtn = styled.button`
-//   width: 65px;
-//   height: 30px;
-//   background: #FF0000;
-//   color: white;
-//   border-radius: 5px;
-//   border: none;
-//   font-weight: 600;
-// `;
-
 const FormTable = styled.table`
   width: 700px;
   border-collapse: collapse;
@@ -77,6 +67,7 @@ const ColGroup = styled.colgroup`
   col:nth-child(1) {
     width: 20%;
   }
+
   col:nth-child(2) {
     width: 80%;
   }
@@ -104,196 +95,171 @@ const InfoContent = styled.p`
 `;
 
 const BookInfo = ({ bookInfo }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [isBookLoaned, setIsBookLoaned] = useState(false);
-  const [loanButtonText, setLoanButtonText] = useState("대출하기");
+    const [isLiked, setIsLiked] = useState(false);
+    const [isBookLoaned, setIsBookLoaned] = useState(false);
+    const [loanButtonText, setLoanButtonText] = useState("대출하기");
+    const { bookId } = useParams();
 
-  const { bookId } = useParams();
+    const storedUserInfo = localStorage.getItem("userInfo");
+    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
-  const storedUserInfo = localStorage.getItem("userInfo");
-  const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+    useEffect(() => {
+        if (userInfo && bookId) {
+            const userId = userInfo.userId;
 
-  useEffect(() => {
-      if (userInfo && bookId) {
-        // 사용자 정보가 있을 때만 API 호출
+            axios
+                .get(`http://localhost:8080/book/checkLike?userId=${userId}&bookId=${bookId}`)
+                .then((response) => {
+                    const likeStatus = response.data;
+                    if (likeStatus === "on") {
+                        setIsLiked(true);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error checking like status: ", error);
+                });
+
+            axios
+                .get(`http://localhost:8080/book/loan?userId=${userId}&bookId=${bookId}`)
+                .then((response) => {
+                    const loanStatus = response.data;
+                    if (loanStatus === "able") {
+                        setLoanButtonText("대출하기");
+                        setIsBookLoaned(false);
+                    } else if (loanStatus === "unable") {
+                        setLoanButtonText("대출 중");
+                        setIsBookLoaned(true);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error checking book loan status: ", error);
+                });
+        }
+    }, [userInfo, bookId]);
+
+    const handleLikeClick = () => {
+        if (!userInfo) {
+            alert("로그인이 필요합니다");
+            return;
+        }
+
+        const bookId = bookInfo.bookId;
         const userId = userInfo.userId;
 
-        // 백엔드 API 호출하여 초기 찜 상태 확인
         axios
-          .get(`http://localhost:8080/book/checkLike?userId=${userId}&bookId=${bookId}`)
-          .then((response) => {
-            const likeStatus = response.data;
-            if (likeStatus === "on") {
-              setIsLiked(true);
-            }
-          })
-          .catch((error) => {
-            console.error("Error checking like status: ", error);
-          });
-
-        axios
-           .get(`http://localhost:8080/book/loan?userId=${userId}&bookId=${bookId}`)
-           .then((response) => {
-              const loanStatus = response.data;
-              if (loanStatus === "able") {
-                setLoanButtonText("대출하기");
-                setIsBookLoaned(false);
-              } else if(loanStatus === "unable") {
-                setLoanButtonText("대출 중");
-                setIsBookLoaned(true);
-              }
+            .post('http://localhost:8080/book/like', { bookId, userId }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((response) => {
+                const likeStatus = response.data;
+                if (likeStatus === 1) {
+                    setIsLiked(!isLiked);
+                    alert("찜 등록 되었습니다");
+                } else if (likeStatus === 0) {
+                    setIsLiked(!isLiked);
+                    alert("찜 해제 되었습니다");
+                } else {
+                    alert("에러");
+                }
             })
             .catch((error) => {
-              console.error("Error checking book loan status: ", error);
+                console.error(error);
+                alert("ERROR");
             });
-        }
-      }, [userInfo, bookId]);
-
-  // 찜 버튼 클릭 이벤트 핸들러
-  const handleLikeClick = () => {
-    if(!userInfo) {
-        alert("로그인이 필요합니다");
-        return;
-    }
-
-    // 클라이언트에서 서버로 bookId를 보냅니다.
-    const bookId = bookInfo.bookId;
-    const userId = userInfo.userId;
-
-    // HTTP POST 요청을 보냅니다.
-    axios
-      .post('http://localhost:8080/book/like', { bookId, userId }, {
-      headers: {
-         'Content-Type': 'application/json',
-         },
-      })
-      .then((response) => {
-        const likeStatus = response.data;
-        // 요청 성공 시 처리
-        if(likeStatus === 1) {
-            setIsLiked(!isLiked); // 버튼 상태 변경 등
-            alert("찜 등록 되었습니다");
-        } else if(likeStatus === 0) {
-            setIsLiked(!isLiked);
-            alert("찜 해제 되었습니다");
-        } else {
-            alert("에러");
-        }
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // 요청 실패 시 처리
-        console.error(error);
-        alert("ERROR");
-      });
-  };
-
-  const handleLoanClick = () => {
-      if (!userInfo) {
-        alert("로그인이 필요합니다");
-        return;
-      }
-
-      if (isBookLoaned) {
-        alert("이 책은 이미 대출 중입니다");
-        return;
-      }
-
-      const userId = userInfo.userId;
-
-      axios
-        .post('http://localhost:8080/book/loan', { bookId, userId }, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((response) => {
-          const loanStatus = response.data;
-// <<<<<<< HEAD
-//           if(loanStatus === 99) {
-//             alert("대여 권수 제한입니다")
-//           } else if (loanStatus === 0) {
-//                 setIsBookLoaned(true);
-//                 setLoanButtonText("반납하기");
-//                 alert("대출 완료되었습니다");
-//              } else if(loanStatus === 1) {
-//                 setLoanButtonText("대출하기");
-//                 alert("반납 완료되었습니다.");
-//              } else if(loanStatus === -1) {
-//                 setLoanButtonText("대출 중");
-//                 alert("이미 대출 중인 도서입니다.");
-//              }
-
-          if (loanStatus === 0) {
-            setIsBookLoaned(true);
-            setLoanButtonText("대출 중");
-            alert("대출 완료되었습니다");
-          } else if(loanStatus === 1) {
-            alert("이 도서는 대출 중입니다.");
-          }
-
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("ERROR");
-        });
     };
 
-  return (
-    <Wrapper>
-      <BookTitle>{bookInfo.bookTitle}</BookTitle>
-      <BookAuthor>{bookInfo.author}</BookAuthor>
-      <BtnArea>
-          <LoanBtn onClick={handleLoanClick}>
-              {isBookLoaned ? loanButtonText === "대출 중" ? "대출 중"
-               : "반납하기" : "대출하기"}
-          </LoanBtn>
-        <ReserveButton ></ReserveButton>
+    const handleLoanClick = () => {
+        if (!userInfo) {
+            alert("로그인이 필요합니다");
+            return;
+        }
 
-        <HeartButton isLiked={isLiked} onClick={handleLikeClick}/>
-      </BtnArea>
-      <FormTable>
-        <ColGroup>
-          <col />
-          <col />
-        </ColGroup>
-        <TBody>
-          <TableRow>
-            <td>
-              <Info>자료유형</Info>
-            </td>
-            <td>
-              <InfoContent>{bookInfo.category}</InfoContent>
-            </td>
-          </TableRow>
-          <TableRow>
-            <td>
-              <Info>출판연도</Info>
-            </td>
-            <td>
-              <InfoContent>{bookInfo.publishedDate}</InfoContent>
-            </td>
-          </TableRow>
-          <TableRow>
-            <td>
-              <Info>출판사</Info>
-            </td>
-            <td>
-              <InfoContent>{bookInfo.publisher}</InfoContent>
-            </td>
-          </TableRow>
-          <TableRow>
-            <td>
-              <Info>층수</Info>
-            </td>
-            <td>
-              <InfoContent>{bookInfo.floor}</InfoContent>
-            </td>
-          </TableRow>
-        </TBody>
-      </FormTable>
-    </Wrapper>
-  );
+        if (isBookLoaned) {
+            alert("이 책은 이미 대출 중입니다");
+            return;
+        }
+
+        const userId = userInfo.userId;
+
+        axios
+            .post('http://localhost:8080/book/loan', { bookId, userId }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((response) => {
+                const loanStatus = response.data;
+                if (loanStatus === 0) {
+                    setIsBookLoaned(true);
+                    setLoanButtonText("대출 중");
+                    alert("대출 완료되었습니다");
+                } else if (loanStatus === 1) {
+                    alert("이 도서는 대출 중입니다.");
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert("ERROR");
+            });
+    };
+
+
+    return (
+        <Wrapper>
+            <BookTitle>{bookInfo.bookTitle}</BookTitle>
+            <BookAuthor>{bookInfo.author}</BookAuthor>
+            <BtnArea>
+                <LoanBtn onClick={handleLoanClick}>
+                    {isBookLoaned ? loanButtonText === "대출 중" ? "대출 중"
+                        : "반납하기" : "대출하기"}
+                </LoanBtn>
+                <ReserveButton bookId={bookInfo.bookId} />
+                <HeartButton isLiked={isLiked} onClick={handleLikeClick}/>
+            </BtnArea>
+            <FormTable>
+                <ColGroup>
+                    <col/>
+                    <col/>
+                </ColGroup>
+                <TBody>
+                    <TableRow>
+                        <td>
+                            <Info>자료유형</Info>
+                        </td>
+                        <td>
+                            <InfoContent>{bookInfo.category}</InfoContent>
+                        </td>
+                    </TableRow>
+                    <TableRow>
+                        <td>
+                            <Info>출판연도</Info>
+                        </td>
+                        <td>
+                            <InfoContent>{bookInfo.publishedDate}</InfoContent>
+                        </td>
+                    </TableRow>
+                    <TableRow>
+                        <td>
+                            <Info>출판사</Info>
+                        </td>
+                        <td>
+                            <InfoContent>{bookInfo.publisher}</InfoContent>
+                        </td>
+                    </TableRow>
+                    <TableRow>
+                        <td>
+                            <Info>층수</Info>
+                        </td>
+                        <td>
+                            <InfoContent>{bookInfo.floor}</InfoContent>
+                        </td>
+                    </TableRow>
+                </TBody>
+            </FormTable>
+        </Wrapper>
+    );
 };
 
 export default BookInfo;

@@ -60,20 +60,32 @@ public class BookReserveService {
      * @return bookRezId
      */
     public void reserveBook(BookReserveRequest request) {
-        // 이미 예약되었는지 확인
-        Long existingReservation = bookReserveMapper.checkBookRez(request.getBookId());
-        if (existingReservation == null) {
-            // 예약 가능한 경우, 도서 예약 정보 저장
-            bookReserveMapper.save(request);
-        } else {
-            // 이미 예약된 경우 예외 처리
-            throw new RuntimeException("이미 예약된 도서입니다. (도서 ID: " + request.getBookId() + ")");
-        }
+        bookReserveMapper.save(request);
     }
 
-    public BookReserveResponse getReservationInfo(int bookRezId) {
-        // 도서 예약 정보 조회
-        return bookReserveMapper.findById(bookRezId);
+    /**
+     * count로 도서 예약 확인
+     */
+    public int checkReserve(int bookId) {
+        int bookReserve = bookReserveMapper.checkReserve(bookId);
+        return bookReserve;
     }
+
+    /**
+     * bookId로 예약 취소
+     */
+    public int cancelReserve(int bookId) {
+        return bookReserveMapper.cancelReserve(bookId);
+    }
+
+    /**
+     * 사용자가 예약한 도서 조회
+     * userId로 조회
+     */
+    public List<BookReserveResponse> checkBookReserve(String userId) {
+        List<BookReserveResponse> reserveBookList = bookReserveMapper.checkBookReserve(userId);
+        return reserveBookList;
+    }
+
 }
 

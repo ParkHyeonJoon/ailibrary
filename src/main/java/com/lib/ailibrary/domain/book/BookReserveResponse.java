@@ -6,10 +6,10 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-public class BookReserveResponse {
+public class BookReserveResponse extends Book{
     private int bookRezId;
     private String userId;
-    private int bookId;
+
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate bookRezDate;
