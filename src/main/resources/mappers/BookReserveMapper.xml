@@ -73,12 +73,14 @@
     </select>
 
     <!-- 예약 취소 기능 -->
-    <delete id="cancelReserve" parameterType="int">
+    <delete id="cancelReserve" parameterType="java.util.List">
         DELETE
         FROM
             tb_book_rez
-        WHERE
-            book_id = #{bookId}
+        WHERE book_id IN
+        <foreach item="bookId" collection="list" open="(" separator="," close=")">
+             #{bookId}
+        </foreach>
     </delete>
 
     <!-- 사용자가 예약 중인 도서 조회 기능 -->

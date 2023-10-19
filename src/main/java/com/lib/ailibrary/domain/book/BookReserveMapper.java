@@ -1,6 +1,8 @@
 package com.lib.ailibrary.domain.book;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -46,9 +48,9 @@ public interface BookReserveMapper {
 
     /**
      * 도서 예약 취소
-     * @param bookId
+
      */
-    int cancelReserve(int bookId);
+    void cancelReserve(List<Integer> bookId);
 
     /**
      * 해당 사용자가 예약한 도서 목록 조회

@@ -2,9 +2,12 @@ package com.lib.ailibrary.domain.book;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -74,8 +77,9 @@ public class BookReserveService {
     /**
      * bookId로 예약 취소
      */
-    public int cancelReserve(int bookId) {
-        return bookReserveMapper.cancelReserve(bookId);
+    public void cancelReserve(List<Integer> bookId) {
+        // 예약 취소 처리를 여기서 수행
+        bookReserveMapper.cancelReserve(bookId);
     }
 
     /**

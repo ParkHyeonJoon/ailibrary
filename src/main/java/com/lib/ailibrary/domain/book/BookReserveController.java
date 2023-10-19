@@ -5,8 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequiredArgsConstructor
 @RequestMapping("/book")
 public class BookReserveController {
@@ -70,5 +72,14 @@ public class BookReserveController {
         List<BookReserveResponse> reserveBookList = bookReserveService.checkBookReserve(userId);
         return reserveBookList;
     }
+
+    //사용자 예약 도서 취소
+    @PostMapping("/Reserving")
+    public void cancelReserve(@RequestBody List<Integer> bookId) {
+        bookReserveService.cancelReserve(bookId);
+        System.out.println(bookId);
+
+    }
+
 }
 
