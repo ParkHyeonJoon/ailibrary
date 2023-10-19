@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import RecentAlarm from "./RecentAlarm";
+import AllAlarm from "../pages/AllAlarm";
 
 const Wrapper = styled.div`
   width: 1050px;
@@ -59,6 +60,15 @@ const Title = styled.p`
   font-weight: 600;
   margin-left: 10px;
 `;
+const AllLink = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+  color: #6b6b6b;
+  font-size: 14px;
+  position: fixed;
+  left: 1080px;
+  top: 225px;
+`;
 function MyProfile() {
 
     const storedUserInfo = localStorage.getItem("userInfo");
@@ -72,6 +82,7 @@ function MyProfile() {
             </InformArea>
             <AlarmArea>
                 <Title>알림</Title>
+                <AllLink href="/allalarm">전체 알림>></AllLink>
                 <RecentAlarm/>
             </AlarmArea>
         </Wrapper>

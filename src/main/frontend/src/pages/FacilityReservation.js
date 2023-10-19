@@ -17,6 +17,14 @@ const Wrapper = styled.div`
   margin-top: 180px;
 `;
 
+const ContentWrapper = styled.div`
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Title = styled.p`
   text-align: left;
   color: #000;
@@ -134,6 +142,7 @@ function FacilityReservation() {
     return (
         <Wrapper>
             <Header />
+            <ContentWrapper>
             <Title>시설예약</Title>
             <RoomTypeArea>
                 <RoomTypeBtn
@@ -182,6 +191,7 @@ function FacilityReservation() {
                     </div>
                 </Result>
             ))}
+            </ContentWrapper>
         </Wrapper>
     );
 }

@@ -33,7 +33,7 @@ const AlertMessage = styled.p`
 `;
 
 const TimeSlot = styled.div`
-  padding: 4px 8px;
+  padding: 4px 15px;
   margin: 5px;
   border: 1px solid #6F8FFF;
   border-radius: 4px;

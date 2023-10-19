@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import axios from "axios";
 const Wrapper = styled.div`
   width: 95%;
   height: 60px;
@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  overflow-y: auto;
 `;
 const ContentArea = styled.div`
   margin: 10px;
@@ -21,15 +22,26 @@ const ContentArea = styled.div`
 const Date = styled.p`
 width: 20%;
 `;
-function Alarm() {
+const DeleteBtn = styled.button`
+`;
+function Alarm({ notification, onDelete }) {
+    const handleDeleteClick = () => {
+        // 알림 삭제 요청을 서버로 보냅니다.
+        axios
+            .put("http://localhost:8080/notification/delete", { notiId: notification.notiId })
+            .then((response) => {
+                // 성공적으로 삭제된 경우
+                onDelete(notification.notiId);
+            })
+            .catch((error) => {
+                console.error("Error deleting notification: ", error);
+            });
+    };
     return (
         <Wrapper>
-            <ContentArea>
-                스터디룸 이용 예약이 완료되었습니다.
-            </ContentArea>
-            <Date>
-                05/12 10:00
-            </Date>
+            <ContentArea>{notification.notiContent}</ContentArea>
+            <DeleteBtn onClick={handleDeleteClick}>x</DeleteBtn>
+            <Date>{notification.dateMessage}</Date>
         </Wrapper>
     );
 }
