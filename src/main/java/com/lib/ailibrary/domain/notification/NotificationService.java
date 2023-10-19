@@ -23,7 +23,7 @@ public class NotificationService {
     }
 
     /**
-     * 
+     * 알림 내역 조회 (삭제 되지 않은 알림)
      * @param userStuId - FK
      * @return 알림 내역
      */
@@ -32,6 +32,14 @@ public class NotificationService {
     }
 
     /**
+     * 알림 내역 조회 (삭제 된 알림 포함)
+     * @param userStuId - FK
+     * @return 알림 내역
+     */
+    public List<NotificationResponse> findAllById(final Long userStuId) {return notificationMapper.findAllById(userStuId);}
+
+    /**
+     * 알림 삭제
      * @param notiId - PK
      */
     public void deleteNotification(final Long notiId) {
@@ -39,6 +47,7 @@ public class NotificationService {
     }
 
     /**
+     * 알림 개수 (삭제 되지 않은 알림)
      * @param userStuId - 학번 FK
      */
     public int notificationCount(final Long userStuId) {

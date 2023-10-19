@@ -58,13 +58,13 @@ const ReserveButton = ({bookId, userId}) => {
         }, [bookId, userId]);
 
         const handleButtonClick = () => {
-            if (reservationStatus === "예약 가능") {
+            if (reservationStatus === "예약 가능") { // 다른 회원이 대출 중이고 예약중임
                 setIsModalOpen(true);
-            } else if (reservationStatus === "대출 중") {
+            } else if (reservationStatus === "대출 중") { // 내가 대출 중일 경우
                 alert("현재 대출 중인 도서입니다");
-            } else if (reservationStatus === "예약 중") {
+            } else if (reservationStatus === "예약 중") { // 다른 회원이 대출 중이고 예약 중일 경우
                 alert("다른 사용자가 예약 중인 도서입니다.");
-            } else {
+            } else { // 나도 대출 안 함 다른 회원도 안 함
                 alert("현재 대출이 가능한 도서입니다. 대출기능을 이용하세요.")
             }
         };
