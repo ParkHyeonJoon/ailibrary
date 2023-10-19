@@ -1,4 +1,4 @@
-package com.lib.ailibrary.domain.notification;
+package com.lib.ailibrary.domain.notification.sms;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
