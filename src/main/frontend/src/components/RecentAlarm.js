@@ -19,13 +19,19 @@ const Wrapper = styled.div`
 function RecentAlarm() {
     const [notifications, setNotifications] = useState([]);
 
+    const storedToken = localStorage.getItem('token');
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
     const userStuId = userInfo.userStuId;
     const fetchNotifications = () => {
         axios
-            .post("http://localhost:8080/notification/list", {userStuId})
+            .post("http://localhost:8080/notification/list", userStuId, {
+                headers: {
+                    'Authorization': storedToken,
+                    'Content-Type': 'application/json'
+                }
+            })
             .then((response) => {
                 setNotifications(response.data);
             })
