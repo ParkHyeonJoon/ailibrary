@@ -5,12 +5,9 @@ import com.lib.ailibrary.domain.room.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -19,24 +16,45 @@ public class ReserveNotificationScheduler {
     private final RoomService roomService;
     private final NotificationService notificationService;
 
-    @Scheduled(cron = "0 0 8 * * 1-6")
-    public void checkReservations() {
-
+    @Scheduled(fixedRate = 60000) // 매일 오전 8시에 실행 fixedRate = 60000 cron = "0 0 8 * * ?"
+    public void sendNotifications() {
         LocalDate today = LocalDate.now();
-
         List<RoomReserveResponse> reservations = roomService.findAllReserveToday(today);
 
-        for (RoomReserveResponse reservation : reservations) {
+        Map<Long, List<RoomReserveResponse>> userReservationsMap = new HashMap<>();
 
+        for (RoomReserveResponse reservation : reservations) {
+            Long userStuId = reservation.getUserStuId();
+
+            if (userReservationsMap.containsKey(userStuId)) {
+                List<RoomReserveResponse> userReservations = userReservationsMap.get(userStuId);
+                userReservations.add(reservation);
+            } else {
+                List<RoomReserveResponse> userReservations = new ArrayList<>();
+                userReservations.add(reservation);
+                userReservationsMap.put(userStuId, userReservations);
+            }
+        }
+
+        for (Map.Entry<Long, List<RoomReserveResponse>> entry : userReservationsMap.entrySet()) {
+            Long userStuId = entry.getKey();
+            List<RoomReserveResponse> userReservations = entry.getValue();
+
+            StringBuilder notificationContent = new StringBuilder();
+
+            for (RoomReserveResponse reservation : userReservations) {
                 String roomName = getRoomName(reservation.getRoomId());
                 String roomFloor = getRoomFloor(reservation.getRoomId());
 
-                NotificationRequest params = new NotificationRequest();
-                params.setUserStuId(reservation.getUserStuId());
-                params.setNotiContent("금일 " + reservation.getRezTime() + "에 " + roomFloor + " " + roomName + " 예약이 있습니다.");
-                params.setNotiTime(LocalDateTime.now());
+                notificationContent.append(roomFloor).append(" ").append(roomName).append(" 예약 - ").append(reservation.getRezTime()).append("\n");
+            }
 
-                notificationService.saveNotification(params);
+            NotificationRequest params = new NotificationRequest();
+            params.setUserStuId(userStuId);
+            params.setNotiContent("금일 예약된 내용입니다.\n" + notificationContent.toString());
+            params.setNotiTime(LocalDateTime.now()); // 여기에 알림을 보낼 시간을 설정합니다.
+
+            notificationService.saveNotification(params);
         }
     }
 
@@ -52,3 +70,7 @@ public class ReserveNotificationScheduler {
         return roomFloors[roomId];
     }
 }
+
+
+
+
