@@ -1,11 +1,7 @@
 package com.lib.ailibrary.domain.room;
 
-import com.lib.ailibrary.user.UserService;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Mapper

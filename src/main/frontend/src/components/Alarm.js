@@ -25,10 +25,16 @@ width: 20%;
 const DeleteBtn = styled.button`
 `;
 function Alarm({ notification, onDelete }) {
+    const storedToken = localStorage.getItem('token');
     const handleDeleteClick = () => {
         // 알림 삭제 요청을 서버로 보냅니다.
         axios
-            .put("http://localhost:8080/notification/delete", { notiId: notification.notiId })
+            .put("http://localhost:8080/notification/delete", notification.notiId, {
+                headers: {
+                    'Authorization': storedToken,
+                    'Content-Type': 'application/json'
+                }
+            })
             .then((response) => {
                 // 성공적으로 삭제된 경우
                 onDelete(notification.notiId);

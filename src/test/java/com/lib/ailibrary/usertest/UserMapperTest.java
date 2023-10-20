@@ -1,14 +1,8 @@
 package com.lib.ailibrary.usertest;
 
-import com.lib.ailibrary.user.UserLoginRequest;
-import com.lib.ailibrary.user.UserMapper;
-import com.lib.ailibrary.user.UserRequest;
-import com.lib.ailibrary.user.UserResponse;
-import org.junit.jupiter.api.Test;
+import com.lib.ailibrary.domain.user.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 @SpringBootTest
 public class UserMapperTest {
