@@ -69,6 +69,16 @@
             rez_id DESC
     </select>
 
+    <!-- 오늘 예약 내역 조회 -->
+    <select id="findAllToday" resultType="com.lib.ailibrary.domain.room.RoomReserveResponse">
+        SELECT
+            <include refid="roomColumns"></include>
+        FROM
+            tb_room_rez
+        WHERE
+            rez_date = #{value}
+    </select>
+
     <!-- 잔여 시설 조회 -->
     <select id="searchRoom" resultType="com.lib.ailibrary.domain.room.RoomSearchResponse">
         SELECT

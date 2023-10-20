@@ -2,6 +2,7 @@ package com.lib.ailibrary.domain.room;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
@@ -37,6 +38,12 @@ public interface RoomMapper {
      * @return 예약 내역 전체
      */
     List<RoomReserveResponse> findAll();
+
+    /**
+     * 오늘 예약 내역 전체 조회
+     * @return 오늘 예약 내역
+     */
+    List<RoomReserveResponse> findAllToday(LocalDate rezDate);
 
     /**
      * 예약 정보 수 카운팅

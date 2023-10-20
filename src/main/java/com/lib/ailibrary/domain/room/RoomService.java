@@ -57,6 +57,15 @@ public class RoomService {
     }
 
     /**
+     * 오늘 예약 내역 전체 조회
+     * @param rezDate - 예약 날짜
+     * @return 오늘 예약 내역 전체
+     */
+    public List<RoomReserveResponse> findAllReserveToday(LocalDate rezDate) {
+        return roomMapper.findAllToday(rezDate);
+    }
+
+    /**
      * 잔여 시설 조회
      * @return 잔여 시설
      */

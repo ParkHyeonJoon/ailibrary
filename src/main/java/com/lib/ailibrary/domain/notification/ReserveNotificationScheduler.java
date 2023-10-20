@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
@@ -20,15 +21,13 @@ public class ReserveNotificationScheduler {
 
     @Scheduled(cron = "0 0 8 * * 1-6")
     public void checkReservations() {
-        List<RoomReserveResponse> reservations = roomService.findAllReserve();
 
-        LocalDate currentDate = LocalDate.now();
+        LocalDate today = LocalDate.now();
+
+        List<RoomReserveResponse> reservations = roomService.findAllReserveToday(today);
 
         for (RoomReserveResponse reservation : reservations) {
-            LocalDateTime reserveDateTime = reservation.getRezDate().atStartOfDay();
-            Duration duration = Duration.between(currentDate.atStartOfDay(), reserveDateTime);
 
-            if (duration.toDays() == 0) {
                 String roomName = getRoomName(reservation.getRoomId());
                 String roomFloor = getRoomFloor(reservation.getRoomId());
 
@@ -38,7 +37,6 @@ public class ReserveNotificationScheduler {
                 params.setNotiTime(LocalDateTime.now());
 
                 notificationService.saveNotification(params);
-            }
         }
     }
 
