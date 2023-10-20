@@ -2,6 +2,8 @@ package com.lib.ailibrary.jwt.service;
 
 
 import com.lib.ailibrary.jwt.common.SecurityUtil;
+import com.lib.ailibrary.jwt.entity.UserAuthority;
+import com.lib.ailibrary.jwt.repository.UserAuthorityRepository;
 import com.lib.ailibrary.jwt.repository.UserRepository;
 import com.lib.ailibrary.jwt.dto.UserDto;
 import com.lib.ailibrary.jwt.entity.Authority;
@@ -18,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserJwtService {
     private final UserRepository userRepository;
+    private final UserAuthorityRepository userAuthorityRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -61,5 +64,9 @@ public class UserJwtService {
     public Optional<User> getMyUserWithAuthorities() {
         return SecurityUtil.getCurrentUsername()
                 .flatMap(userRepository::findOneWithAuthoritiesByUserId);
+    }
+
+    public Optional<UserAuthority> getUserRole(Long userStuId) {
+        return userAuthorityRepository.findByIdUserStuId(userStuId);
     }
 }

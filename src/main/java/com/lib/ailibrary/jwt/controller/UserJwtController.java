@@ -1,6 +1,7 @@
 package com.lib.ailibrary.jwt.controller;
 
 import com.lib.ailibrary.jwt.entity.User;
+import com.lib.ailibrary.jwt.entity.UserAuthority;
 import com.lib.ailibrary.jwt.service.UserJwtService;
 import com.lib.ailibrary.jwt.dto.UserDto;
 import jakarta.validation.Valid;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,4 +37,10 @@ public class UserJwtController {
     public ResponseEntity<User> getUserInfo(@PathVariable String userId) {
         return ResponseEntity.ok(userJwtService.getUserWithAuthorities(userId).get());
     }
+
+    @GetMapping("/user/role")
+    public Optional<UserAuthority> getUserRole(@RequestParam Long userStuId) {
+        return userJwtService.getUserRole(userStuId);
+    }
+
 }
