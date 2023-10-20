@@ -8,15 +8,19 @@ const Wrapper = styled.div`
   height: 270px;
   border-radius: 20px;
   background: white;
-  margin-top: -25px;
-  margin-left: 10px;
   display: flex; 
-  flex-direction: row;
-  align-items: flex-start;
+  margin-left: 10px;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  
 `;
 
-
+const AlarmWrapper = styled.div`
+width: 98%;
+  height: 95%;
+  overflow-y: auto;
+`;
 function RecentAlarm() {
     const [notifications, setNotifications] = useState([]);
 
@@ -54,9 +58,11 @@ function RecentAlarm() {
 
     return (
         <Wrapper>
+            <AlarmWrapper>
             {notifications.map((notification) => (
                 <Alarm key={notification.notiId} notification={notification} onDelete={handleDeleteNotification} />
             ))}
+            </AlarmWrapper>
         </Wrapper>
     );
 }

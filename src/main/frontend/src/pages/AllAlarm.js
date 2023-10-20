@@ -17,13 +17,20 @@ const AlarmArea = styled.div`
 
 function AllAlarm() {
     const [notifications, setNotifications] = useState([]);
+
+    const storedToken = localStorage.getItem('token');
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
     const userStuId = userInfo.userStuId;
     const fetchNotifications = () => {
         axios
-            .post("http://localhost:8080/notification/alllist", { userStuId }) // 예시 학번
+            .post("http://localhost:8080/notification/alllist", userStuId , {
+                headers: {
+                    'Authorization': storedToken,
+                    'Content-Type': 'application/json'
+                }
+            }) // 예시 학번
             .then((response) => {
                 setNotifications(response.data);
             })

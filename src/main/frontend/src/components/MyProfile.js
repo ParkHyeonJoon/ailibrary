@@ -54,6 +54,7 @@ const AlarmArea = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  position: relative;
 `;
 const Title = styled.p`
   font-size: 20px;
@@ -65,9 +66,9 @@ const AllLink = styled.a`
   text-decoration: none;
   color: #6b6b6b;
   font-size: 14px;
-  position: relative;
-  left: 630px;
-  top: -40px;
+  position: absolute;
+  right: 30px; /* 우측 정렬 */
+  top: 30px;   /* 상단 정렬 */
 `;
 function MyProfile() {
 

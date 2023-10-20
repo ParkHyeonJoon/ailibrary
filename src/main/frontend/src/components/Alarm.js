@@ -1,34 +1,53 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
+
 const Wrapper = styled.div`
   width: 95%;
-  height: 60px;
+  height: 80px;
   border-radius: 10px;
   background: #EFF2FF;
   box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.25);
-  margin: 15px;
+  margin: 10px 15px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  overflow-y: auto;
+  position: relative;
 `;
 const ContentArea = styled.div`
   margin: 10px;
   width: 80%;
+  height: 100%;
+`;
+const Content = styled.p`
 `;
 
 const Date = styled.p`
-width: 20%;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
 `;
 const DeleteBtn = styled.button`
+  background: none;
+  border: none;
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  &:hover {
+    color: ${(props) => props.hoverBackgroundColor || "#989898"};
+    cursor: pointer;
+  }
 `;
-function Alarm({ notification, onDelete }) {
+
+function Alarm({notification, onDelete}) {
     const handleDeleteClick = () => {
         // 알림 삭제 요청을 서버로 보냅니다.
         axios
-            .put("http://localhost:8080/notification/delete", { notiId: notification.notiId })
+            .put("http://localhost:8080/notification/delete", {notiId: notification.notiId})
             .then((response) => {
                 // 성공적으로 삭제된 경우
                 onDelete(notification.notiId);
@@ -39,7 +58,9 @@ function Alarm({ notification, onDelete }) {
     };
     return (
         <Wrapper>
-            <ContentArea>{notification.notiContent}</ContentArea>
+            <ContentArea>
+                <Content>{notification.notiContent}</Content>
+            </ContentArea>
             <DeleteBtn onClick={handleDeleteClick}>x</DeleteBtn>
             <Date>{notification.dateMessage}</Date>
         </Wrapper>
