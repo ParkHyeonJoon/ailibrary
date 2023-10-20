@@ -48,11 +48,17 @@ function ReserveBookList({ book }) {
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
     const userId = userInfo.userId;
+    const userStuId = userInfo.userStuId;
 
     const handleCancelReservation = async () => {
             if(selectedBooks.length === 0) {
                 return;
             }
+
+            const requestBody = {
+                bookId: selectedBooks,
+                userStuId: userStuId
+            };
 
             const fetchData = async () => {
                 try {
@@ -76,7 +82,7 @@ function ReserveBookList({ book }) {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify(selectedBooks)
+                    body: JSON.stringify(requestBody)
                 });
 
                 if(!response.ok) {

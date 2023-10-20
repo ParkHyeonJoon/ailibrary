@@ -1,10 +1,13 @@
 package com.lib.ailibrary.domain.book;
 
+import com.lib.ailibrary.domain.notification.NotificationRequest;
+import com.lib.ailibrary.domain.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -13,6 +16,7 @@ import java.util.List;
 public class BookLoanController {
 
     private final BookLoanService bookLoanService;
+    private final NotificationService notificationService;
 
     //대출 버튼 클릭
     @PostMapping("/loan")
@@ -20,6 +24,7 @@ public class BookLoanController {
         try {
             String userId = request.getUserId();
             int bookId = request.getBookId();
+            Long userStuId = request.getUserStuId();
             //대출 내역에 존재하면 loanStatus가 1, 존재하지 않으면 0
             int loanStatus = bookLoanService.checkBookLoan(bookId);
             int loan = bookLoanService.checkBook(userId, bookId);
@@ -31,6 +36,11 @@ public class BookLoanController {
                 if (loanStatus == 0) {
                     //아직 대출 가능한 상태
                     if(loanCount < 5) {
+                        NotificationRequest notificationRequest = new NotificationRequest();
+                        notificationRequest.setUserStuId(userStuId);
+                        notificationRequest.setNotiContent("도서 대출이 완료되었습니다.");
+                        notificationRequest.setNotiTime(LocalDateTime.now());
+                        notificationService.saveNotification(notificationRequest);
                         bookLoanService.saveLoan(request);
                         return ResponseEntity.ok("0");
                     }
@@ -46,6 +56,11 @@ public class BookLoanController {
             }
             //사용자가 대출해 반납해야 되는 상태
             else {
+                NotificationRequest notificationRequest = new NotificationRequest();
+                notificationRequest.setUserStuId(userStuId);
+                notificationRequest.setNotiContent("도서 반납이 완료되었습니다.");
+                notificationRequest.setNotiTime(LocalDateTime.now());
+                notificationService.saveNotification(notificationRequest);
                 bookLoanService.checkBookReturn(userId, bookId);
                 return ResponseEntity.ok("1");
             }

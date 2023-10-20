@@ -11,6 +11,7 @@ import java.time.LocalDate;
 public class BookReserveRequest {
     private int bookRezId;
     private String userId;
+    private Long userStuId;
     private int bookId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")

@@ -223,9 +223,10 @@ const BookInfo = ({ bookInfo }) => {
       }
 
       const userId = userInfo.userId;
+      const userStuId = userInfo.userStuId;
 
       axios
-        .post('http://localhost:8080/book/loan', { bookId, userId }, {
+        .post('http://localhost:8080/book/loan', { bookId, userId, userStuId }, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -276,7 +277,8 @@ const BookInfo = ({ bookInfo }) => {
                 .post('http://localhost:8080/book/reserve', {
                     bookId: bookId,
                     bookRezDate: reserveDate,
-                    userId: userInfo.userId
+                    userId: userInfo.userId,
+                    userStuId: userInfo.userStuId
                 })
                 .then((response) => {
                     const reserveStatus = response.data;
