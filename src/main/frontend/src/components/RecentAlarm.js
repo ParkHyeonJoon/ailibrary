@@ -8,8 +8,9 @@ const Wrapper = styled.div`
   height: 270px;
   border-radius: 20px;
   background: white;
+  margin-top: -25px;
   margin-left: 10px;
-  display: flex;
+  display: flex; 
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
@@ -19,13 +20,19 @@ const Wrapper = styled.div`
 function RecentAlarm() {
     const [notifications, setNotifications] = useState([]);
 
+    const storedToken = localStorage.getItem('token');
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
     const userStuId = userInfo.userStuId;
     const fetchNotifications = () => {
         axios
-            .post("http://localhost:8080/notification/list", {userStuId})
+            .post("http://localhost:8080/notification/list", userStuId, {
+                headers: {
+                    'Authorization': storedToken,
+                    'Content-Type': 'application/json'
+                }
+            })
             .then((response) => {
                 setNotifications(response.data);
             })

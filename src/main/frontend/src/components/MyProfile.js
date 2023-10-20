@@ -65,9 +65,9 @@ const AllLink = styled.a`
   text-decoration: none;
   color: #6b6b6b;
   font-size: 14px;
-  position: fixed;
-  left: 1080px;
-  top: 225px;
+  position: relative;
+  left: 630px;
+  top: -40px;
 `;
 function MyProfile() {
 
