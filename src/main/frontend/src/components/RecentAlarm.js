@@ -60,7 +60,7 @@ function RecentAlarm() {
         <Wrapper>
             <AlarmWrapper>
             {notifications.map((notification) => (
-                <Alarm key={notification.notiId} notification={notification} onDelete={handleDeleteNotification} />
+                <Alarm key={notification.notiId} notification={notification} onDelete={handleDeleteNotification} showDeleteButton={true} />
             ))}
             </AlarmWrapper>
         </Wrapper>

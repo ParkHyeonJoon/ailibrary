@@ -18,9 +18,9 @@ const Wrapper = styled.div`
 const ContentArea = styled.div`
   margin: 10px;
   width: 80%;
-  height: 100%;
 `;
 const Content = styled.p`
+    margin-left: 10px;
 `;
 
 const Date = styled.p`
@@ -29,6 +29,8 @@ const Date = styled.p`
   bottom: 0;
   right: 0;
   padding: 10px;
+  color: #707070;
+  font-size: 14px;
 `;
 const DeleteBtn = styled.button`
   background: none;
@@ -43,11 +45,17 @@ const DeleteBtn = styled.button`
   }
 `;
 
-function Alarm({notification, onDelete}) {
+function Alarm({ notification, onDelete, showDeleteButton }) {
+    const storedToken = localStorage.getItem('token');
     const handleDeleteClick = () => {
         // 알림 삭제 요청을 서버로 보냅니다.
         axios
-            .put("http://localhost:8080/notification/delete", {notiId: notification.notiId})
+            .put("http://localhost:8080/notification/delete", notification.notiId, {
+                headers: {
+                    'Authorization': storedToken,
+                    'Content-Type': 'application/json'
+                }
+            })
             .then((response) => {
                 // 성공적으로 삭제된 경우
                 onDelete(notification.notiId);
@@ -61,7 +69,9 @@ function Alarm({notification, onDelete}) {
             <ContentArea>
                 <Content>{notification.notiContent}</Content>
             </ContentArea>
-            <DeleteBtn onClick={handleDeleteClick}>x</DeleteBtn>
+            {showDeleteButton && (
+                <DeleteBtn onClick={handleDeleteClick}>x</DeleteBtn>
+            )}
             <Date>{notification.dateMessage}</Date>
         </Wrapper>
     );

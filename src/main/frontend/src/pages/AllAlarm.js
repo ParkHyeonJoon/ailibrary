@@ -12,9 +12,21 @@ const Wrapper = styled.div`
   justify-content: center;
   margin-top: 180px;
 `;
+
+const Title = styled.p`
+  text-align: left;
+  color: #000;
+  font-family: Inter;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
 const AlarmArea = styled.div`
 `;
-
+const ContentWrapper = styled.div`
+  width: 1000px;
+`;
 function AllAlarm() {
     const [notifications, setNotifications] = useState([]);
 
@@ -53,11 +65,14 @@ function AllAlarm() {
     return (
         <Wrapper>
             <Header/>
+            <ContentWrapper>
+                <Title>전체 알림</Title>
         <AlarmArea>
             {notifications.map((notification) => (
-                <Alarm key={notification.notiId} notification={notification} onDelete={handleDeleteNotification} />
+                <Alarm key={notification.notiId} notification={notification} onDelete={handleDeleteNotification} showDeleteButton={false}/>
             ))}
         </AlarmArea>
+            </ContentWrapper>
         </Wrapper>
     );
 }

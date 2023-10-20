@@ -129,7 +129,7 @@ function BookSlider({book}) {
             <CustomSlider {...settings}> {/* Use React-Slick Slider component */}
                 {topBooks.map((book, index) => (
                     <div key={index}>
-                        <BookFrame book={book}/>
+                        <BookFrame book={book} showReturnDate={false}/>
                     </div>
                 ))}
             </CustomSlider>
