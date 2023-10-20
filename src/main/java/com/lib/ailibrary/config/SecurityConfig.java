@@ -1,9 +1,9 @@
 package com.lib.ailibrary.config;
 
-import com.lib.ailibrary.jwt.common.JwtAccessDeniedHandler;
-import com.lib.ailibrary.jwt.common.JwtAuthenticationEntryPoint;
-import com.lib.ailibrary.jwt.common.JwtSecurityConfig;
-import com.lib.ailibrary.jwt.common.TokenProvider;
+import com.lib.ailibrary.domain.user.jwt.common.JwtAccessDeniedHandler;
+import com.lib.ailibrary.domain.user.jwt.common.JwtAuthenticationEntryPoint;
+import com.lib.ailibrary.domain.user.jwt.common.JwtSecurityConfig;
+import com.lib.ailibrary.domain.user.jwt.common.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,6 @@
 package com.lib.ailibrary.usertest;
 
-import com.lib.ailibrary.user.UserRequest;
-import com.lib.ailibrary.user.UserService;
-import org.junit.jupiter.api.Test;
+import com.lib.ailibrary.domain.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

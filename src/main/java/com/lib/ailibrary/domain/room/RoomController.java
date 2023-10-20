@@ -5,11 +5,14 @@ import com.lib.ailibrary.domain.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,6 +29,7 @@ public class RoomController {
             @RequestParam String roomType,
             @RequestParam String rezDate,
             @RequestParam String[] rezTime) {
+
         LocalDate currentDate = LocalDate.now();
 
         RoomSearchRequest params = new RoomSearchRequest();
@@ -34,12 +38,15 @@ public class RoomController {
         params.setRezTime(rezTime);
 
         int[] rezTimeCheck = new int[rezTime.length];
-
         LocalDate parseRezDate = params.getRezDate();
+
         for(int i=0; i<rezTime.length; i++) {
-            rezTimeCheck[i] = Integer.parseInt(rezTime[i].substring(0, 2));
-            if ( (parseRezDate.isBefore(LocalDate.now())) || (rezTimeCheck[i] <= LocalTime.now().getHour() && parseRezDate.isEqual(LocalDate.now())) ) {
+            rezTimeCheck[i] = Integer.parseInt(rezTime[i].substring(0, 2)); // ex) 12:00 - 13:00 = 12
+
+            if ( parseRezDate.isBefore(LocalDate.now()) ) {
                 throw new IllegalArgumentException("예약 가능일이 아닙니다.");
+            } else if( rezTimeCheck[i] <= LocalTime.now().getHour() && parseRezDate.isEqual(LocalDate.now()) ) {
+                throw new IllegalArgumentException("예약 가능 시간이 아닙니다.");
             } else if(parseRezDate.getDayOfWeek() == DayOfWeek.SATURDAY || parseRezDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 throw new IllegalArgumentException("주말은 예약이 불가합니다.");
             }
@@ -72,13 +79,38 @@ public class RoomController {
             }
 
             notificationRequest.setUserStuId(params.getUserStuId());
-            if (params.getRoomId() <= 13) {
-                notificationRequest.setNotiContent("스터디룸 이용 예약이 완료되었습니다.");
-            } else if (params.getRoomId() == 14) {
-                notificationRequest.setNotiContent("오디토리움 이용 예약이 완료되었습니다.");
-            } else {
-                notificationRequest.setNotiContent("VR룸 이용 예약이 완료되었습니다.");
+
+            String outputFormat = "MM월 dd일";
+
+            SimpleDateFormat inputFormatter = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat outputFormatter = new SimpleDateFormat(outputFormat);
+
+            String rezTimeOutput = Arrays.toString(params.getRezTime());
+            rezTimeOutput = rezTimeOutput.substring(1, rezTimeOutput.length() - 1);
+
+            int roomId = params.getRoomId();
+
+            String[] roomNames = {"1번 스터디룸", "2번 스터디룸", "3번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
+                    "1번 스터디룸", "2번스터디룸", "3번 스터디룸", "4번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
+                    "오디토리움", "VR룸"};
+
+            String[] roomFloors = {"2층", "2층", "2층", "3층", "3층", "3층", "4층", "4층", "4층", "4층", "5층", "5층", "5층", "5층", "5층"};
+
+            try {
+                Date date = inputFormatter.parse(params.getRezDate().toString());
+                String formattedDate = outputFormatter.format(date);
+                String roomInfo = formattedDate + " " + rezTimeOutput  + " " + roomFloors[roomId] + " " + roomNames[roomId];
+                if (roomId <= 13) {
+                    notificationRequest.setNotiContent(roomInfo + " 이용 예약이 완료되었습니다.");
+                } else if (params.getRoomId() == 14) {
+                    notificationRequest.setNotiContent(roomInfo + "  이용 예약이 완료되었습니다.");
+                } else {
+                    notificationRequest.setNotiContent(roomInfo + "  예약이 완료되었습니다.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
             notificationRequest.setNotiTime(LocalDateTime.now());
 
             notificationService.saveNotification(notificationRequest);

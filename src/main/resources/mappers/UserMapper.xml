@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.lib.ailibrary.user.UserMapper">
+<mapper namespace="com.lib.ailibrary.domain.user.UserMapper">
 
     <!-- tb_user 테이블 전체 컬럼 -->
     <sql id="userColumns">
@@ -15,34 +15,9 @@
         , user_grade
     </sql>
 
-   <!-- &lt;!&ndash; 회원가입 &ndash;&gt;
-    <insert id="join" parameterType="com.lib.ailibrary.user.UserRequest">
-        INSERT INTO tb_users (
-            <include refid="userColumns"></include>
-        ) VALUES (
-              #{userStuId}
-            , #{userName}
-            , #{userMajor}
-            , #{userEmail}
-            , #{userPnum}
-            , #{userId}
-            , #{userPw}
-            , #{userGrade}
-        )
-    </insert>
-
-    &lt;!&ndash; 회원 상세정보 조회 &ndash;&gt;
-    <select id="findByLoginId" parameterType="string" resultType="com.lib.ailibrary.user.UserResponse">
-            SELECT
-                <include refid="userColumns"></include>
-            FROM
-                tb_users
-            WHERE
-                user_id = #{userId}
-    </select>-->
 
     <!-- 회원 정보 수정 -->
-    <update id="update" parameterType="com.lib.ailibrary.user.UserRequest">
+    <update id="update" parameterType="com.lib.ailibrary.domain.user.UserRequest">
         UPDATE tb_users
         SET
             user_name = #{userName}
