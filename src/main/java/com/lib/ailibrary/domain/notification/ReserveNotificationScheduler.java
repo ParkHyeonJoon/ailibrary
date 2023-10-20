@@ -16,7 +16,7 @@ public class ReserveNotificationScheduler {
     private final RoomService roomService;
     private final NotificationService notificationService;
 
-    @Scheduled(fixedRate = 60000) // 매일 오전 8시에 실행 fixedRate = 60000 cron = "0 0 8 * * ?"
+    @Scheduled(cron = "0 0 8 * * ?") // 매일 오전 8시에 실행 fixedRate = 60000 cron = "0 0 8 * * ?"
     public void sendNotifications() {
         LocalDate today = LocalDate.now();
         List<RoomReserveResponse> reservations = roomService.findAllReserveToday(today);
