@@ -46,13 +46,13 @@ public class ReserveNotificationScheduler {
                 String roomName = getRoomName(reservation.getRoomId());
                 String roomFloor = getRoomFloor(reservation.getRoomId());
 
-                notificationContent.append(roomFloor).append(" ").append(roomName).append(" 예약 - ").append(reservation.getRezTime()).append("\n");
+                notificationContent.append(roomFloor).append(" ").append(roomName).append(" 예약: ").append(reservation.getRezTime()).append("\n");
             }
 
             NotificationRequest params = new NotificationRequest();
             params.setUserStuId(userStuId);
             params.setNotiContent("금일 예약된 내용입니다.\n" + notificationContent.toString());
-            params.setNotiTime(LocalDateTime.now()); // 여기에 알림을 보낼 시간을 설정합니다.
+            params.setNotiTime(LocalDateTime.now());
 
             notificationService.saveNotification(params);
         }
