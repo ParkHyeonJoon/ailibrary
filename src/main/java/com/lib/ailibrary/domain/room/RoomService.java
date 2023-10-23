@@ -54,7 +54,7 @@ public class RoomService {
      * 예약 정보 삭제
      * @param rezId - PK
      */
-    public void deleteReserve(final Long rezId) {
+    public void deleteReserve(final Long[] rezId) {
         roomMapper.deleteById(rezId);
     }
 

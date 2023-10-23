@@ -122,8 +122,8 @@ public class RoomController {
     }
 
     // 예약 정보 삭제
-    @DeleteMapping("/reserve/delete")
-    public String deleteReserve(@RequestBody final Long rezId) {
+    @PutMapping("/reserve/delete")
+    public String deleteReserve(@RequestBody final Long[] rezId) {
         roomService.deleteReserve(rezId);
         return "삭제 완료";
     }

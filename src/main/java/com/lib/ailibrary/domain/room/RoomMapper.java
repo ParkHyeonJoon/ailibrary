@@ -38,7 +38,7 @@ public interface RoomMapper {
      * 예약 정보 삭제
      * @param rezId - PK
      */
-    void deleteById(Long rezId);
+    void deleteById(Long[] rezId);
 
     /**
      * 예약 내역 전체 조회

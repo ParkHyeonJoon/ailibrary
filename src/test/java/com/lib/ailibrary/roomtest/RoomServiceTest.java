@@ -56,10 +56,10 @@ public class RoomServiceTest {
         System.out.println(list.get(0).getRoomName());*/
     }
 
-    @Test
+    /*@Test
     void 예약삭제() {
         roomService.deleteReserve(46L);
-    }
+    }*/
 
     @Test
     void 오늘예약내역조회() {

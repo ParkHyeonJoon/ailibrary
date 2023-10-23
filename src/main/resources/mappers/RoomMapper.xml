@@ -56,6 +56,7 @@
             AND (rez_date > CURRENT_DATE()
                 OR (rez_date = CURRENT_DATE()
                     AND CAST(LEFT(rez_time, 2) AS UNSIGNED) > CAST(LEFT(CURRENT_TIME(), 2) AS UNSIGNED)))
+            AND delete_check = 0
         ORDER BY
             rez_date DESC
     </select>
@@ -67,13 +68,20 @@
 
 
     <!-- 예약 정보 삭제 or 취소 -->
-    <delete id="deleteById" parameterType="long">
-        DELETE
-        FROM
+    <update id="deleteById" parameterType="java.util.List">
+        UPDATE
             tb_room_rez
-        WHERE
-            rez_id = #{rezId}
-    </delete>
+        SET
+            delete_check = 1
+        <where>
+            <if test = "rezId != null and rezId.length > 0">
+                rez_id IN
+                <foreach item="id" collection="rezId" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </update>
 
 
     <!-- 예약 내역 조회 -->
@@ -138,6 +146,6 @@
         FROM
             tb_room_rez
         WHERE
-            user_stu_id = #{userStuId} and rez_date = #{rezDate}
+            user_stu_id = #{userStuId} and rez_date = #{rezDate} and delete_check = 0
     </select>
 </mapper>
