@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,13 @@ public class BookReserveService {
     }
 
     /**
+     * 예약해놓은 도서 대출하면 예약 자동 취소
+     */
+    public void cancelAuto(int bookId) {
+        bookReserveMapper.cancelAuto(bookId);
+    }
+
+    /**
      * 사용자가 예약한 도서 조회
      * userId로 조회
      */
@@ -91,5 +99,20 @@ public class BookReserveService {
         return reserveBookList;
     }
 
+    /**
+     * 대출하려는 도서가 예약이 된 도서인지
+     * bookId로 조회해서 userId 조회
+     */
+    public String checkWhoReserve(int bookId) {
+        return bookReserveMapper.checkWhoReserve(bookId);
+    }
+
+    /**
+     * 예약한 도서의 예약 유효 기간 확인
+     */
+   // public LocalDate checkReserveDate(int bookId) {
+     //   LocalDate returnDate = bookReserveMapper.checkReserveDate(bookId);
+       // return returnDate;
+    //}
 }
 

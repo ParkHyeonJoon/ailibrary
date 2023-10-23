@@ -246,6 +246,9 @@ const BookInfo = ({ bookInfo }) => {
               setLoanButtonText("대출 중");
               alert("대출 중입니다.");
               }
+              else if(loanStatus === -2) {
+              alert("예약 중인 도서입니다.");
+              }
            })
         .catch((error) => {
           console.error(error);

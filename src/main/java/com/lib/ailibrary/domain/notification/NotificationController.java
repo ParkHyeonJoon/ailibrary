@@ -1,8 +1,12 @@
 package com.lib.ailibrary.domain.notification;
 
+import com.lib.ailibrary.domain.book.BookReserveRequest;
+import com.lib.ailibrary.domain.book.BookReserveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -11,6 +15,7 @@ import java.util.List;
 public class NotificationController {
 
     private final NotificationService notificationService;
+    private final BookReserveService bookReserveService;
 
     @PostMapping("/notification/list") // 삭제 되지 않은 알림 내역
     public List<NotificationResponse> getNotification(@RequestBody final Long userStuId) {

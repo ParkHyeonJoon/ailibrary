@@ -21,7 +21,7 @@ BookLoanMapper {
      * @param - bookLoanId(대출 아이디)
      * @return - 대출 정보
      */
-    BookLoanResponse findById(int bookLoanId);
+    List<BookLoanResponse> findByAll();
 
     /**
      * 대출 정보 수정

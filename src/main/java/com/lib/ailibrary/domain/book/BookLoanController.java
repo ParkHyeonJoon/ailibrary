@@ -16,7 +16,9 @@ import java.util.List;
 public class BookLoanController {
 
     private final BookLoanService bookLoanService;
+    private final BookReserveService bookReserveService;
     private final NotificationService notificationService;
+    private final BookService bookService;
 
     //대출 버튼 클릭
     @PostMapping("/loan")
@@ -30,38 +32,63 @@ public class BookLoanController {
             int loan = bookLoanService.checkBook(userId, bookId);
             int loanCount = bookLoanService.checkBookCount(userId);
 
+            //대출하려는 도서가 예약이 되어있는 도서인지 확인
+            String whoReserve = bookReserveService.checkWhoReserve(bookId);
+
             //사용자가 대출 하지 않은 상태
-            if (loan == 0) {
-                //다른 사용자도 대출 하지 않은 상태
-                if (loanStatus == 0) {
-                    //아직 대출 가능한 상태
-                    if(loanCount < 5) {
-                        NotificationRequest notificationRequest = new NotificationRequest();
-                        notificationRequest.setUserStuId(userStuId);
-                        notificationRequest.setNotiContent("도서 대출이 완료되었습니다.");
-                        notificationRequest.setNotiTime(LocalDateTime.now());
-                        notificationService.saveNotification(notificationRequest);
-                        bookLoanService.saveLoan(request);
-                        return ResponseEntity.ok("0");
+            if(loan == 0) {
+                //예약이 안되어있거나, 사용자가 예약 해놓은 도서
+                if (whoReserve.isEmpty() || whoReserve.equals(userId)) {
+                    //다른 사용자도 대출 하지 않은 상태
+                    if (loanStatus == 0) {
+                        //아직 대출 가능한 상태
+                        if(loanCount < 5) {
+                            NotificationRequest notificationRequest = new NotificationRequest();
+                            notificationRequest.setUserStuId(userStuId);
+                            notificationRequest.setNotiContent("도서 대출이 완료되었습니다.");
+                            notificationRequest.setNotiTime(LocalDateTime.now());
+                            notificationService.saveNotification(notificationRequest);
+                            bookLoanService.saveLoan(request);
+                            if(whoReserve.equals(userId)) {
+                                bookReserveService.cancelAuto(bookId);
+                            }
+                            return ResponseEntity.ok("0");
+                        }
+                        //5권 대출해서 대출 불가능한 상태
+                        else {
+                            return ResponseEntity.ok("99");
+                        }
                     }
-                    //5권 대출해서 대출 불가능한 상태
+                    //다른 사용자가 대출 중인 상태
                     else {
-                        return ResponseEntity.ok("99");
+                        return ResponseEntity.ok("-1");
                     }
                 }
-                //다른 사용자가 대출 중인 상태
                 else {
-                    return ResponseEntity.ok("-1");
+                    //다른 사용자가 예약 중인 상태
+                    return ResponseEntity.ok("-2");
                 }
-            }
-            //사용자가 대출해 반납해야 되는 상태
-            else {
+            } else {
+                //사용자가 대출해 반납해야 되는 상태
                 NotificationRequest notificationRequest = new NotificationRequest();
                 notificationRequest.setUserStuId(userStuId);
                 notificationRequest.setNotiContent("도서 반납이 완료되었습니다.");
                 notificationRequest.setNotiTime(LocalDateTime.now());
                 notificationService.saveNotification(notificationRequest);
                 bookLoanService.checkBookReturn(userId, bookId);
+                String bookTitle = bookService.reserveBookTitle(bookId);
+
+                List<BookReserveResponse> responses = bookReserveService.findAllRez();
+                for(BookReserveResponse response : responses) {
+                    if(response.getBookId() == bookId) {
+                        NotificationRequest notirequest2 = new NotificationRequest();
+                        notirequest2.setNotiContent("예약하신 " + bookTitle + " 도서가 반납되었습니다.");
+                        notirequest2.setUserStuId(response.getUserStuId());
+                        notirequest2.setNotiTime(LocalDateTime.now());
+                        notificationService.saveNotification(notirequest2);
+                    }
+                }
+
                 return ResponseEntity.ok("1");
             }
         } catch (RuntimeException e) {

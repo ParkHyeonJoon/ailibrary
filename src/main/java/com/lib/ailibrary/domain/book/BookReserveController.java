@@ -4,8 +4,10 @@ import com.lib.ailibrary.domain.notification.NotificationRequest;
 import com.lib.ailibrary.domain.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +66,7 @@ public class BookReserveController {
     @GetMapping("/reserve")
     public ResponseEntity<String> checkAndReserve(int bookId) {
         int reserveStatus = bookReserveService.checkReserve(bookId);
+        //LocalDate returnDate = bookReserveService.checkReserveDate(bookId);
 
         if(reserveStatus == 1) {
             // 예약 중인 도서
@@ -91,6 +94,24 @@ public class BookReserveController {
         notificationRequest.setNotiTime(LocalDateTime.now());
         notificationService.saveNotification(notificationRequest);
         bookReserveService.cancelReserve(request.getBookId());
+    }
+
+    //예약 유효 날짜 지나면 도서 자동 취소
+    @Scheduled(cron = "0 0 8 * * 1-6")
+    public void autoReserveCancel() {
+        List<BookReserveResponse> responses = bookReserveService.findAllRez();
+        LocalDate currentDate = LocalDate.now();
+
+        for(BookReserveResponse response : responses) {
+            LocalDate rezDate = response.getBookRezDate();
+            if(currentDate.isAfter(rezDate)) {
+                bookReserveService.cancelAuto(response.getBookId());
+                NotificationRequest notificationRequest = new NotificationRequest();
+                notificationRequest.setUserStuId(response.getUserStuId());
+                notificationRequest.setNotiTime(LocalDateTime.now());
+                notificationRequest.setNotiContent(response.getBookTitle() + "이 예약 유효날짜가 지나 자동 취소되었습니다.");
+            }
+        }
     }
 }
 

@@ -32,14 +32,12 @@
     </insert>
 
 
-    <!-- 예약 정보 조회 -->
-    <select id="findById" parameterType="long" resultType="com.lib.ailibrary.domain.book.BookLoanResponse">
+    <!-- 대출 정보 조회 -->
+    <select id="findByAll" resultType="com.lib.ailibrary.domain.book.BookLoanResponse">
         SELECT
         <include refid="bookLoanColumns"></include>
         FROM
         tb_book_loan
-        WHERE
-        book_loan_id = #{value}
     </select>
 
 
