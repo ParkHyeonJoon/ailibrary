@@ -27,13 +27,23 @@ public class RoomService {
     }
 
     /**
-     * 예약 정보 조회
+     * 예약 정보 조회 ( 지날 날까지 조회 )
      * @param userStuId - UK
      * @return 예약 정보
      */
     public List<RoomReserveResponse> findRezById(final Long userStuId) {
 
         return roomMapper.findById(userStuId);
+    }
+
+    /**
+     * 예약 정보 조회 ( 오늘 이후 조회 )
+     * @param userStuId - UK
+     * @return 예약 정보
+     */
+    public List<RoomReserveResponse> findRezByIdAfterToday(final Long userStuId) {
+
+        return roomMapper.findByIdAfterToday(userStuId);
     }
 
     /**

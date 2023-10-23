@@ -7,6 +7,7 @@ import com.lib.ailibrary.domain.room.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.parameters.P;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -64,6 +65,19 @@ public class RoomServiceTest {
     void 오늘예약내역조회() {
         List<RoomReserveResponse> result = roomService.findAllReserveToday(LocalDate.now());
 
+        for(int i=0; i<result.size(); i++) {
+            try {
+                String roomJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(result.get(i));
+                System.out.println(roomJson);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Test
+    void 오늘이후사용자예약내역조회() {
+        List<RoomReserveResponse> result = roomService.findRezByIdAfterToday(20233562L);
         for(int i=0; i<result.size(); i++) {
             try {
                 String roomJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(result.get(i));

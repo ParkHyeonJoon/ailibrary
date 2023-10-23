@@ -15,11 +15,18 @@ public interface RoomMapper {
     void save(RoomReserveSaveRequest params);
 
     /**
-     * 예약 정보 조회
+     * 예약 정보 조회 ( 지날 날까지 조회 )
      * @param userStuId - PK
      * @return 예약 정보
      */
     List<RoomReserveResponse> findById(Long userStuId);
+
+    /**
+     * 예약 정보 조회 ( 오늘 이후 조회 )
+     * @param userStuId - PK
+     * @return 예약 정보
+     */
+    List<RoomReserveResponse> findByIdAfterToday(Long userStuId);
 
     /**
      * 예약 정보 수정
