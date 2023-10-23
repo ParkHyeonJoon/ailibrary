@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const BookWrapper = styled.div`
   position: relative;
-  width: 180px;
+  width: 180px; /* 책 컴포넌트의 너비 설정 */
   height: 270px;
   margin-right: -20px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease; /* 마우스 오버시 애니메이션 효과 */
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* 마우스 오버시 확대 효과 */
   }
 `;
 
@@ -31,16 +31,25 @@ const BookTitle = styled.p`
   overflow: hidden; /* 내용이 넘칠 때 숨김 처리 */
   text-overflow: ellipsis; /* 넘친 내용에 "..." 표시 */
 `;
-
-const BookFrame = ({ book }) => {
+const ReturnDate = styled.p`
+  color: red;
+  font-size: 15px;
+  font-weight: 600;
+`;
+const LoaningBookFrame = ({ book, showReturnDate }) => {
     return (
-        <Link to={`/book-detail/${book.bookId}`} style={{ textDecoration: "none" }}>
+        <Link to={`/book-detail/${book.bookId}`} style={{ textDecoration: "none" }}> {/* 각 책에 대한 고유한 URL로 연결 */}
             <BookWrapper>
                 <BookImage src={book.bookImage} alt={book.bookTitle} />
                 <BookTitle>{book.bookTitle}</BookTitle>
+                {showReturnDate && (
+                    <ReturnDate>반납 날짜 : {book.returnDate}</ReturnDate>
+                )}
             </BookWrapper>
         </Link>
     );
 };
 
-export default BookFrame;
+
+
+export default LoaningBookFrame;
