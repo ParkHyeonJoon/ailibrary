@@ -2,9 +2,13 @@ package com.lib.ailibrary.domain.book;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -74,8 +78,16 @@ public class BookReserveService {
     /**
      * bookId로 예약 취소
      */
-    public int cancelReserve(int bookId) {
-        return bookReserveMapper.cancelReserve(bookId);
+    public void cancelReserve(List<Integer> bookId) {
+        // 예약 취소 처리를 여기서 수행
+        bookReserveMapper.cancelReserve(bookId);
+    }
+
+    /**
+     * 예약해놓은 도서 대출하면 예약 자동 취소
+     */
+    public void cancelAuto(int bookId) {
+        bookReserveMapper.cancelAuto(bookId);
     }
 
     /**
@@ -87,5 +99,20 @@ public class BookReserveService {
         return reserveBookList;
     }
 
+    /**
+     * 대출하려는 도서가 예약이 된 도서인지
+     * bookId로 조회해서 userId 조회
+     */
+    public String checkWhoReserve(int bookId) {
+        return bookReserveMapper.checkWhoReserve(bookId);
+    }
+
+    /**
+     * 예약한 도서의 예약 유효 기간 확인
+     */
+   // public LocalDate checkReserveDate(int bookId) {
+     //   LocalDate returnDate = bookReserveMapper.checkReserveDate(bookId);
+       // return returnDate;
+    //}
 }
 

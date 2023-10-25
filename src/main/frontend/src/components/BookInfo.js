@@ -104,119 +104,119 @@ const BookInfo = ({ bookInfo }) => {
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
 
-  useEffect(() => {
-      if (userInfo && bookId) {
-        // 사용자 정보가 있을 때만 API 호출
-        const userId = userInfo.userId;
+    useEffect(() => {
+        if (userInfo && bookId) {
+            // 사용자 정보가 있을 때만 API 호출
+            const userId = userInfo.userId;
 
-        // 백엔드 API 호출하여 초기 찜 상태 확인
-        axios
-          .get(`http://localhost:8080/book/checkLike?userId=${userId}&bookId=${bookId}`)
-          .then((response) => {
-            // 백엔드에서 데이터 받음
-            const likeStatus = response.data;
-            // "on"이면 찜
-            if (likeStatus === "on") {
-              setIsLiked(true);
-            }
-          })
-          .catch((error) => {
-            console.error("Error checking like status: ", error);
-          });
+            // 백엔드 API 호출하여 초기 찜 상태 확인
+            axios
+                .get(`http://localhost:8080/book/checkLike?userId=${userId}&bookId=${bookId}`)
+                .then((response) => {
+                    // 백엔드에서 데이터 받음
+                    const likeStatus = response.data;
+                    // "on"이면 찜
+                    if (likeStatus === "on") {
+                        setIsLiked(true);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error checking like status: ", error);
+                });
 
-        axios
-           .get(`http://localhost:8080/book/loan?userId=${userId}&bookId=${bookId}`)
-           .then((response) => {
-              const loanStatus = response.data;
-              if (loanStatus === "able") {
-                setLoanButtonText("대출하기");
-                setIsBookLoaned(false);
-              } else if(loanStatus === "unable") {
-                setLoanButtonText("대출 중");
-                setIsBookLoaned(true);
-              } else if(loanStatus === "return") {
-                setLoanButtonText("반납하기");
-                setIsBookLoaned(true);
-              }
-            })
-            .catch((error) => {
-              console.error("Error checking book loan status: ", error);
-            });
+            axios
+                .get(`http://localhost:8080/book/loan?userId=${userId}&bookId=${bookId}`)
+                .then((response) => {
+                    const loanStatus = response.data;
+                    if (loanStatus === "able") {
+                        setLoanButtonText("대출하기");
+                        setIsBookLoaned(false);
+                    } else if(loanStatus === "unable") {
+                        setLoanButtonText("대출 중");
+                        setIsBookLoaned(true);
+                    } else if(loanStatus === "return") {
+                        setLoanButtonText("반납하기");
+                        setIsBookLoaned(true);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error checking book loan status: ", error);
+                });
         }
     }, [userInfo, bookId]);
 
-  const handleLikeClick = () => {
-    if(!userInfo) {
-        alert("로그인이 필요합니다");
-        return;
-    }
-
-    // 클라이언트에서 서버로 bookId를 보냅니다.
-    const bookId = bookInfo.bookId;
-    const userId = userInfo.userId;
-
-    // HTTP POST 요청을 보냅니다.
-    axios
-      .post('http://localhost:8080/book/like', { bookId, userId }, {
-      headers: {
-         'Content-Type': 'application/json',
-         },
-      })
-      .then((response) => {
-        const likeStatus = response.data;
-        // 요청 성공 시 처리
-        if(likeStatus === 1) {
-            setIsLiked(!isLiked); // 버튼 상태 변경 등
-            alert("찜 등록 되었습니다");
-        } else if(likeStatus === 0) {
-            setIsLiked(!isLiked);
-            alert("찜 해제 되었습니다");
-        } else {
-            alert("에러");
+    const handleLikeClick = () => {
+        if(!userInfo) {
+            alert("로그인이 필요합니다");
+            return;
         }
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // 요청 실패 시 처리
-        console.error(error);
-        alert("ERROR");
-      });
-  };
 
-  const handleLoanClick = () => {
-      if (!userInfo) {
-        alert("로그인이 필요합니다");
-        return;
-      }
+        // 클라이언트에서 서버로 bookId를 보냅니다.
+        const bookId = bookInfo.bookId;
+        const userId = userInfo.userId;
 
-      const userId = userInfo.userId;
+        // HTTP POST 요청을 보냅니다.
+        axios
+            .post('http://localhost:8080/book/like', { bookId, userId }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((response) => {
+                const likeStatus = response.data;
+                // 요청 성공 시 처리
+                if(likeStatus === 1) {
+                    setIsLiked(!isLiked); // 버튼 상태 변경 등
+                    alert("찜 등록 되었습니다");
+                } else if(likeStatus === 0) {
+                    setIsLiked(!isLiked);
+                    alert("찜 해제 되었습니다");
+                } else {
+                    alert("에러");
+                }
+                console.log(response.data);
+            })
+            .catch((error) => {
+                // 요청 실패 시 처리
+                console.error(error);
+                alert("ERROR");
+            });
+    };
 
-      axios
-        .post('http://localhost:8080/book/loan', { bookId, userId }, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((response) => {
-          const loanStatus = response.data;
-          if(loanStatus === 99) {
-             alert("대여 권수 제한입니다")
-          } else if (loanStatus === 0) {
-            setIsBookLoaned(true);
-            setLoanButtonText("반납하기");
-            alert("대출 완료되었습니다");
-          } else if(loanStatus === 1) {
-             setLoanButtonText("대출하기");
-             alert("반납 완료되었습니다.");
-           } else if(loanStatus === -1) {
-              setLoanButtonText("대출 중");
-              alert("대출 중입니다.");
-              }
-           })
-        .catch((error) => {
-          console.error(error);
-          alert("ERROR");
-        });
+    const handleLoanClick = () => {
+        if (!userInfo) {
+            alert("로그인이 필요합니다");
+            return;
+        }
+
+        const userId = userInfo.userId;
+
+        axios
+            .post('http://localhost:8080/book/loan', { bookId, userId }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((response) => {
+                const loanStatus = response.data;
+                if(loanStatus === 99) {
+                    alert("대여 권수 제한입니다")
+                } else if (loanStatus === 0) {
+                    setIsBookLoaned(true);
+                    setLoanButtonText("반납하기");
+                    alert("대출 완료되었습니다");
+                } else if(loanStatus === 1) {
+                    setLoanButtonText("대출하기");
+                    alert("반납 완료되었습니다.");
+                } else if(loanStatus === -1) {
+                    setLoanButtonText("대출 중");
+                    alert("대출 중입니다.");
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert("ERROR");
+            });
     };
 
     return (

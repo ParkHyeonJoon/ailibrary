@@ -1,35 +1,35 @@
-import React, {useState, useEffect} from "react";
+// Slider.js
+import React from "react";
+import BookFrame from "../components/BookFrame";
 import styled from "styled-components";
 import Slider from "react-slick"; // Import Slider from react-slick
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import BookFrame from "../components/BookFrame";
 import rightArrowImage from "../assets/next.png";
 import leftArrowImage from "../assets/back.png";
 
 const Container = styled.div`
-  width: 1100px;
-  color: #000000;
+  width: 98%;
+  overflow-x: hidden;
 `;
-
 const Title = styled.p`
   margin-left: 20px;
-  color: #000000;
-  font-size: 30px;
+  color: #ffffff;
+  font-size: 25px;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 const CustomSlider = styled(Slider)`
-  width: 1090px;
-  left: 10px;
+  width: 110%;
   position: relative;
-
   .slick-prev {
     position: absolute;
     opacity: 0;
     z-index: 1;
     transition: opacity 0.3s;
     left: 15px;
+    width: 45px;
+    height: 45px;
   }
 
   .slick-next {
@@ -37,32 +37,37 @@ const CustomSlider = styled(Slider)`
     opacity: 0;
     z-index: 1;
     transition: opacity 0.3s;
-    right: 5px;
+    right: 150px;
+    width: 45px;
+    height: 45px;
   }
-  
-  &:hover {
-    .slick-prev, .slick-next {
-      opacity: 1;
 
+  &:hover {
+    .slick-prev,
+    .slick-next {
+      opacity: 1;
     }
   }
-
-  //TODO: 배경 검고 투명하게 나오는 거 하기
 `;
-function BookSlider({book}) {
+
+const StyledDiv = styled.div`
+  padding-top: 10px;
+  margin-left: 60px;
+`;
+
+function SliderComponent({ title, books, showRank }) {
     const settings = {
         dots: false,
         infinite: true,
-        speed: 500,
+        speed: 800,
         arrows: true,
         autoplay: false,
-        slidesToShow: 5,
+        slidesToShow: 6,
         slidesToScroll: 5,
         initialSlide: 0,
-        centerMode: true, // Enable center mode
-        centerPadding: "15px", // Adjust the value as needed
-        prevArrow: <img src={leftArrowImage} alt="Previous" />, // 이전 화살표 이미지 지정
-        nextArrow: <img src={rightArrowImage} alt="Next" />, // 다음 화살표 이미지 지정
+        centerMode: false,
+        prevArrow: <img src={leftArrowImage} alt="Previous" />,
+        nextArrow: <img src={rightArrowImage} alt="Next" />,
         responsive: [
             {
                 breakpoint: 1440,
@@ -102,39 +107,21 @@ function BookSlider({book}) {
         ],
     };
 
-    const [topBooks, setTopBooks] = useState([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const topResponse = await fetch("http://localhost:8080/book/top");
-
-                if (!topResponse.ok) {
-                    throw new Error("Network response was not ok");
-                }
-
-                const topData = await topResponse.json();
-
-                setTopBooks(topData);
-            } catch (error) {
-                console.error("Error fetching data: ", error);
-            }
-        };
-        fetchData();
-    }, []);
-
     return (
         <Container>
-            <Title>오늘 도서관의 TOP 10 도서!!</Title>
-            <CustomSlider {...settings}> {/* Use React-Slick Slider component */}
-                {topBooks.map((book, index) => (
-                    <div key={index}>
-                        <BookFrame book={book} showReturnDate={false}/>
-                    </div>
+            <Title>{title}</Title>
+            <CustomSlider {...settings}>
+                {books.map((book, index) => (
+                    <StyledDiv key={index}>
+                        <BookFrame
+                            book={book}
+                            rank={index + 1}
+                            showRank={showRank} />
+                    </StyledDiv>
                 ))}
             </CustomSlider>
         </Container>
     );
 }
 
-export default BookSlider;
+export default SliderComponent;

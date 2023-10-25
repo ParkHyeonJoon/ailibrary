@@ -4,21 +4,23 @@ import RecentAlarm from "./RecentAlarm";
 import AllAlarm from "../pages/AllAlarm";
 
 const Wrapper = styled.div`
-  width: 1050px;
+  width: 100%;
   height: 350px;
   border-radius: 20px;
-  background: rgba(217, 224, 255, 0.9);
+  background: rgba(95, 209, 255, 0.34);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   margin-top: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  color: white;
 `;
 
 const InformArea = styled.div`
-  width: 30%;
-  height: 100%;
+  width: 45%;
+  padding: 30px;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -28,7 +30,7 @@ const Name = styled.p`
   margin-left: 20px;
   margin-top: 20px;
   margin-bottom: 10px;
-  font-size: 23px;
+  font-size: 30px;
   font-weight: 700;
 `;
 const Major = styled.p`
@@ -36,7 +38,7 @@ const Major = styled.p`
   margin-bottom: 3px;
   font-size: 14px;
   font-weight: 600;
-  color: #808080;
+  color: #ececec;
 `;
 
 const Grade = styled.p`
@@ -45,11 +47,12 @@ const Grade = styled.p`
   margin-bottom: 10px;
   font-size: 14px;
   font-weight: 600;
-  color: #808080;
+  color: #ececec;
 `;
 const AlarmArea = styled.div`
-  width: 70%;
+  width: 55%;
   height: 100%;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -64,11 +67,11 @@ const Title = styled.p`
 const AllLink = styled.a`
   cursor: pointer;
   text-decoration: none;
-  color: #6b6b6b;
+  color: #cecece;
   font-size: 14px;
   position: absolute;
-  right: 30px; /* 우측 정렬 */
-  top: 30px;   /* 상단 정렬 */
+  right: 60px; /* 우측 정렬 */
+  top: 65px; /* 상단 정렬 */
 `;
 function MyProfile() {
 

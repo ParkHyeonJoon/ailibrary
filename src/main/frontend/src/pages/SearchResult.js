@@ -11,25 +11,14 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 180px;
+  background: black;
+  color: white;
+  height: 100vh;
 `;
 
-const BookImage = styled.img`
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-  box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.2);
-`;
-
-const BookTitle = styled.p`
-  color: black;
-  font-size: 15px;
-  font-weight: 600;
-  margin-top: 5px;
-  margin-left: 2px;
-`;
 const ContentWrapper = styled.div`
   width: 1000px;
+  margin-top: 10px;
 `;
 const Title = styled.h2`
   margin: 50px 0;

@@ -12,6 +12,8 @@ const CustomDatePicker = styled.div`
   align-items: flex-start; /* 텍스트를 왼쪽으로 정렬 */
   justify-content: flex-start;
   margin-bottom: 20px;
+  color: black;
+  
 `;
 
 const StyledDatePickerWrapper = styled.div`
@@ -21,23 +23,27 @@ const StyledDatePickerWrapper = styled.div`
   border-radius: 5px;
   padding: 2px 4px;
   margin: 5px;
+  color: black;
+  background: white;
 `;
 
 const StyledDatePicker = styled(DatePicker)`
   /* DatePicker 컴포넌트에 스타일을 직접 적용할 수 있습니다. */
-  
+
   border: none;
   height: 25px;
   background-color: transparent;
   font-size: 15px;
+  color: black;
 
   & .react-datepicker__header {
     background-color: white;
+    color: white;
   }
 
   & .react-datepicker__day--selected {
     background-color: #007bff;
-    color: #fff;
+    color: white;
   }
 `;
 

@@ -150,4 +150,12 @@ public class BookService {
         List<Book> likeBooklist = bookMapper.checkLikeBook(userId);
         return likeBooklist;
     }
+
+    /**
+     * 사용자가 예약해놓았던 도서 제목 조회
+     */
+    public String reserveBookTitle(int bookId) {
+        String bookTitle = bookMapper.reserveBookTitle(bookId);
+        return bookTitle;
+    }
 }

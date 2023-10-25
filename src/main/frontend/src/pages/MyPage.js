@@ -13,18 +13,27 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 180px;
+  background: black;
+`;
+const ContentArea = styled.div`
+  width: 100%;
+  margin-top: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 function MyPage() {
     return (
         <Wrapper>
             <Header/>
-            <MyProfile/>
-            <BookSlider/>
-            <LoaningBookList/>
-            <ReserveBookList/>
-            <LikeBookList/>
+            <ContentArea>
+                <MyProfile/>
+                <LoaningBookList/>
+                <ReserveBookList/>
+                <LikeBookList/>
+            </ContentArea>
         </Wrapper>
     );
 }

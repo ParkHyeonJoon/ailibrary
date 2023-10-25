@@ -11,21 +11,20 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin-top: 180px;
   color: #fff;
   min-height: 100vh;
+  background: black;
 `;
 
 const ContentWrapper = styled.div`
   width: 1000px;
   display: flex;
   flex-direction: row;
-  margin-top: 50px;
+  margin-top: 220px;
 `;
 
 const BackgroundImage = styled.div`
   position: absolute;
-  z-index: -1;
   top: -30px;
   right: -30px; /* 오른쪽에 -30px 여백 추가 */
   bottom: -30px; /* 아래에 -30px 여백 추가 */

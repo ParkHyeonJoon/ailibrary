@@ -10,6 +10,8 @@ import java.time.LocalDate;
 public class BookLoanResponse extends Book{
     private int bookLoanId;
     private String userId;
+    private Long userStuId;
+
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate loanDate; //대출 날짜

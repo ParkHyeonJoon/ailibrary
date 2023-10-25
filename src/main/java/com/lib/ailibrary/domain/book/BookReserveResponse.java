@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public class BookReserveResponse extends Book{
     private int bookRezId;
     private String userId;
+    private Long userStuId;
 
 
     @JsonFormat(pattern = "yyyy-MM-dd")

@@ -1,7 +1,10 @@
 package com.lib.ailibrary.domain.book;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
@@ -45,10 +48,14 @@ public interface BookReserveMapper {
     int checkReserve(int bookId);
 
     /**
-     * 도서 예약 취소
-     * @param bookId
+     * 도서 선택 예약 취소
      */
-    int cancelReserve(int bookId);
+    void cancelReserve(List<Integer> bookId);
+
+    /**
+     * 예약해놓은 도서 대출하면 자동 취소
+     */
+    void cancelAuto(int bookId);
 
     /**
      * 해당 사용자가 예약한 도서 목록 조회
@@ -57,6 +64,19 @@ public interface BookReserveMapper {
      */
     List<BookReserveResponse> checkBookReserve(String userId);
 
+    /**
+     * 사용자가 대출하려는 도서가 예약된 도서인지
+     * @param - bookId
+     * @return - userId
+     */
+    String checkWhoReserve(int bookId);
+
+    /**
+     * 예약한 도서 예약 유효날짜 확인
+     * @param - bookId
+     * @return - returnDate
+     */
+    //LocalDate checkReserveDate(int bookId);
 
 
 

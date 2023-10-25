@@ -1,30 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Line from "../common/Line";
 
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 32px;
+  height: 30px;
   justify-content: flex-end;
   align-items: center;
   gap: 26px;
   flex-shrink: 0;
-  background: #e3e9ff;
-  color: #909090;
+  color: #ffffff;
 `;
 
 const CustomLink = styled(Link)`
   text-decoration: none; /* 밑줄 제거 */
-  color: #909090;
+  color: #838383;
 `;
 
 const Text = styled.p`
   cursor: pointer;
-  font-size: 13px;
+  font-size: 12px;
   margin-right: 0;
   font-family: Inter;
-  font-weight: 600;
   word-wrap: break-word;
 
   &:last-child {
