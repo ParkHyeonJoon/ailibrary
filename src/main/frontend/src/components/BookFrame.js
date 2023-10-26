@@ -22,7 +22,7 @@ const BookImage = styled.img`
 `;
 
 const BookTitle = styled.p`
-  color: #ffffff;
+  color: #000000;
   font-size: 15px;
   font-weight: 600;
   margin-top: 5px;
@@ -34,7 +34,7 @@ const BookTitle = styled.p`
 
 const BookRank = styled.p`
   font-family: 'RixInooAriDuriR';
-  color: rgb(255, 255, 255);
+  color: rgb(0, 28, 70);
   font-size: 80px;
   font-weight: 700;
   position: absolute;

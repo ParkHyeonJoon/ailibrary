@@ -7,14 +7,14 @@ const Wrapper = styled.div`
   width: 100%;
   height: 350px;
   border-radius: 20px;
-  background: rgba(95, 209, 255, 0.34);
+  background: rgba(255, 255, 255, 0.16);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   margin-top: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #000000;
 `;
 
 const InformArea = styled.div`
@@ -38,7 +38,7 @@ const Major = styled.p`
   margin-bottom: 3px;
   font-size: 14px;
   font-weight: 600;
-  color: #ececec;
+  color: #424242;
 `;
 
 const Grade = styled.p`
@@ -47,7 +47,7 @@ const Grade = styled.p`
   margin-bottom: 10px;
   font-size: 14px;
   font-weight: 600;
-  color: #ececec;
+  color: #424242;
 `;
 const AlarmArea = styled.div`
   width: 55%;

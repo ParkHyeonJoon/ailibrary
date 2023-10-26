@@ -5,8 +5,8 @@ import styled from "styled-components";
 import Slider from "react-slick"; // Import Slider from react-slick
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import rightArrowImage from "../assets/next.png";
-import leftArrowImage from "../assets/back.png";
+import rightArrowImage from "../assets/right-arrow.png";
+import leftArrowImage from "../assets/left-arrow.png";
 
 const Container = styled.div`
   width: 98%;
@@ -14,7 +14,7 @@ const Container = styled.div`
 `;
 const Title = styled.p`
   margin-left: 20px;
-  color: #ffffff;
+  color: #000000;
   font-size: 25px;
   font-weight: 700;
   margin-bottom: 10px;
