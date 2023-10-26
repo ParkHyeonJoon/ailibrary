@@ -18,7 +18,8 @@ const theme = {
 // Set some properties of the bot
 const config = {
     botAvatar: require('../assets/robot.png'),
-    botDelay: 1000
+    botDelay: 1000,
+    floating: true
 };
 
 function ResponseComponent({ steps, triggerNextStep }) {
