@@ -154,4 +154,14 @@
             B.user_id = #{userId}
     </select>
 
+    <!-- 예약해놓은 도서가 반납됐을 때 도서 제목 -->
+    <select id="reserveBookTitle" parameterType="int" resultType="string">
+        SELECT
+            book_title
+        FROM
+            tb_book
+        WHERE
+            book_id = #{bookId}
+    </select>
+
 </mapper>

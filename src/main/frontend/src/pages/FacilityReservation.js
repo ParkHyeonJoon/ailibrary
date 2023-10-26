@@ -14,7 +14,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 180px;
+  background: black;
+  color: white;
+  height: 100vh;
 `;
 
 const ContentWrapper = styled.div`
@@ -23,11 +25,11 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
 `;
 
 const Title = styled.p`
   text-align: left;
-  color: #000;
   font-family: Inter;
   font-size: 25px;
   font-style: normal;
@@ -50,7 +52,6 @@ const RoomTypeBtn = styled.button`
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   border: none;
-  color: #000;
   font-family: Inter;
   font-size: 15px;
   font-style: normal;
@@ -79,6 +80,7 @@ const PickerArea = styled.div`
 `;
 const Result = styled.div`
   width: 880px;
+  
 `;
 const StyledText = styled.span`
   font-size: 15px;

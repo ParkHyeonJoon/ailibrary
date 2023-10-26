@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Book {
 
-    private int bookId; //도서 아이디 PK
+    protected int bookId; //도서 아이디 PK
     private String bookTitle; //도서명
     private String author; //작가명
     private int publishedDate; //출판연도

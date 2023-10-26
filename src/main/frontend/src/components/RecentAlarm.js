@@ -5,15 +5,15 @@ import axios from "axios";
 
 const Wrapper = styled.div`
   width: 95%;
-  height: 270px;
+  height: 260px;
   border-radius: 20px;
-  background: white;
-  display: flex; 
+  background: rgb(255, 255, 255);
+  display: flex;
   margin-left: 10px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
 `;
 
 const AlarmWrapper = styled.div`

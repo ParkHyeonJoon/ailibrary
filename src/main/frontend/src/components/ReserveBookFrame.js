@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 
@@ -34,8 +34,36 @@ const BookRezDate = styled.p`
   font-size: 15px;
   font-weight: 600;
 `;
-const ReserveBookFrame = ({ book }) => {
+
+const CheckboxContainer = styled.label`
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  z-index: 1;
+  display: inline-block;
+  background: #fff;
+  padding: 5px;
+  border-radius: 50%;
+`;
+
+const ReserveBookFrame = ({ book, selection, selected }) => {
+    const [isChecked, setIsChecked] = useState(selected);
+
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+        selection(book.bookId, !isChecked);
+    };
+
+    const handleCancelReservation = () => {
+        if(isChecked) {
+            const dataToSend = {
+                bookId: book.bookId,
+            };
+        }
+    };
+
     return (
+    <div style = {{ position: "relative" }}>
         <Link to={`/book-detail/${book.bookId}`}> {/* 각 책에 대한 고유한 URL로 연결 */}
             <BookWrapper>
                 <BookImage src={book.bookImage} alt={book.bookTitle} />
@@ -43,6 +71,8 @@ const ReserveBookFrame = ({ book }) => {
                 <BookRezDate>예약 기한 : {book.bookRezDate}</BookRezDate>
             </BookWrapper>
         </Link>
+
+     </div>
     );
 };
 

@@ -4,13 +4,12 @@ import { Link } from 'react-router-dom';
 
 const BookWrapper = styled.div`
   position: relative;
-  width: 180px; /* 책 컴포넌트의 너비 설정 */
+  width: 180px;
   height: 270px;
   margin-right: -20px;
-  transition: transform 0.3s ease; /* 마우스 오버시 애니메이션 효과 */
-
+  transition: transform 0.3s ease;
   &:hover {
-    transform: scale(1.05); /* 마우스 오버시 확대 효과 */
+    transform: scale(1.03);
   }
 `;
 
@@ -19,37 +18,52 @@ const BookImage = styled.img`
   height: 250px;
   border-radius: 5px;
   box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.2);
+  position: relative; // 상대적 위치 설정
 `;
 
 const BookTitle = styled.p`
-  color: black;
+  color: #ffffff;
   font-size: 15px;
   font-weight: 600;
   margin-top: 5px;
   margin-left: 2px;
-  white-space: nowrap; /* 줄 바꿈 방지 */
-  overflow: hidden; /* 내용이 넘칠 때 숨김 처리 */
-  text-overflow: ellipsis; /* 넘친 내용에 "..." 표시 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const BookRank = styled.p`
+  font-family: 'RixInooAriDuriR';
+  color: rgb(255, 255, 255);
+  font-size: 80px;
+  font-weight: 700;
+  position: absolute;
+  top: -85px;
+  left: -55px;
+  z-index: 1;
+  font-style: italic;
 `;
 const ReturnDate = styled.p`
   color: red;
   font-size: 15px;
   font-weight: 600;
 `;
-const LoaningBookFrame = ({ book, showReturnDate }) => {
+const BookFrame = ({ book, rank, showRank, showReturnDate }) => {
     return (
-        <Link to={`/book-detail/${book.bookId}`} style={{ textDecoration: "none" }}> {/* 각 책에 대한 고유한 URL로 연결 */}
+        <Link to={`/book-detail/${book.bookId}`}
+              style={{ textDecoration: "none"}}>
             <BookWrapper>
+                {showRank &&
+                    <BookRank>{rank}</BookRank>
+                }
                 <BookImage src={book.bookImage} alt={book.bookTitle} />
                 <BookTitle>{book.bookTitle}</BookTitle>
                 {showReturnDate && (
-                    <ReturnDate>반납 날짜 : {book.returnDate}</ReturnDate>
+                    <ReturnDate>반납 {book.returnDate}</ReturnDate>
                 )}
             </BookWrapper>
         </Link>
     );
 };
 
-
-
-export default LoaningBookFrame;
+export default BookFrame;

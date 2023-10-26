@@ -4,7 +4,7 @@ import {createReservation} from "../api/FacilityReserveapi";
 import {darken} from "polished";
 
 const ModalOverlay = styled.div`
-  margin-top: 30px;
+  margin-top: 70px;
   position: fixed;
   top: 0;
   left: 0;
@@ -64,7 +64,27 @@ const ReservationBtn = styled.button`
     /* 원하는 다른 스타일 변경도 추가 가능 */
   }
 `;
+const ContentArea = styled.div`
+  width: 270px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+`;
 
+const Title = styled.h2`
+  font-weight: bold;
+  font-size: 15px;
+  margin: 0;
+`;
+const StyledInput = styled.input`
+  margin-top: 20px;
+  border-radius: 5px;
+  border: 0.5px solid black;
+  height: 25px;
+  width: 100px;
+`;
 function Modal({isOpen, onClose, onReservation, date, time, roomData}) {
     const rezDate = date;
     const rezTime = time;
@@ -106,21 +126,24 @@ function Modal({isOpen, onClose, onReservation, date, time, roomData}) {
                     <ModalTitle>예약 확인</ModalTitle>
                     <CloseButton onClick={onClose}>닫기</CloseButton>
                 </ModalHeader>
-                <p>시설명: {roomData.roomFloor}층 {roomData.roomName}</p>
-                <p>날짜: {rezDate}</p>
-                <div style={{textAlign: 'center'}}>
-                    <p>시간:</p>
+                <ContentArea>
+                    <Title>시설명</Title>
+                    <p>{roomData.roomFloor}층 {roomData.roomName}</p>
+                    <Title>날짜</Title>
+                    <p>{rezDate}</p>
+                    <Title>시간</Title>
                     {rezTime.map((slot, index) => (
                         <p key={index}>{slot}</p>
                     ))}
-                </div>
-                <p> 참여인원: {"\n"}
-                    <input
+
+                    <Title> 참여인원</Title>
+                    <StyledInput
                         type="text"
                         value={rezPeopleNum}
                         onChange={(e) => setRezPeopleNum(e.target.value)}
 
-                    /></p>
+                    />
+                </ContentArea>
                 <p>위 시설을 예약하시겠습니까?</p>
                 <ReservationBtn onClick={handleReservation}>예약하기</ReservationBtn>
             </ModalContent>

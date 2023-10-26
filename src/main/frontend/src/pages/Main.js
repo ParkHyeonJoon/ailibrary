@@ -11,7 +11,15 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 180px;
+  background: black;
+`;
+
+const ContentArea = styled.div`
+  margin-top: 160px;
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
 `;
 
 function Main() {
@@ -19,8 +27,10 @@ function Main() {
     return (
         <Wrapper>
             <Header/>
-            <ChatArea/>
-            <MainBookList/>
+            <ContentArea>
+                <ChatArea/>
+                <MainBookList/>
+            </ContentArea>
         </Wrapper>
     );
 }

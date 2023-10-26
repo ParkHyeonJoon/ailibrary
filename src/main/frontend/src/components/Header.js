@@ -12,8 +12,8 @@ const StyledHeader = styled.header`
   top: 0;
   left: 0;
   z-index: 10000; /* 다른 요소 위에 표시 */
-  background: #fff;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.75);
+  //box-shadow: 0px 3px 5px rgba(250, 250, 250, 0.3);
 `;
 
 function Header() {

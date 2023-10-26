@@ -86,4 +86,9 @@ public interface BookMapper {
      */
     List<Book> checkLikeBook(String userId);
 
+    /**
+     * 사용자가 예약해놓았던 도서 제목 조회
+     */
+    String reserveBookTitle(int bookId);
+
 }

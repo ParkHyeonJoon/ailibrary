@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Button from '../common/Button';
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -11,7 +11,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding-bottom: 30px;
-  margin-top: 180px;
+  background: black;
+  color: white
 `;
 
 const Title = styled.p`
@@ -73,6 +74,12 @@ const SignupForm = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+const ContentWrapper = styled.div`
+  margin-top: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 function Signup() {
     const [formData, setFormData] = useState({
@@ -196,141 +203,143 @@ function Signup() {
     return (
         <Wrapper>
             <Header/>
-            <Title>회원가입</Title>
-            <SignupForm onSubmit={handleSubmit}>
-                <FormTable>
-                    <ColGroup>
-                        <col/>
-                        <col/>
-                    </ColGroup>
-                    <TBody>
-                        <TableRow>
-                            <td>
-                                <InputInform>학번</InputInform>
-                            </td>
-                            <td>
-                                <InputField
-                                    type="text"
-                                    name="studentID"
-                                    value={formData.studentID}
-                                    onChange={handleInputChange}
-                                />
-                            </td>
-                        </TableRow>
-                        <TableRow>
-                            <td>
-                                <InputInform>이름</InputInform>
-                            </td>
-                            <td>
-                                <InputField
-                                    type="text"
-                                    name="userName"
-                                    value={formData.userName}
-                                    onChange={handleInputChange}
-                                />
-                            </td>
-                        </TableRow>
-                        <TableRow>
-                            <td>
-                                <InputInform>전공</InputInform>
-                            </td>
-                            <td>
-                                <InputField
-                                    type="text"
-                                    name="major"
-                                    value={formData.major}
-                                    onChange={handleInputChange}
-                                />
-                            </td>
-                        </TableRow>
-                        <TableRow>
-                            <td>
-                                <InputInform>학년</InputInform>
-                            </td>
-                            <td>
-                                <SelectGrade
-                                    name="grade"
-                                    value={formData.grade}
-                                    onChange={handleInputChange}
-                                >
-                                    <option value="1">1학년</option>
-                                    <option value="2">2학년</option>
-                                    <option value="3">3학년</option>
-                                    <option value="4">4학년</option>
-                                </SelectGrade>
-                            </td>
-                        </TableRow>
-                        <TableRow>
-                            <td>
-                                <InputInform>이메일</InputInform>
-                            </td>
-                            <td>
-                                <InputField
-                                    type="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleInputChange}
-                                />
-                            </td>
-                        </TableRow>
-                        <TableRow>
-                            <td>
-                                <InputInform>핸드폰번호</InputInform>
-                            </td>
-                            <td>
-                                <InputField
-                                    type="tel"
-                                    name="phoneNumber"
-                                    value={formData.phoneNumber}
-                                    onChange={handleInputChange}
-                                />
-                            </td>
-                        </TableRow>
-                        <TableRow>
-                            <td>
-                                <InputInform>아이디</InputInform>
-                            </td>
-                            <td>
-                                <InputField
-                                    type="text"
-                                    name="userID"
-                                    value={formData.userID}
-                                    onChange={handleInputChange}
-                                />
-                            </td>
-                        </TableRow>
-                        <TableRow>
-                            <td>
-                                <InputInform>비밀번호</InputInform>
-                            </td>
-                            <td>
-                                <InputField
-                                    type="password"
-                                    name="password"
-                                    value={formData.password}
-                                    onChange={handlePasswordChange}
-                                />
-                            </td>
-                        </TableRow>
-                        <TableRow>
-                            <td>
-                                <InputInform>비밀번호 확인</InputInform>
-                            </td>
-                            <td>
-                                <InputField
-                                    type="password"
-                                    name="confirmPassword"
-                                    value={formData.confirmPassword}
-                                    onChange={handleConfirmPasswordChange}
-                                />
-                                {/* 비밀번호 확인 메시지 */}
-                                <p style={{fontSize: '14px', color: 'red'}}>{passwordMatch}</p>
-                            </td>
-                        </TableRow>
-                    </TBody>
-                </FormTable>
-                <Button type="submit">회원가입</Button>
-            </SignupForm>
+            <ContentWrapper>
+                <Title>회원가입</Title>
+                <SignupForm onSubmit={handleSubmit}>
+                    <FormTable>
+                        <ColGroup>
+                            <col/>
+                            <col/>
+                        </ColGroup>
+                        <TBody>
+                            <TableRow>
+                                <td>
+                                    <InputInform>학번</InputInform>
+                                </td>
+                                <td>
+                                    <InputField
+                                        type="text"
+                                        name="studentID"
+                                        value={formData.studentID}
+                                        onChange={handleInputChange}
+                                    />
+                                </td>
+                            </TableRow>
+                            <TableRow>
+                                <td>
+                                    <InputInform>이름</InputInform>
+                                </td>
+                                <td>
+                                    <InputField
+                                        type="text"
+                                        name="userName"
+                                        value={formData.userName}
+                                        onChange={handleInputChange}
+                                    />
+                                </td>
+                            </TableRow>
+                            <TableRow>
+                                <td>
+                                    <InputInform>전공</InputInform>
+                                </td>
+                                <td>
+                                    <InputField
+                                        type="text"
+                                        name="major"
+                                        value={formData.major}
+                                        onChange={handleInputChange}
+                                    />
+                                </td>
+                            </TableRow>
+                            <TableRow>
+                                <td>
+                                    <InputInform>학년</InputInform>
+                                </td>
+                                <td>
+                                    <SelectGrade
+                                        name="grade"
+                                        value={formData.grade}
+                                        onChange={handleInputChange}
+                                    >
+                                        <option value="1">1학년</option>
+                                        <option value="2">2학년</option>
+                                        <option value="3">3학년</option>
+                                        <option value="4">4학년</option>
+                                    </SelectGrade>
+                                </td>
+                            </TableRow>
+                            <TableRow>
+                                <td>
+                                    <InputInform>이메일</InputInform>
+                                </td>
+                                <td>
+                                    <InputField
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                    />
+                                </td>
+                            </TableRow>
+                            <TableRow>
+                                <td>
+                                    <InputInform>핸드폰번호</InputInform>
+                                </td>
+                                <td>
+                                    <InputField
+                                        type="tel"
+                                        name="phoneNumber"
+                                        value={formData.phoneNumber}
+                                        onChange={handleInputChange}
+                                    />
+                                </td>
+                            </TableRow>
+                            <TableRow>
+                                <td>
+                                    <InputInform>아이디</InputInform>
+                                </td>
+                                <td>
+                                    <InputField
+                                        type="text"
+                                        name="userID"
+                                        value={formData.userID}
+                                        onChange={handleInputChange}
+                                    />
+                                </td>
+                            </TableRow>
+                            <TableRow>
+                                <td>
+                                    <InputInform>비밀번호</InputInform>
+                                </td>
+                                <td>
+                                    <InputField
+                                        type="password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handlePasswordChange}
+                                    />
+                                </td>
+                            </TableRow>
+                            <TableRow>
+                                <td>
+                                    <InputInform>비밀번호 확인</InputInform>
+                                </td>
+                                <td>
+                                    <InputField
+                                        type="password"
+                                        name="confirmPassword"
+                                        value={formData.confirmPassword}
+                                        onChange={handleConfirmPasswordChange}
+                                    />
+                                    {/* 비밀번호 확인 메시지 */}
+                                    <p style={{fontSize: '14px', color: 'red'}}>{passwordMatch}</p>
+                                </td>
+                            </TableRow>
+                        </TBody>
+                    </FormTable>
+                    <Button type="submit">회원가입</Button>
+                </SignupForm>
+            </ContentWrapper>
         </Wrapper>
     );
 }

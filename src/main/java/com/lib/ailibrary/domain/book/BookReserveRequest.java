@@ -8,10 +8,11 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class BookReserveRequest {
+public class BookReserveRequest extends Book {
     private int bookRezId;
     private String userId;
-    private int bookId;
+    private Long userStuId;
+
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate bookRezDate;

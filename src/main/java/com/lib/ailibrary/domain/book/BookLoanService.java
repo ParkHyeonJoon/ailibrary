@@ -19,8 +19,8 @@ public class BookLoanService {
         bookLoanMapper.save(param);
     }
 
-    public BookLoanResponse findLoanbyId(final int bookLoanId) {
-        return bookLoanMapper.findById(bookLoanId);
+    public List<BookLoanResponse> findLoanAll() {
+        return bookLoanMapper.findByAll();
     }
 
     public void deleteLoanById(final int bookLoanId) {

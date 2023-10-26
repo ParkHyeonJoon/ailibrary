@@ -1,21 +1,23 @@
 // AllAlarm.js
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Alarm from "../components/Alarm";
 import axios from "axios";
 import styled from "styled-components";
 import Header from "../components/Header";
+
 const Wrapper = styled.div`
+  background: #f6f6f6;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 180px;
+  background: black;
 `;
 
 const Title = styled.p`
   text-align: left;
-  color: #000;
+  color: white;
   font-family: Inter;
   font-size: 25px;
   font-style: normal;
@@ -23,10 +25,17 @@ const Title = styled.p`
   line-height: normal;
 `;
 const AlarmArea = styled.div`
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  border: 0.5px solid #cccccc;
+  padding-top: 20px;
 `;
 const ContentWrapper = styled.div`
   width: 1000px;
+  margin-top: 200px;
 `;
+
 function AllAlarm() {
     const [notifications, setNotifications] = useState([]);
 
@@ -37,7 +46,7 @@ function AllAlarm() {
     const userStuId = userInfo.userStuId;
     const fetchNotifications = () => {
         axios
-            .post("http://localhost:8080/notification/alllist", userStuId , {
+            .post("http://localhost:8080/notification/alllist", userStuId, {
                 headers: {
                     'Authorization': storedToken,
                     'Content-Type': 'application/json'
@@ -67,11 +76,12 @@ function AllAlarm() {
             <Header/>
             <ContentWrapper>
                 <Title>전체 알림</Title>
-        <AlarmArea>
-            {notifications.map((notification) => (
-                <Alarm key={notification.notiId} notification={notification} onDelete={handleDeleteNotification} showDeleteButton={false}/>
-            ))}
-        </AlarmArea>
+                <AlarmArea>
+                    {notifications.map((notification) => (
+                        <Alarm key={notification.notiId} notification={notification} onDelete={handleDeleteNotification}
+                               showDeleteButton={false}/>
+                    ))}
+                </AlarmArea>
             </ContentWrapper>
         </Wrapper>
     );

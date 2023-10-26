@@ -7,6 +7,7 @@
     <sql id="bookRezColumns">
         book_rez_id
         , user_id
+        , user_stu_id
         , book_id
         , book_rez_date
 
@@ -20,6 +21,7 @@
         ) VALUES (
         #{bookRezId}
         , #{userId}
+        , #{userStuId}
         , #{bookId}
         , #{bookRezDate}
         )
@@ -72,8 +74,19 @@
             book_id = #{bookId}
     </select>
 
-    <!-- 예약 취소 기능 -->
-    <delete id="cancelReserve" parameterType="int">
+    <!-- 예약 선택 취소 기능 -->
+    <delete id="cancelReserve" parameterType="java.util.List">
+        DELETE
+        FROM
+            tb_book_rez
+        WHERE book_id IN
+        <foreach item="bookId" collection="list" open="(" separator="," close=")">
+             #{bookId}
+        </foreach>
+    </delete>
+
+    <!-- 예약해놓은 도서를 대출하면 예약 취소 기능 -->
+    <delete id="cancelAuto" parameterType="int">
         DELETE
         FROM
             tb_book_rez
@@ -92,4 +105,19 @@
         WHERE
             B.user_id = #{userId}
     </select>
+
+    <!-- 사용자가 대출하려는 도서가 예약이 되어있는 도서인지 확인 -->
+    <select id="checkWhoReserve" parameterType="int" resultType="string">
+        SELECT
+            user_id
+        FROM
+            tb_book_rez
+        WHERE
+            book_id = #{bookId}
+    </select>
+
+    <!-- 사용자가 예약한 도서 예약 유효 날짜 확인 -->
+
+
+
 </mapper>
