@@ -46,35 +46,48 @@ public class BookReserveController {
                     notificationRequest.setNotiTime(LocalDateTime.now());
                     notificationService.saveNotification(notificationRequest);
                     bookReserveService.reserveBook(request);
-                    return ResponseEntity.ok("예약 성공");
+                    return ResponseEntity.ok("예약 가능");
                 } else {
-                    return ResponseEntity.ok("이미 예약");
+                    return ResponseEntity.ok("예약 중");
                 }
             }
             // 아무도 대출 하지 않은 상태
             else {
-                return ResponseEntity.ok("예약 불가능");
+                return ResponseEntity.ok("예약 불가");
             }
         }
         //사용자가 대출 한 상태
         else {
-            return ResponseEntity.ok("대출");
+            return ResponseEntity.ok("대출 중");
         }
     }
 
     //화면에 들어갔을 때
     @GetMapping("/reserve")
-    public ResponseEntity<String> checkAndReserve(int bookId) {
-        int reserveStatus = bookReserveService.checkReserve(bookId);
-        //LocalDate returnDate = bookReserveService.checkReserveDate(bookId);
+    public ResponseEntity<String> checkAndReserve(int bookId, String userId) {
 
-        if(reserveStatus == 1) {
-            // 예약 중인 도서
-            return ResponseEntity.ok("예약 도서");
+        int loanStatus = bookLoanService.checkBookLoan(bookId);
+        int loan = bookLoanService.checkBook(userId, bookId);
+        int reserveStatus = bookReserveService.checkReserve(bookId);
+
+        if(loan == 0) {
+            // 다른 사용자가 대출 한 상태
+            if(loanStatus == 1) {
+                // 예약 하지 않은 상태
+                if(reserveStatus == 0) {
+                    return ResponseEntity.ok("예약 가능");
+                } else {
+                    return ResponseEntity.ok("예약 중");
+                }
+            }
+            // 아무도 대출 하지 않은 상태
+            else {
+                return ResponseEntity.ok("예약 불가");
+            }
         }
-        // 예약이 안되어있는 도서
+        //사용자가 대출 한 상태
         else {
-            return ResponseEntity.ok("그냥 도서");
+            return ResponseEntity.ok("대출 중");
         }
     }
 

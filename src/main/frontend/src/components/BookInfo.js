@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import HeartButton from "../common/HeartButton";
 import ReserveButton from "../common/ReserveButton";
-import DatePicker from "react-datepicker";
-import moment from "moment";
-import "react-datepicker/dist/react-datepicker.css";
-import "../modalStyle.css";
 
 const Wrapper = styled.div`
   width: 70%;
@@ -25,7 +21,7 @@ const BookTitle = styled.p`
   text-align: left;
   font-size: 63px;
   line-height: normal;
-  margin-top:0;
+  margin-top: 0;
   margin-bottom: 0px;
   word-wrap: break-word;
 `;
@@ -71,6 +67,7 @@ const ColGroup = styled.colgroup`
   col:nth-child(1) {
     width: 20%;
   }
+
   col:nth-child(2) {
     width: 80%;
   }
@@ -98,29 +95,14 @@ const InfoContent = styled.p`
 `;
 
 const BookInfo = ({ bookInfo }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [isBookLoaned, setIsBookLoaned] = useState(false);
-  const [loanButtonText, setLoanButtonText] = useState("대출하기");
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [isReserveOpen, setIsReserveOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
+    const [isBookLoaned, setIsBookLoaned] = useState(false);
+    const [loanButtonText, setLoanButtonText] = useState("대출하기");
+    const { bookId } = useParams();
 
-  const { bookId } = useParams();
+    const storedUserInfo = localStorage.getItem("userInfo");
+    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
-  const storedUserInfo = localStorage.getItem("userInfo");
-  const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const today = new Date();
-  const monthFromToday = new Date(today);
-  monthFromToday.setMonth(monthFromToday.getMonth() + 1);
 
   useEffect(() => {
       if (userInfo && bookId) {
@@ -160,24 +142,9 @@ const BookInfo = ({ bookInfo }) => {
             .catch((error) => {
               console.error("Error checking book loan status: ", error);
             });
-
-        axios
-           .get(`http://localhost:8080/book/reserve?bookId=${bookId}`)
-           .then((response) => {
-           const reserveStatus = response.data;
-           if (reserveStatus === "예약 도서") {
-                setIsReserveOpen(false);
-           } else {
-                setIsReserveOpen(true);
-           }
-           })
-           .catch((error) => {
-           console.error("Error checking book loan status: ", error);
-           });
         }
-      }, [userInfo, bookId]);
+    }, [userInfo, bookId]);
 
-  // 찜 버튼 클릭 이벤트 핸들러
   const handleLikeClick = () => {
     if(!userInfo) {
         alert("로그인이 필요합니다");
@@ -247,7 +214,8 @@ const BookInfo = ({ bookInfo }) => {
               alert("대출 중입니다.");
               }
               else if(loanStatus === -2) {
-              alert("예약 중인 도서입니다.");
+                setLoanButtonText("대출하기");
+                alert("현재 다른 사용자가 예약 중입니다.");
               }
            })
         .catch((error) => {
@@ -256,133 +224,60 @@ const BookInfo = ({ bookInfo }) => {
         });
     };
 
-    const handleReserveClick = () => {
-        if(!userInfo) {
-            alert("로그인이 필요합니다");
-            return;
-        }
-
-        //달력이 켜짐
-        setIsReserveOpen(true);
-
-    };
-
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
-
-    const handleReserveConfirm = () => {
-        if (selectedDate) {
-           // 선택한 날짜를 서버로 전달합니다.
-           const reserveDate = moment(selectedDate).format("YYYY-MM-DD");
-
-            axios
-                .post('http://localhost:8080/book/reserve', {
-                    bookId: bookId,
-                    bookRezDate: reserveDate,
-                    userId: userInfo.userId,
-                    userStuId: userInfo.userStuId
-                })
-                .then((response) => {
-                    const reserveStatus = response.data;
-                       if(reserveStatus === "예약 성공") {
-                         alert("예약이 완료되었습니다")
-                         setIsReserveOpen(false);
-                       } else if(reserveStatus === "대출") {
-                         alert("현재 대출 한 도서입니다")
-                         setIsReserveOpen(false);
-                       } else{
-                          alert("누구도 대출 하지 않은 도서입니다")
-                          setIsReserveOpen(false);
-                       }
-                    })
-                .catch((error) => {
-                 console.error(error);
-                        alert("예약 중 오류가 발생했습니다.");
-                      });
-                  } else {
-                    alert("예약 날짜를 선택해주세요.");
-                  }
-                };
-
-  return (
-    <Wrapper>
-      <BookTitle>{bookInfo.bookTitle}</BookTitle>
-      <BookAuthor>{bookInfo.author}</BookAuthor>
-      <BtnArea>
-          <LoanBtn onClick={handleLoanClick}>
-              {isBookLoaned ? loanButtonText === "대출 중" ? "대출 중"
-               : "반납하기" : "대출하기"}
-          </LoanBtn>
-
-        {isReserveOpen && (
-            <ReserveButton onClick={openModal} />
-        )}
-        <HeartButton isLiked={isLiked} onClick={handleLikeClick}/>
-        {isModalOpen && (
-            <div className="modal">
-            <div className="modal-content">
-            <h2 className="black-text">도서 예약 날짜 선택</h2>
-            <p className="black-text">* 예약 할 날짜를 선택하세요.</p>
-            <p className="black-text">* 예약은 오늘 날짜로부터 한 달 내에 날짜까지만 선택 가능합니다.</p>
-            <p className="black-text">* 예약 날짜가 지나기 전에 예약해야 합니다.</p>
-            <p className="black-text">* 날짜가 지나면 예약은 자동 취소 됩니다.</p>
-            <DatePicker
-                selected={selectedDate}
-                onChange={handleDateChange}
-                dateFormat="yyyy-MM-dd"
-                minDate={today} // 오늘부터 선택 가능
-                maxDate={monthFromToday} // 오늘로부터 한 달 후까지 선택 가능
-                placeholderText="예약 날짜 선택"
-              />
-              <button onClick={handleReserveConfirm}>확인</button>
-              <button onClick={closeModal}>닫기</button>
-            </div>
-            </div>
-           )}
-      </BtnArea>
-      <FormTable>
-        <ColGroup>
-          <col />
-          <col />
-        </ColGroup>
-        <TBody>
-          <TableRow>
-            <td>
-              <Info>자료유형</Info>
-            </td>
-            <td>
-              <InfoContent>{bookInfo.category}</InfoContent>
-            </td>
-          </TableRow>
-          <TableRow>
-            <td>
-              <Info>출판연도</Info>
-            </td>
-            <td>
-              <InfoContent>{bookInfo.publishedDate}</InfoContent>
-            </td>
-          </TableRow>
-          <TableRow>
-            <td>
-              <Info>출판사</Info>
-            </td>
-            <td>
-              <InfoContent>{bookInfo.publisher}</InfoContent>
-            </td>
-          </TableRow>
-          <TableRow>
-            <td>
-              <Info>층수</Info>
-            </td>
-            <td>
-              <InfoContent>{bookInfo.floor}</InfoContent>
-            </td>
-          </TableRow>
-        </TBody>
-      </FormTable>
-    </Wrapper>
-  );
+    return (
+        <Wrapper>
+            <BookTitle>{bookInfo.bookTitle}</BookTitle>
+            <BookAuthor>{bookInfo.author}</BookAuthor>
+            <BtnArea>
+                <LoanBtn onClick={handleLoanClick}>
+                    {isBookLoaned ? loanButtonText === "대출 중" ? "대출 중"
+                        : "반납하기" : "대출하기"}
+                </LoanBtn>
+                <ReserveButton bookId={bookInfo.bookId} />
+                <HeartButton isLiked={isLiked} onClick={handleLikeClick}/>
+            </BtnArea>
+            <FormTable>
+                <ColGroup>
+                    <col/>
+                    <col/>
+                </ColGroup>
+                <TBody>
+                    <TableRow>
+                        <td>
+                            <Info>자료유형</Info>
+                        </td>
+                        <td>
+                            <InfoContent>{bookInfo.category}</InfoContent>
+                        </td>
+                    </TableRow>
+                    <TableRow>
+                        <td>
+                            <Info>출판연도</Info>
+                        </td>
+                        <td>
+                            <InfoContent>{bookInfo.publishedDate}</InfoContent>
+                        </td>
+                    </TableRow>
+                    <TableRow>
+                        <td>
+                            <Info>출판사</Info>
+                        </td>
+                        <td>
+                            <InfoContent>{bookInfo.publisher}</InfoContent>
+                        </td>
+                    </TableRow>
+                    <TableRow>
+                        <td>
+                            <Info>층수</Info>
+                        </td>
+                        <td>
+                            <InfoContent>{bookInfo.floor}</InfoContent>
+                        </td>
+                    </TableRow>
+                </TBody>
+            </FormTable>
+        </Wrapper>
+    );
 };
 
 export default BookInfo;

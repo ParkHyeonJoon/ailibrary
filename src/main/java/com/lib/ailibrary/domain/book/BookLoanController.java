@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,9 +38,32 @@ public class BookLoanController {
 
             //사용자가 대출 하지 않은 상태
             if(loan == 0) {
-                //예약이 안되어있거나, 사용자가 예약 해놓은 도서
-                if (whoReserve.isEmpty() || whoReserve.equals(userId)) {
+                //예약이 아예 안되어있거나, 예약이 되어있을 경우에는 사용자가 예약 해놓은 도서
+                if (whoReserve == null) {
                     //다른 사용자도 대출 하지 않은 상태
+                    if (loanStatus == 0) {
+                        //아직 대출 가능한 상태
+                        if(loanCount < 5) {
+                            NotificationRequest notificationRequest = new NotificationRequest();
+                            notificationRequest.setUserStuId(userStuId);
+                            notificationRequest.setNotiContent("도서 대출이 완료되었습니다.");
+                            notificationRequest.setNotiTime(LocalDateTime.now());
+                            notificationService.saveNotification(notificationRequest);
+                            bookLoanService.saveLoan(request);
+                            return ResponseEntity.ok("0");
+                        }
+                        //5권 대출해서 대출 불가능한 상태
+                        else {
+                            return ResponseEntity.ok("99");
+                        }
+                    }
+                    //다른 사용자가 대출 중인 상태
+                    else {
+                        return ResponseEntity.ok("-1");
+                    }
+                }
+                //예약이 있지만 사용자가 예약해놓은 도서일 경우
+                else if(whoReserve.equals(userId)) {
                     if (loanStatus == 0) {
                         //아직 대출 가능한 상태
                         if(loanCount < 5) {
