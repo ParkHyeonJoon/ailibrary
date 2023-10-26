@@ -16,6 +16,7 @@ export const fetchChatGPTResponse = async (userInput) => {
 
         const data = await response.json();
         return data.response;
+
     } catch (error) {
         console.error('Error fetching ChatGPT response:', error);
         return 'Sorry, I couldn\'t understand that.';
