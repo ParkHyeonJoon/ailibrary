@@ -1,45 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
-import { toast, ToastContainer } from 'react-toastify';
+import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ReserveBookFrame from "./ReserveBookFrame";
+import BookFrame from "./BookFrame";
 
 const SelectAllLabel = styled.label`
-    font-size: 18px;
+  font-size: 16px;
+  margin-left: 570px;
+  height: 20px;
+  padding: 1px;
 `;
 
 const Wrapper = styled.div`
   margin-top: 20px;
   width: 1000px;
-  color: #ffffff;
+  color: #000000;
 `;
 
 const SectionWrapper = styled.div`
   width: 100%;
   overflow-x: auto; /* 가로 스크롤을 허용 */
   white-space: nowrap; /* 자식 요소들을 한 줄로 나열 */
+  background: #bb86fc;
 `;
 
 const Title = styled.p`
   margin-left: 20px;
-  color: #ffffff;
+  color: #000000;
   font-size: 25px;
   font-weight: 700;
   margin-bottom: 10px;
 `;
-
-function ReserveBookList({ book }) {
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: flex-end;
+`;
+const CancelBtn = styled.button`
+  background: transparent;
+  color: #755dff;
+  border: none;
+  font-size: 16px;
+`;
+const StyledInput = styled.input`
+  position: relative;
+  top:-120px;
+`;
+function ReserveBookList({book}) {
     const [reserveBooks, setReserveBooks] = useState([]);
     const [selectedBooks, setSelectedBooks] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
 
     const selection = (bookId, selected) => {
-        if(selected) {
+        if (selected) {
             setSelectedBooks([...selectedBooks, bookId]);
         } else {
             setSelectedBooks(selectedBooks.filter((id) => id !== bookId));
         }
-        if(selectAll && !selected) {
+        if (selectAll && !selected) {
             setSelectAll(false);
         }
     };
@@ -51,63 +70,63 @@ function ReserveBookList({ book }) {
     const userStuId = userInfo.userStuId;
 
     const handleCancelReservation = async () => {
-            if(selectedBooks.length === 0) {
-                return;
-            }
+        if (selectedBooks.length === 0) {
+            return;
+        }
 
-            const requestBody = {
-                bookId: selectedBooks,
-                userStuId: userStuId
-            };
+        const requestBody = {
+            bookId: selectedBooks,
+            userStuId: userStuId
+        };
 
-            const fetchData = async () => {
-                try {
-                    const reserveResponse = await fetch(`http://localhost:8080/book/reserving?userId=${userId}`);
-
-                    if (!reserveResponse.ok) {
-                        throw new Error("Network response was not ok");
-                    }
-
-                    const reserveData = await reserveResponse.json();
-
-                    setReserveBooks(reserveData);
-                } catch (error) {
-                     console.error("Error fetching data: ", error);
-                }
-            };
-
+        const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/book/Reserving', {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(requestBody)
-                });
+                const reserveResponse = await fetch(`http://localhost:8080/book/reserving?userId=${userId}`);
 
-                if(!response.ok) {
-                   throw new Error("Network response was not ok");
+                if (!reserveResponse.ok) {
+                    throw new Error("Network response was not ok");
                 }
 
-                fetchData();
-                setSelectedBooks([]);
-                toast.success("예약이 취소되었습니다");
+                const reserveData = await reserveResponse.json();
 
-            } catch(error) {
-                console.error("Error canceling reservation: ", error);
-                toast.error("예약 취소 중 오류가 발생했습니다.");
+                setReserveBooks(reserveData);
+            } catch (error) {
+                console.error("Error fetching data: ", error);
             }
         };
 
-        const handleSelectAll = () => {
-            if(selectAll) {
-                setSelectedBooks([]);
-            } else {
-                const allBookIds = reserveBooks.map((book) => book.bookId);
-                setSelectedBooks(allBookIds);
+        try {
+            const response = await fetch('http://localhost:8080/book/Reserving', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
             }
-            setSelectAll(!selectAll);
-        };
+
+            fetchData();
+            setSelectedBooks([]);
+            toast.success("예약이 취소되었습니다");
+
+        } catch (error) {
+            console.error("Error canceling reservation: ", error);
+            toast.error("예약 취소 중 오류가 발생했습니다.");
+        }
+    };
+
+    const handleSelectAll = () => {
+        if (selectAll) {
+            setSelectedBooks([]);
+        } else {
+            const allBookIds = reserveBooks.map((book) => book.bookId);
+            setSelectedBooks(allBookIds);
+        }
+        setSelectAll(!selectAll);
+    };
 
     useEffect(() => {
 
@@ -134,25 +153,29 @@ function ReserveBookList({ book }) {
 
     return (
         <Wrapper>
-            <Title>예약 중인 도서</Title>
-            <SelectAllLabel>
-            <input
-                type="checkbox"
-                checked={selectAll}
-                onChange={handleSelectAll}
-            />
-            전체 선택
-            </SelectAllLabel>
+            <Header>
+                <Title>예약 중인 도서</Title>
+                <SelectAllLabel>
+                    <input
+                        type="checkbox"
+                        checked={selectAll}
+                        onChange={handleSelectAll}
+                    />
+                    전체 선택
+                </SelectAllLabel>
+                <CancelBtn onClick={handleCancelReservation}>예약 취소</CancelBtn>
+            </Header>
             <SectionWrapper>
                 {reserveBooks.map((book, index) => (
-                    <div style={{ display: 'inline-block', margin: '20px' }} key={index}>
-                    <input type="checkbox" checked={selectedBooks.includes(book.bookId)} onChange={() => selection(book.bookId, !selectedBooks.includes(book.bookId))}/>
-                        <ReserveBookFrame book={book}/>
+                    <div style={{ display: 'flex', alignItems: 'center'}} key={index}>
+                        <StyledInput type="checkbox" checked={selectedBooks.includes(book.bookId)}
+                               onChange={() => selection(book.bookId, !selectedBooks.includes(book.bookId))}/>
+                        <BookFrame book={book} showRank={false} showReturnDate={false} showRezDate={true}/>
                     </div>
                 ))}
             </SectionWrapper>
-            <ToastContainer />
-            <button onClick={handleCancelReservation}>예약 취소</button>
+            <ToastContainer/>
+
         </Wrapper>
     );
 }

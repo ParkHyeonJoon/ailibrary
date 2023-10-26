@@ -4,7 +4,7 @@ import Main from './pages/Main';
 import FacilityReservation from './pages/FacilityReservation';
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import PopularBooks from "./pages/PopularBooks";
+import BooksByType from "./pages/BooksByType";
 import MyPage from "./pages/MyPage";
 import BookDetail from "./pages/BookDetail";
 import SearchResult from "./pages/SearchResult";
@@ -90,7 +90,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Main/>}/>
                     <Route path="/facility-reservation" element={<FacilityReservation/>}/>
-                    <Route path="/popularbooks" element={<PopularBooks/>}/>
+                    <Route path="/bookbytype" element={<BooksByType/>}/>
                     <Route path="/signup" element={<Signup/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/mypage" element={<MyPage/>}/>

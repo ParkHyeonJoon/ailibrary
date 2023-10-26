@@ -1,8 +1,9 @@
 // pages/Home.js
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled, {ThemeProvider} from "styled-components";
 import Header from "../components/Header";
 import ChatBotComponent from "../components/ChatBotComponent";
+import SliderComponent from "../components/BookSlider";
 
 
 const Wrapper = styled.div`
@@ -23,11 +24,43 @@ const ContentArea = styled.div`
 `;
 
 function Main() {
+    const [topBooks, setTopBooks] = useState([]);
+    const [newBooks, setNewBooks] = useState([]);
+
+    useEffect(() => {
+        // 두 개의 API를 병렬로 호출하는 함수
+        const fetchData = async () => {
+            try {
+                const [topResponse, newResponse] = await Promise.all([
+                    fetch("http://localhost:8080/book/top"),
+                    fetch("http://localhost:8080/book/new"),
+                ]);
+
+                if (!topResponse.ok || !newResponse.ok ) {
+                    throw new Error("Network response was not ok");
+                }
+
+                const topData = await topResponse.json();
+                const newData = await newResponse.json();
+
+
+                setTopBooks(topData);
+                setNewBooks(newData);
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
+        };
+
+        // 데이터 가져오는 함수 호출
+        fetchData();
+    }, []);
 
     return (
         <Wrapper>
             <Header/>
             <ContentArea>
+                <SliderComponent title="오늘 도서관의 TOP 10 도서!!" books={topBooks} showRank={true} />
+                <SliderComponent title="뜨끈뜨끈한 새로 들어온 도서들!" books={newBooks} showRank={false} />
                 <ChatBotComponent/>
             </ContentArea>
         </Wrapper>

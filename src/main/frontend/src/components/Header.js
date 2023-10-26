@@ -11,7 +11,7 @@ const StyledHeader = styled.header`
   top: 0;
   left: 0;
   z-index: 10000; /* 다른 요소 위에 표시 */
-  background: rgba(255, 255, 255, 0.07);
+  background: rgb(255, 255, 255);
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
 `;
 

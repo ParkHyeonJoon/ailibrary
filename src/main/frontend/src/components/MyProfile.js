@@ -4,10 +4,10 @@ import RecentAlarm from "./RecentAlarm";
 import AllAlarm from "../pages/AllAlarm";
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 80%;
   height: 350px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.16);
+  background: #EFF2FFFF;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   margin-top: 20px;
   display: flex;
@@ -50,7 +50,7 @@ const Grade = styled.p`
   color: #424242;
 `;
 const AlarmArea = styled.div`
-  width: 55%;
+  width: 65%;
   height: 100%;
   padding: 30px;
   display: flex;
