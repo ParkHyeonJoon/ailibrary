@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {Link, useNavigate} from "react-router-dom";
+import LoginArea from "./LoginArea";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,21 +14,28 @@ const Wrapper = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 200px;
+  width: 150px;
   height: 77px;
-  margin-left: 30px;
+  margin-left: 150px;
 `;
 
 const SearchBar = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 400px;
+  width: 25%;
   height: 40px;
   flex-shrink: 0;
-  border-radius: 8px;
+  border: 1.5px solid #a0a0ff;
+  border-radius: 4px;
   opacity: 0.699999988079071;
-  background: rgba(255, 255, 255, 0.65);
+  background: rgb(255, 255, 255);
+
+  &:hover {
+    background: ${(props) => props.hoverBackgroundColor || "rgba(0,0,0,0.04)"};
+    /* 원하는 다른 스타일 변경도 추가 가능 */
+  }
+
 `;
 
 const SearchInput = styled.input`
@@ -71,7 +79,7 @@ function SearchArea() {
     return (
         <Wrapper>
             <Link to="/">
-                <Logo src={`${process.env.PUBLIC_URL}/assets/LogoWhite.png`} alt="로고"/>
+                <Logo src={`${process.env.PUBLIC_URL}/assets/Logo.png`} alt="로고"/>
             </Link>
             <SearchBar>
                 <SearchInput
@@ -85,6 +93,7 @@ function SearchArea() {
                     <FontAwesomeIcon icon={faSearch} style={{fontSize: '15px'}}/>
                 </SearchButton>
             </SearchBar>
+            <LoginArea/>
         </Wrapper>
     );
 }

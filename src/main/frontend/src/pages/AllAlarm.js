@@ -6,13 +6,12 @@ import styled from "styled-components";
 import Header from "../components/Header";
 
 const Wrapper = styled.div`
-  background: #f6f6f6;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: black;
+  background: #ffffff;
 `;
 
 const Title = styled.p`

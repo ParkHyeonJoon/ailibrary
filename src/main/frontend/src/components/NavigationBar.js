@@ -19,7 +19,7 @@ const NavWrapper = styled.nav`
 
 const NavItem = styled.a`
   padding: 10px;
-  color: #ffffff;
+  color: #000000;
   text-decoration: none;
   font-size: 18px;
   font-weight: bold;
@@ -36,7 +36,7 @@ const NavItem = styled.a`
     /* 원하는 다른 스타일 변경도 추가 가능 */
   }
 
-\`            ;
+\`                   ;
 `;
 
 function NavigationBar() {

@@ -4,19 +4,19 @@ import { Link } from "react-router-dom";
 import Line from "../common/Line";
 
 const Wrapper = styled.div`
+  width: 48%;
   display: flex;
-  width: 100%;
-  height: 30px;
+  background: #ffffff;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-start;
   gap: 26px;
   flex-shrink: 0;
-  color: #ffffff;
+  color: #444444;
 `;
 
 const CustomLink = styled(Link)`
   text-decoration: none; /* 밑줄 제거 */
-  color: #838383;
+  color: #444444;
 `;
 
 const Text = styled.p`

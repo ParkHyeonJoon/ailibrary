@@ -42,6 +42,7 @@ const BookImage = styled.img`
   height: 450px;
   border-radius: 5px;
   box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.2);
+  z-index:100;
 `;
 
 const BookDetail = () => {

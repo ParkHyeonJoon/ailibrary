@@ -86,20 +86,20 @@ function App() {
         };
     }, []);
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Main/>}/>
-                <Route path="/facility-reservation" element={<FacilityReservation/>}/>
-                <Route path="/popularbooks" element={<PopularBooks/>}/>
-                <Route path="/signup" element={<Signup/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/mypage" element={<MyPage/>}/>
-                <Route path="/book-detail/:bookId" element={<BookDetail/>}/>
-                <Route path="/results/:keyword" element={<SearchResult/>}/>
-                <Route path="/notice" element={<Notice/>}/>
-                <Route path="/allalarm" element={<AllAlarm/>}/>
-            </Routes>
-        </Router>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Main/>}/>
+                    <Route path="/facility-reservation" element={<FacilityReservation/>}/>
+                    <Route path="/popularbooks" element={<PopularBooks/>}/>
+                    <Route path="/signup" element={<Signup/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/mypage" element={<MyPage/>}/>
+                    <Route path="/book-detail/:bookId" element={<BookDetail/>}/>o
+                    <Route path="/results/:keyword" element={<SearchResult/>}/>
+                    <Route path="/notice" element={<Notice/>}/>
+                    <Route path="/allalarm" element={<AllAlarm/>}/>
+                </Routes>
+            </Router>
     );
 }
 

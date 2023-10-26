@@ -13,7 +13,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: black;
+  background: #ffffff;
+  color: #000000;
 `;
 const ContentArea = styled.div`
   width: 100%;
