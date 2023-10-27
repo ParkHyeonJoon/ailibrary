@@ -30,7 +30,7 @@
     </select>
 
     <!-- 리뷰 정보 저장 -->
-    <insert id="saveReview" parameterType="com.lib.ailibrary.domain.review.ReviewRequest" useGeneratedKeys="true" keyProperty="reveiwId">
+    <insert id="saveReview" parameterType="com.lib.ailibrary.domain.review.ReviewRequest" useGeneratedKeys="true" keyProperty="reviewId">
         INSERT INTO tb_review (
         <include refid="reviewColumns"></include>
         ) VALUES (
@@ -48,7 +48,7 @@
         SET
             review = #{review}
         WHERE
-            user_stu_id = #{userStuId, jdbcType=long} AND book_id = #{bookId, jdbcType=INTEGER}
+            user_stu_id = #{userStuId, jdbcType=BIGINT} AND book_id = #{bookId, jdbcType=INTEGER}
     </update>
 
     <!-- 리뷰 삭제 -->

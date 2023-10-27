@@ -13,6 +13,19 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
+    @PostMapping("/save")
+    public void saveReiview(@RequestBody ReviewRequest request) {
+        ReviewRequest reviewRequest = new ReviewRequest();
+        Long userStuId = request.getUserStuId();
+        int bookId = request.getBookId();
+        String review = request.getReview();
+
+        reviewRequest.setUserStuId(userStuId);
+        reviewRequest.setBookId(bookId);
+        reviewRequest.setReview(review);
+
+        reviewService.saveReview(reviewRequest);
+    }
     @GetMapping("/all")
     public List<ReviewResponse> findReviewAll() {
         List<ReviewResponse> allReview = reviewService.findReviewAll();

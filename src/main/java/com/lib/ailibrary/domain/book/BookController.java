@@ -68,9 +68,9 @@ public class BookController {
         return book;
     }
 
-    @GetMapping("/comic")
-    public List<Book> findGenreComic() {
-        List<Book> book = bookService.findGenreComic();
+    @GetMapping("/computer")
+    public List<Book> findGenreComputer() {
+        List<Book> book = bookService.findGenreComputer();
         return book;
     }
 

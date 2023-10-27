@@ -36,7 +36,7 @@ public interface BookMapper {
 
     List<Book> findGenreScience();
 
-    List<Book> findGenreComic();
+    List<Book> findGenreComputer();
 
     List<Book> findGenreEssay();
 

@@ -53,8 +53,8 @@ public class BookService {
         return bookMapper.findGenreScience();
     }
 
-    public List<Book> findGenreComic() {
-        return bookMapper.findGenreComic();
+    public List<Book> findGenreComputer() {
+        return bookMapper.findGenreComputer();
     }
 
     public List<Book> findGenreEssay() {

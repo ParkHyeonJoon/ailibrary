@@ -88,14 +88,14 @@
         LIMIT 10
     </select>
 
-    <!-- 만화책 조회 -->
-    <select id="findGenreComic" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+    <!-- 컴퓨터책 조회 -->
+    <select id="findGenreComputer" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
         SELECT
         <include refid="bookColumns"></include>
         FROM
         tb_book
         WHERE
-        category = '만화책'
+        category = '컴퓨터'
         ORDER BY
         book_good DESC
         LIMIT 10
