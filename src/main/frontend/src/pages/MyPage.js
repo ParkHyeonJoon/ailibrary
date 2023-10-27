@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import MyProfile from "../components/MyProfile";
 import LoaningBookList from "../components/LoaningBookList";
+import BookSlider from "../components/BookSlider";
 import ReserveBookList from "../components/ReserveBookList";
 import LikeBookList from "../components/LikeBookList";
 
@@ -12,17 +13,28 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 180px;
+  background: #ffffff;
+  color: #000000;
+`;
+const ContentArea = styled.div`
+  width: 100%;
+  margin-top: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 function MyPage() {
     return (
         <Wrapper>
             <Header/>
-            <MyProfile/>
-            <LoaningBookList/>
-            <ReserveBookList/>
-            <LikeBookList/>
+            <ContentArea>
+                <MyProfile/>
+                <LoaningBookList/>
+                <ReserveBookList/>
+                <LikeBookList/>
+            </ContentArea>
         </Wrapper>
     );
 }

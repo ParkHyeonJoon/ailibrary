@@ -11,7 +11,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 180px;
+  height: 100vh;
+  background: black;
+  color: white;
 `;
 
 const LoginArea = styled.div`
@@ -20,6 +22,7 @@ const LoginArea = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 160px;
 `;
 
 const Title = styled.p`
@@ -31,7 +34,8 @@ const Title = styled.p`
 const InputArea = styled.div`
   width: 300px;
   height: 40px;
-  border: 2px solid #cecece;
+  background: #ffffff;
+  border: 2px solid #000000;
   display: flex;
   align-items: center;
   justify-content: center;

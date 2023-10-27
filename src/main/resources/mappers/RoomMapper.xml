@@ -33,7 +33,7 @@
     </insert>
 
 
-    <!-- 예약 정보 조회 -->
+    <!-- 사용자 예약 정보 조회 (이미 지난 날까지) -->
     <select id="findById" parameterType="long" resultType="com.lib.ailibrary.domain.room.RoomReserveResponse">
         SELECT
             <include refid="roomColumns"></include>
@@ -41,6 +41,24 @@
             tb_room_rez
         WHERE
             user_stu_id = #{value}
+        ORDER BY
+            rez_id DESC;
+    </select>
+
+    <!-- 사용자 예약 정보 조회 (오늘 이후) -->
+    <select id="findByIdAfterToday" parameterType="long" resultType="com.lib.ailibrary.domain.room.RoomReserveResponse">
+        SELECT
+            <include refid="roomColumns"></include>
+        FROM
+            tb_room_rez
+        WHERE
+            user_stu_id = #{value}
+            AND (rez_date > CURRENT_DATE()
+                OR (rez_date = CURRENT_DATE()
+                    AND CAST(LEFT(rez_time, 2) AS UNSIGNED) > CAST(LEFT(CURRENT_TIME(), 2) AS UNSIGNED)))
+            AND delete_check = 0
+        ORDER BY
+            rez_date DESC
     </select>
 
 
@@ -50,13 +68,20 @@
 
 
     <!-- 예약 정보 삭제 or 취소 -->
-    <delete id="deleteById" parameterType="long">
-        DELETE
-        FROM
+    <update id="deleteById" parameterType="java.util.List">
+        UPDATE
             tb_room_rez
-        WHERE
-            rez_id = #{rezId}
-    </delete>
+        SET
+            delete_check = 1
+        <where>
+            <if test = "rezId != null and rezId.length > 0">
+                rez_id IN
+                <foreach item="id" collection="rezId" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </update>
 
 
     <!-- 예약 내역 조회 -->
@@ -67,6 +92,16 @@
             tb_room_rez
         ORDER BY
             rez_id DESC
+    </select>
+
+    <!-- 오늘 예약 내역 조회 -->
+    <select id="findAllToday" resultType="com.lib.ailibrary.domain.room.RoomReserveResponse">
+        SELECT
+            <include refid="roomColumns"></include>
+        FROM
+            tb_room_rez
+        WHERE
+            rez_date = #{value}
     </select>
 
     <!-- 잔여 시설 조회 -->
@@ -111,6 +146,6 @@
         FROM
             tb_room_rez
         WHERE
-            user_stu_id = #{userStuId} and rez_date = #{rezDate}
+            user_stu_id = #{userStuId} and rez_date = #{rezDate} and delete_check = 0
     </select>
 </mapper>

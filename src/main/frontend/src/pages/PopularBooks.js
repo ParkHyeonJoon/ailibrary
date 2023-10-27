@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
-import Room from "../components/Room";
-import Book from "../components/BookFrame";
-import BookFrame from "../components/BookFrame";
 import BookList from "../components/BookList";
-import { useLocation } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -13,17 +9,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 180px;
-  background-color: #ffffff; /* 원하는 어두운 색상 코드를 사용하세요 */
-  color: #000000; /* 텍스트 색상을 밝게 설정할 수 있습니다. */
+  background: #ffffff;
+  color: #000000;
 `;
-
 function PopularBooks() {
-   const [popularBooks, setPopularBooks] = useState([]);
-   //const location = useLocation();
-   //const showText = location.pathname === "/popularbooks" ? "인기도서" : ""; // URL에 따라 showText 설정
-
-
     return (
         <Wrapper>
             <Header />

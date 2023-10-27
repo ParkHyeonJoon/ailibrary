@@ -1,27 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
-import BookFrame from "../components/BookFrame";
+
+import SliderComponent from "./BookSlider";
 
 const Wrapper = styled.div`
   width: 100%;
-  color: #000000;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 160px;
 `;
 
-const SectionWrapper = styled.div`
-  width: 100%;
-  overflow-x: auto; /* 가로 스크롤을 허용 */
-  white-space: nowrap; /* 자식 요소들을 한 줄로 나열 */
-`;
-
-const Title = styled.p`
-  margin-left: 20px;
-  color: #000000;
-  font-size: 30px;
-  font-weight: 700;
-  margin-bottom: 10px;
-`;
-
-function BookList({ book }) {
+function BookList({book}) {
     const [topBooks, setTopBooks] = useState([]);
     const [newBooks, setNewBooks] = useState([]);
     const [fictionBooks, setFictionBooks] = useState([]);
@@ -59,36 +50,9 @@ function BookList({ book }) {
 
     return (
         <Wrapper>
-            {/* TOP 도서 */}
-            <Title>오늘 도서관의 TOP 10 도서!!</Title>
-            <SectionWrapper>
-                {topBooks.map((book, index) => (
-                    <div style={{ display: 'inline-block', margin: '20px' }} key={index}>
-                        <BookFrame book={book} />
-
-                    </div>
-                ))}
-            </SectionWrapper>
-
-            {/* 소설 도서 */}
-            <Title>마법 같은 세계로 초대하는 소설들</Title>
-            <SectionWrapper>
-            {fictionBooks.map((book, index) => (
-            <div style={{ display: 'inline-block', margin: '20px' }} key={index}>
-            <BookFrame book={book} />
-            </div>
-            ))}
-            </SectionWrapper>
-
-            {/* 신규 도서 */}
-            <Title>뜨끈뜨끈한 새로 들어온 도서들!</Title>
-            <SectionWrapper>
-                {newBooks.map((book, index) => (
-                    <div style={{ display: 'inline-block', margin: '20px' }} key={index}>
-                        <BookFrame book={book} />
-                    </div>
-                ))}
-            </SectionWrapper>
+            <SliderComponent title="오늘 도서관의 TOP 10 도서!!" books={topBooks} showRank={true} />
+            <SliderComponent title="마법 같은 세계로 초대하는 소설들" books={fictionBooks} showRank={false} />
+            <SliderComponent title="뜨끈뜨끈한 새로 들어온 도서들!" books={newBooks} showRank={false} />
         </Wrapper>
     );
 }

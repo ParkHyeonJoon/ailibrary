@@ -1,23 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 import RecentAlarm from "./RecentAlarm";
+import AllAlarm from "../pages/AllAlarm";
 
 const Wrapper = styled.div`
-  width: 1000px;
+  width: 100%;
   height: 350px;
   border-radius: 20px;
-  background: rgba(217, 224, 255, 0.9);
+  background: rgba(255, 255, 255, 0.16);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   margin-top: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  color: #000000;
 `;
 
 const InformArea = styled.div`
-  width: 30%;
-  height: 100%;
+  width: 45%;
+  padding: 30px;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -27,7 +30,7 @@ const Name = styled.p`
   margin-left: 20px;
   margin-top: 20px;
   margin-bottom: 10px;
-  font-size: 23px;
+  font-size: 30px;
   font-weight: 700;
 `;
 const Major = styled.p`
@@ -35,7 +38,7 @@ const Major = styled.p`
   margin-bottom: 3px;
   font-size: 14px;
   font-weight: 600;
-  color: #808080;
+  color: #424242;
 `;
 
 const Grade = styled.p`
@@ -44,20 +47,31 @@ const Grade = styled.p`
   margin-bottom: 10px;
   font-size: 14px;
   font-weight: 600;
-  color: #808080;
+  color: #424242;
 `;
 const AlarmArea = styled.div`
-  width: 70%;
+  width: 55%;
   height: 100%;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  position: relative;
 `;
 const Title = styled.p`
   font-size: 20px;
   font-weight: 600;
   margin-left: 10px;
+`;
+const AllLink = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+  color: #cecece;
+  font-size: 14px;
+  position: absolute;
+  right: 60px; /* 우측 정렬 */
+  top: 65px; /* 상단 정렬 */
 `;
 function MyProfile() {
 
@@ -72,6 +86,7 @@ function MyProfile() {
             </InformArea>
             <AlarmArea>
                 <Title>알림</Title>
+                <AllLink href="/allalarm">전체 알림>></AllLink>
                 <RecentAlarm/>
             </AlarmArea>
         </Wrapper>

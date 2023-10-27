@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", exposedHeaders = "Authorization")
 public class NotificationController {
 
     private final NotificationService notificationService;

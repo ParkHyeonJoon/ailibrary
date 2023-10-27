@@ -14,12 +14,22 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 180px;
+  background: black;
+  color: white;
+  height: 100vh;
+`;
+
+const ContentWrapper = styled.div`
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
 `;
 
 const Title = styled.p`
   text-align: left;
-  color: #000;
   font-family: Inter;
   font-size: 25px;
   font-style: normal;
@@ -42,7 +52,6 @@ const RoomTypeBtn = styled.button`
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   border: none;
-  color: #000;
   font-family: Inter;
   font-size: 15px;
   font-style: normal;
@@ -71,6 +80,12 @@ const PickerArea = styled.div`
 `;
 const Result = styled.div`
   width: 880px;
+  
+`;
+const StyledText = styled.span`
+  font-size: 15px;
+  display: flex; /* 왼쪽 정렬을 위해 추가 */
+  align-items: center; /* 텍스트와 아이콘을 세로 중앙 정렬 */
 `;
 function groupByRoomFloor(searchResult) {
     const groupedResult = {};
@@ -129,6 +144,7 @@ function FacilityReservation() {
     return (
         <Wrapper>
             <Header />
+            <ContentWrapper>
             <Title>시설예약</Title>
             <RoomTypeArea>
                 <RoomTypeBtn
@@ -151,7 +167,9 @@ function FacilityReservation() {
                 </RoomTypeBtn>
             </RoomTypeArea>
             <PickerArea>
+                <StyledText>날짜</StyledText>
                 <MyDatePicker onDateChange={(date) => setSelectedDate(date)} />
+                <StyledText>시간</StyledText>
                 <MyTimePicker
                     selectedTimes={selectedTimes}
                     setSelectedTimes={setSelectedTimes}
@@ -175,6 +193,7 @@ function FacilityReservation() {
                     </div>
                 </Result>
             ))}
+            </ContentWrapper>
         </Wrapper>
     );
 }

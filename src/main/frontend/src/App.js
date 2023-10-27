@@ -7,7 +7,9 @@ import Login from "./pages/Login";
 import PopularBooks from "./pages/PopularBooks";
 import MyPage from "./pages/MyPage";
 import BookDetail from "./pages/BookDetail";
-import SearchResult from "./pages/SearchResult"; // SearchResult 컴포넌트
+import SearchResult from "./pages/SearchResult";
+import Notice from "./pages/Notice";
+import AllAlarm from "./pages/AllAlarm";
 
 function App() {
     const [closingWindow, setClosingWindow] = useState(false);
@@ -84,18 +86,20 @@ function App() {
         };
     }, []);
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Main/>}/>
-                <Route path="/facility-reservation" element={<FacilityReservation/>}/>
-                <Route path="/popularbooks" element={<PopularBooks/>}/>
-                <Route path="/signup" element={<Signup/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/mypage" element={<MyPage/>}/>
-                <Route path="/book-detail/:bookId" element={<BookDetail/>}/>
-                <Route path="/results/:keyword" element={<SearchResult/>}/> {/* SearchResult 컴포넌트 라우트 추가 */}
-            </Routes>
-        </Router>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Main/>}/>
+                    <Route path="/facility-reservation" element={<FacilityReservation/>}/>
+                    <Route path="/popularbooks" element={<PopularBooks/>}/>
+                    <Route path="/signup" element={<Signup/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/mypage" element={<MyPage/>}/>
+                    <Route path="/book-detail/:bookId" element={<BookDetail/>}/>o
+                    <Route path="/results/:keyword" element={<SearchResult/>}/>
+                    <Route path="/notice" element={<Notice/>}/>
+                    <Route path="/allalarm" element={<AllAlarm/>}/>
+                </Routes>
+            </Router>
     );
 }
 

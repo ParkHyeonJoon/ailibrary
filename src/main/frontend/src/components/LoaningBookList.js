@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import LoaningBookFrame from "./LoaningBookFrame";
+import BookFrame from "./BookFrame";
 
 const Wrapper = styled.div`
   margin-top: 20px;
   width: 1000px;
-  color: #000000;
+  color: #ffffff;
 `;
 
 const SectionWrapper = styled.div`
@@ -16,7 +16,7 @@ const SectionWrapper = styled.div`
 
 const Title = styled.p`
   margin-left: 20px;
-  color: #000000;
+  color: #ffffff;
   font-size: 25px;
   font-weight: 700;
   margin-bottom: 10px;
@@ -58,7 +58,7 @@ function LoaningBookList({ book }) {
             <SectionWrapper>
                 {loanBooks.map((book, index) => (
                     <div style={{ display: 'inline-block', margin: '20px' }} key={index}>
-                        <LoaningBookFrame book={book} />
+                        <BookFrame book={book} showReturnDate={true}/>
 
                     </div>
                 ))}

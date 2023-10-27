@@ -1,7 +1,7 @@
 package com.lib.ailibrary.oauthtest;
 
-import com.lib.ailibrary.oauth.OAuthMapper;
-import com.lib.ailibrary.user.UserResponse;
+import com.lib.ailibrary.domain.user.oauth.OAuthMapper;
+import com.lib.ailibrary.domain.user.UserResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

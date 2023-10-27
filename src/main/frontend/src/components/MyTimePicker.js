@@ -33,23 +33,25 @@ const AlertMessage = styled.p`
 `;
 
 const TimeSlot = styled.div`
-  padding: 4px 8px;
+  padding: 4px 15px;
   margin: 5px;
-  border: 1px solid #6F8FFF;
+  background: white;
+  color: #000000;
+  border: 1px solid #a4b2fe;
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
 
-  ${({ selected }) =>
-    selected &&
-    `
+  ${({selected}) =>
+      selected &&
+      `
     background-color: #6F8FFF;
     color: white;
   `}
 
-  ${({ disabled }) =>
-    disabled &&
-    `
+  ${({disabled}) =>
+      disabled &&
+      `
     background-color: lightgray;
     cursor: not-allowed;
   `}
@@ -83,9 +85,6 @@ const MyTimePicker = ({ selectedTimes, setSelectedTimes }) => {
 
   return (
       <TimePickerContainer>
-        <TextContainer>
-          <TimeSlotText>시간</TimeSlotText>
-        </TextContainer>
         <TimeSlotRow>
           {timeSlots.map((timeSlot, index) => (
               <TimeSlot

@@ -20,7 +20,6 @@ const Heart = styled.img`
 `;
 
 const Text = styled.p`
-  magin: 0;
   padding: 0;
   font-size: 13px;
   font-family: Inter;

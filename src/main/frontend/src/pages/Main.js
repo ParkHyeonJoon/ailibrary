@@ -1,9 +1,9 @@
 // pages/Home.js
 import React from 'react';
-import styled from "styled-components";
+import styled, {ThemeProvider} from "styled-components";
 import Header from "../components/Header";
-import ChatArea from "../components/ChatArea";
-import MainBookList from '../components/MainBookList';
+import ChatBotComponent from "../components/ChatBotComponent";
+
 
 const Wrapper = styled.div`
   width: 100%;
@@ -11,7 +11,15 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 180px;
+  background: #ffffff;
+`;
+
+const ContentArea = styled.div`
+  margin-top: 160px;
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
 `;
 
 function Main() {
@@ -19,8 +27,9 @@ function Main() {
     return (
         <Wrapper>
             <Header/>
-            <ChatArea/>
-            <MainBookList/>
+            <ContentArea>
+                <ChatBotComponent/>
+            </ContentArea>
         </Wrapper>
     );
 }

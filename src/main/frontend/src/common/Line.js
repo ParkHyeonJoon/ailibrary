@@ -4,7 +4,7 @@ import styled from "styled-components";
 const StyledLine = styled.div`
   width: 100%;
   height: 1px;
-  background: #ABABAB;
+  background: rgb(91, 91, 91);
 `;
 
 function Line() {
