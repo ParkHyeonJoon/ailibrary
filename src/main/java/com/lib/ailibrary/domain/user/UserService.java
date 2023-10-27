@@ -44,4 +44,13 @@ public class UserService {
     public int countUserByUserId(final String userId) {
         return userMapper.countByLoginId(userId);
     }
+
+    /**
+     * 회원 전화번호 가져오기
+     * @param userStuId - PK
+     * @return 전화번호
+     */
+    public String findPnumById(final Long userStuId) {
+        return userMapper.findPNumById(userStuId);
+    }
 }
