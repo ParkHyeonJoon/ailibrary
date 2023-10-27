@@ -127,14 +127,14 @@
         LIMIT 10
     </select>
 
-    <!-- 전기도서 조회 -->
+    <!-- 인물도서 조회 -->
     <select id="findGenreBiographical" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
         SELECT
         <include refid="bookColumns"></include>
         FROM
         tb_book
         WHERE
-        category = '전기'
+        category = '인물'
         ORDER BY
         book_good DESC
         LIMIT 10
