@@ -5,6 +5,8 @@ import moment from "moment/moment";
 import axios from "axios";
 import {darken} from "polished";
 import MyDatePicker from "./MyDatePicker";
+import ReservePos from "../assets/reserve_pos.png";
+import ReserveIm from "../assets/reserve_im.png";
 
 const ModalOverlay = styled.div`
   margin-top: 30px;
@@ -89,9 +91,12 @@ const StyledText = styled.p`
 `
 
 function BookReservationModal({ isOpen, onClose }) {
-    const [reservationStatus, setReservationStatus] = useState("예약가능");
+    const [reservationStatus, setReservationStatus] = useState("예약 가능");
     const [selectedDate, setSelectedDate] = useState(null);
     const { bookId } = useParams();
+
+    const storedUserInfo = localStorage.getItem("userInfo");
+    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
     if (!isOpen) return null;
 
@@ -103,17 +108,15 @@ function BookReservationModal({ isOpen, onClose }) {
                 .post("http://localhost:8080/book/reserve", {
                     bookId: bookId,
                     bookRezDate: reserveDate,
+                    userId: userInfo.userId,
+                    userStuId: userInfo.userStuId
                 })
                 .then((response) => {
-                    const reserveStatus = response.data;
-                    if (reserveStatus === "예약 가능") {
+                    const reservationStatus = response.data;
+                    if (reservationStatus === "예약 가능") {
+                        setReservationStatus("예약 중");
                         alert("예약이 완료되었습니다");
-                        setReservationStatus("예약 중"); // 예약 성공 시 상태 업데이트
                         onClose();
-                    } else if (reserveStatus === "대출 중") {
-                        alert("현재 대출 중인 도서입니다.");
-                    } else {
-                        alert("대출이 가능한 도서입니다. 대출 기능을 이용하세요");
                     }
                 })
                 .catch((error) => {
@@ -134,12 +137,14 @@ function BookReservationModal({ isOpen, onClose }) {
                 </ModalHeader>
                 <ContentArea>
                     <StyledText>예약 유효일</StyledText>
-                    <MyDatePicker onDateChange={(date) => setSelectedDate(date)}/>
+                    <MyDatePicker
+                        onDateChange={(date) => setSelectedDate(date)}
+                        />
                     <Textarea>예약 유효일 이란?<br/>
-                        입력한 날짜까지 예약한 도서를 대출하지 않으면, 이도서는, 대출할 의사가 없다는 뜻입니다.<br/>
+                        입력한 날짜까지 예약한 도서를 대출하지 않으면, 이 도서는, 대출할 의사가 없다는 뜻입니다.<br/>
                         예약 유효일이 지난 후 예약은 자동 취소됩니다.</Textarea>
                 </ContentArea>
-                <ReservationBtn onClick={handleReserveConfirm()}>신청하기</ReservationBtn>
+                <ReservationBtn onClick={handleReserveConfirm}>신청하기</ReservationBtn>
             </ModalContent>
         </ModalOverlay>
     );

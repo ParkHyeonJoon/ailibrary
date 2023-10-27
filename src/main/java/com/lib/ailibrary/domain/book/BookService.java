@@ -45,6 +45,31 @@ public class BookService {
         return bookMapper.findGenreFiction();
     }
 
+    public List<Book> findGenreDevelopment() {
+        return bookMapper.findGenreDevelopment();
+    }
+
+    public List<Book> findGenreScience() {
+        return bookMapper.findGenreScience();
+    }
+
+    public List<Book> findGenreComputer() {
+        return bookMapper.findGenreComputer();
+    }
+
+    public List<Book> findGenreEssay() {
+        return bookMapper.findGenreEssay();
+    }
+
+    public List<Book> findGenreEconomy() {
+        return bookMapper.findGenreEconomy();
+    }
+
+    public List<Book> findGenreBiographical() {
+        return bookMapper.findGenreBiographical();
+    }
+
+
     /**
      * 도서 목록 전체 조회
      * @return 도서 목록 전체
