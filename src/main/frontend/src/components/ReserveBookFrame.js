@@ -22,12 +22,14 @@ const BookImage = styled.img`
 `;
 
 const BookTitle = styled.p`
-  color: black;
+  color: #000000;
   font-size: 15px;
   font-weight: 600;
   margin-top: 5px;
   margin-left: 2px;
-  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 const BookRezDate = styled.p`
   color: red;
@@ -64,7 +66,8 @@ const ReserveBookFrame = ({ book, selection, selected }) => {
 
     return (
     <div style = {{ position: "relative" }}>
-        <Link to={`/book-detail/${book.bookId}`}> {/* 각 책에 대한 고유한 URL로 연결 */}
+        <Link to={`/book-detail/${book.bookId}`}
+              style={{ textDecoration: "none"}}> {/* 각 책에 대한 고유한 URL로 연결 */}
             <BookWrapper>
                 <BookImage src={book.bookImage} alt={book.bookTitle} />
                 <BookTitle>{book.bookTitle}</BookTitle>

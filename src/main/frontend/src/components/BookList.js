@@ -50,9 +50,7 @@ function BookList({book}) {
 
     return (
         <Wrapper>
-            <SliderComponent title="오늘 도서관의 TOP 10 도서!!" books={topBooks} showRank={true} />
             <SliderComponent title="마법 같은 세계로 초대하는 소설들" books={fictionBooks} showRank={false} />
-            <SliderComponent title="뜨끈뜨끈한 새로 들어온 도서들!" books={newBooks} showRank={false} />
         </Wrapper>
     );
 }

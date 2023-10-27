@@ -14,9 +14,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: black;
-  color: white;
-  height: 100vh;
+  background: #ffffff;
+  color: #000000;
 `;
 
 const ContentWrapper = styled.div`
@@ -25,7 +24,7 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 180px;
 `;
 
 const Title = styled.p`

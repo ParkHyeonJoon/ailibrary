@@ -9,7 +9,7 @@ import rightArrowImage from "../assets/right-arrow.png";
 import leftArrowImage from "../assets/left-arrow.png";
 
 const Container = styled.div`
-  width: 98%;
+  width: 90%;
   overflow-x: hidden;
 `;
 const Title = styled.p`
@@ -55,7 +55,7 @@ const StyledDiv = styled.div`
   margin-left: 60px;
 `;
 
-function SliderComponent({ title, books, showRank }) {
+function SliderComponent({ title, books, showRank, showRezDate, showReturnDate }) {
     const settings = {
         dots: false,
         infinite: true,
@@ -116,7 +116,10 @@ function SliderComponent({ title, books, showRank }) {
                         <BookFrame
                             book={book}
                             rank={index + 1}
-                            showRank={showRank} />
+                            showRank={showRank}
+                            showRezDate={showRezDate}
+                            showReturnDate={showReturnDate}
+                        />
                     </StyledDiv>
                 ))}
             </CustomSlider>

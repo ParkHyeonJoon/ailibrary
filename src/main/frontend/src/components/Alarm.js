@@ -4,7 +4,7 @@ import axios from "axios";
 
 const Wrapper = styled.div`
   width: 95%;
-  height: 70px;
+  height: 60px;
   color: black;
   border-radius: 10px;
   background: #EFF2FF;
