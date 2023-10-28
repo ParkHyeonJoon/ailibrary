@@ -122,15 +122,21 @@ public class RoomController {
     }
 
     // 예약 정보 삭제
-    @DeleteMapping("/reserve/delete")
-    public String deleteReserve(@RequestBody final Long rezId) {
+    @PutMapping("/reserve/delete")
+    public String deleteReserve(@RequestBody final Long[] rezId) {
         roomService.deleteReserve(rezId);
         return "삭제 완료";
     }
 
-    // 예약 정보 조회
+    // 예약 정보 조회 ( 지난 날까지 조회 )
     @GetMapping("/reserve/list")
     public List<RoomReserveResponse> selectReserve(@RequestParam final Long userStuId) {
         return roomService.findRezById(userStuId);
+    }
+
+    // 예약 정보 조회 ( 오늘 이후 조회 )
+    @GetMapping("/reserve/listaftertoday")
+    public List<RoomReserveResponse> selectReserveAfterToday(@RequestParam final Long userStuId) {
+        return roomService.findRezByIdAfterToday(userStuId);
     }
 }

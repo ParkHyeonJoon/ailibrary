@@ -27,13 +27,23 @@ public class RoomService {
     }
 
     /**
-     * 예약 정보 조회
+     * 예약 정보 조회 ( 지날 날까지 조회 )
      * @param userStuId - UK
      * @return 예약 정보
      */
     public List<RoomReserveResponse> findRezById(final Long userStuId) {
 
         return roomMapper.findById(userStuId);
+    }
+
+    /**
+     * 예약 정보 조회 ( 오늘 이후 조회 )
+     * @param userStuId - UK
+     * @return 예약 정보
+     */
+    public List<RoomReserveResponse> findRezByIdAfterToday(final Long userStuId) {
+
+        return roomMapper.findByIdAfterToday(userStuId);
     }
 
     /**
@@ -44,7 +54,7 @@ public class RoomService {
      * 예약 정보 삭제
      * @param rezId - PK
      */
-    public void deleteReserve(final Long rezId) {
+    public void deleteReserve(final Long[] rezId) {
         roomMapper.deleteById(rezId);
     }
 
@@ -54,6 +64,15 @@ public class RoomService {
      */
     public List<RoomReserveResponse> findAllReserve() {
         return roomMapper.findAll();
+    }
+
+    /**
+     * 오늘 예약 내역 전체 조회
+     * @param rezDate - 예약 날짜
+     * @return 오늘 예약 내역 전체
+     */
+    public List<RoomReserveResponse> findAllReserveToday(LocalDate rezDate) {
+        return roomMapper.findAllToday(rezDate);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.lib.ailibrary.domain.room;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.springframework.cglib.core.Local;
 
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
+@Setter
 public class RoomReserveResponse {
 
     private Long rezId;         // PK

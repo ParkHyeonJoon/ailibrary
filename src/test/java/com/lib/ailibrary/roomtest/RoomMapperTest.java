@@ -56,8 +56,9 @@ public class RoomMapperTest {
 
     @Test
     void delete() {
+        Long[] rezId = {4L, 5L, 6L};
         System.out.println("삭제 이전의 전체 예약 개수는 : " + roomMapper.findAll().size() + "개입니다.");
-        roomMapper.deleteById(1L);
+        roomMapper.deleteById(rezId);
         System.out.println("삭제 이후의 전체 예약 개수는 : " + roomMapper.findAll().size() + "개입니다.");
     }
 

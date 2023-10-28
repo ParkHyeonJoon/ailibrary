@@ -51,4 +51,14 @@
             user_id = #{user_id}
     </select>
 
+    <!-- 회원 전화번호 가져오기 -->
+    <select id="findPNumById" parameterType="long" resultType="string">
+        SELECT
+            user_pnum
+        FROM
+            tb_users
+        WHERE
+            user_stu_id = #{value}
+    </select>
+
 </mapper>

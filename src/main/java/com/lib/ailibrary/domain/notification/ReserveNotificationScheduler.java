@@ -1,52 +1,90 @@
 package com.lib.ailibrary.domain.notification;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lib.ailibrary.domain.book.BookLoanResponse;
 import com.lib.ailibrary.domain.book.BookLoanService;
 import com.lib.ailibrary.domain.book.BookReserveResponse;
 import com.lib.ailibrary.domain.book.BookReserveService;
+import com.lib.ailibrary.domain.notification.sms.MessageDTO;
+import com.lib.ailibrary.domain.notification.sms.SmsService;
 import com.lib.ailibrary.domain.room.RoomReserveResponse;
 import com.lib.ailibrary.domain.room.RoomService;
+import com.lib.ailibrary.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
 public class ReserveNotificationScheduler {
 
+    private final UserService userService;
+    private final SmsService smsService;
     private final RoomService roomService;
     private final NotificationService notificationService;
 
     private final BookLoanService bookLoanService;
     private final BookReserveService bookReserveService;
 
-    @Scheduled(cron = "0 0 8 * * 1-6")
-    public void checkReservations() {
-        List<RoomReserveResponse> reservations = roomService.findAllReserve();
+    @Scheduled(cron = "0 0 8 * * MON-FRI") // 매일 오전 8시에 실행,  fixedRate = 60000(1분마다)
+    public void sendNotifications() throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+        LocalDate today = LocalDate.now();
+        List<RoomReserveResponse> reservations = roomService.findAllReserveToday(today);
 
-        LocalDate currentDate = LocalDate.now();
+
+        Map<Long, List<RoomReserveResponse>> userReservationsMap = new HashMap<>();
 
         for (RoomReserveResponse reservation : reservations) {
-            LocalDateTime reserveDateTime = reservation.getRezDate().atStartOfDay();
-            Duration duration = Duration.between(currentDate.atStartOfDay(), reserveDateTime);
+            Long userStuId = reservation.getUserStuId();
 
-            if (duration.toDays() == 0) {
+            if (userReservationsMap.containsKey(userStuId)) {
+                List<RoomReserveResponse> userReservations = userReservationsMap.get(userStuId);
+                userReservations.add(reservation);
+            } else {
+                List<RoomReserveResponse> userReservations = new ArrayList<>();
+                userReservations.add(reservation);
+                userReservationsMap.put(userStuId, userReservations);
+            }
+        }
+
+        for (Map.Entry<Long, List<RoomReserveResponse>> entry : userReservationsMap.entrySet()) {
+            Long userStuId = entry.getKey();
+            List<RoomReserveResponse> userReservations = entry.getValue();
+            String userPnum = userService.findPnumById(userStuId);
+
+            StringBuilder notificationContent = new StringBuilder();
+
+            for (RoomReserveResponse reservation : userReservations) {
                 String roomName = getRoomName(reservation.getRoomId());
                 String roomFloor = getRoomFloor(reservation.getRoomId());
 
-                NotificationRequest params = new NotificationRequest();
-                params.setUserStuId(reservation.getUserStuId());
-                params.setNotiContent("금일 " + reservation.getRezTime() + "에 " + roomFloor + " " + roomName + " 예약이 있습니다.");
-                params.setNotiTime(LocalDateTime.now());
-
-                notificationService.saveNotification(params);
+                notificationContent.append(roomFloor).append(" ").append(roomName).append(" 예약: ").append(reservation.getRezTime()).append("\n");
             }
+
+            NotificationRequest params = new NotificationRequest();
+            params.setUserStuId(userStuId);
+            params.setNotiContent("금일 예약된 내용입니다.\n" + notificationContent.toString());
+            params.setNotiTime(LocalDateTime.now());
+
+            notificationService.saveNotification(params);
+            
+            
+            // SMS 전송 코드
+            /*MessageDTO messageDTO = new MessageDTO();
+            messageDTO.setTo(userPnum);
+            messageDTO.setContent(params.getNotiContent());
+            
+            smsService.sendSms(messageDTO);*/
         }
     }
 
@@ -102,3 +140,7 @@ public class ReserveNotificationScheduler {
         }
     }
 }
+
+
+
+
