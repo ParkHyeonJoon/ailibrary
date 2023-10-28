@@ -190,9 +190,10 @@ const BookInfo = ({ bookInfo }) => {
         }
 
         const userId = userInfo.userId;
+        const userStuId = userInfo.userStuId;
 
         axios
-            .post('http://localhost:8080/book/loan', { bookId, userId }, {
+            .post('http://localhost:8080/book/loan', { bookId, userId, userStuId }, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -211,6 +212,10 @@ const BookInfo = ({ bookInfo }) => {
                 } else if(loanStatus === -1) {
                     setLoanButtonText("대출 중");
                     alert("대출 중입니다.");
+                }
+                else if(loanStatus === -2) {
+                    setLoanButtonText("대출하기");
+                    alert("현재 다른 사용자가 예약 중입니다.");
                 }
             })
             .catch((error) => {

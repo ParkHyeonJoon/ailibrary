@@ -1,92 +1,130 @@
 package com.lib.ailibrary.domain.book;
 
+import com.lib.ailibrary.domain.notification.NotificationRequest;
+import com.lib.ailibrary.domain.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequiredArgsConstructor
 @RequestMapping("/book")
 public class BookReserveController {
 
     private final BookReserveService bookReserveService;
     private final BookLoanService bookLoanService;
+    private final NotificationService notificationService;
 
+    //예약 버튼을 클릭하면 실행
     @PostMapping("/reserve")
     public ResponseEntity<String> reserveBook(@RequestBody BookReserveRequest request) {
         String userId = request.getUserId();
         int bookId = request.getBookId();
 
-        // 1. 사용자가 대출 중인 도서인지 확인
+        int loanStatus = bookLoanService.checkBookLoan(bookId);
         int loan = bookLoanService.checkBook(userId, bookId);
 
-        if (loan > 0) {
-            // 2. 본인이 대출 중
-            return ResponseEntity.ok("대출 중");
-        }
+        //reserveStatus가 0이면 예약 가능, 그 외면 예약 불가능
+        int reserveStatus = bookReserveService.checkReserve(bookId);
 
-        // 3. 본인이 대출 안 함 다른 사용자 대출 중인지 확인
-        int loanStatus = bookLoanService.checkBookLoan(bookId);
-
-        if (loanStatus == 1) {
-            // 4. 본인이 대출 안 하고 다른 사용자가 대출 중
-            int reserveStatus = bookReserveService.checkReserve(bookId);
-            // 다른 사용자가 예약중인지 확인
-            if (reserveStatus == 1) {
-                // 5. 다른 사용자가 대출 중이고 다른 사용자가 예약 중
-                return ResponseEntity.ok("예약 중");
-            } else {
-                // 6. 다른 사용자가 대출 중이고 다른 사용자가 예약 안 함
-                bookReserveService.reserveBook(request);
-                return ResponseEntity.ok("예약 가능");
+        // 사용자가 대출 하지 않은 상태
+        if(loan == 0) {
+            // 다른 사용자가 대출 한 상태
+            if(loanStatus == 1) {
+                // 예약 하지 않은 상태
+                if(reserveStatus == 0) {
+                    NotificationRequest notificationRequest = new NotificationRequest();
+                    notificationRequest.setUserStuId(request.getUserStuId());
+                    notificationRequest.setNotiContent("도서 예약이 완료되었습니다.");
+                    notificationRequest.setNotiTime(LocalDateTime.now());
+                    notificationService.saveNotification(notificationRequest);
+                    bookReserveService.reserveBook(request);
+                    return ResponseEntity.ok("예약 가능");
+                } else {
+                    return ResponseEntity.ok("예약 중");
+                }
+            }
+            // 아무도 대출 하지 않은 상태
+            else {
+                return ResponseEntity.ok("예약 불가");
             }
         }
-
-        // 7. 대출 중이 아니고 다른 사용자도 대출 중이 아님
-        bookReserveService.reserveBook(request);
-        return ResponseEntity.ok("예약 불가");
+        //사용자가 대출 한 상태
+        else {
+            return ResponseEntity.ok("대출 중");
+        }
     }
 
+    //화면에 들어갔을 때
     @GetMapping("/reserve")
-    public ResponseEntity<String> checkAndReserve(@RequestParam int bookId, @RequestParam String userId) {
-        // 1. 사용자가 대출 중인 도서인지 확인
-        int loan = bookLoanService.checkBook(userId, bookId);
+    public ResponseEntity<String> checkAndReserve(int bookId, String userId) {
 
-        if (loan > 0) {
-            // 2. 본인이 대출 중
-            return ResponseEntity.ok("대출 중");
-        }
-
-        // 3. 본인이 대출 안 함 다른 사용자 대출 중인지 확인
         int loanStatus = bookLoanService.checkBookLoan(bookId);
+        int loan = bookLoanService.checkBook(userId, bookId);
+        int reserveStatus = bookReserveService.checkReserve(bookId);
 
-        if (loanStatus == 1) {
-            // 4. 본인이 대출 안 하고 다른 사용자가 대출 중
-            int reserveStatus = bookReserveService.checkReserve(bookId);
-            // 다른 사용자가 예약중인지 확인
-            if (reserveStatus == 1) {
-                // 5. 다른 사용자가 대출 중이고 다른 사용자가 예약 중
-                return ResponseEntity.ok("예약 중");
-            } else {
-                // 6. 다른 사용자가 대출 중이고 다른 사용자가 예약 안 함
-                bookReserveService.reserveBook(new BookReserveRequest(userId, bookId)); // 예약 진행
-                return ResponseEntity.ok("예약 가능");
+        if(loan == 0) {
+            // 다른 사용자가 대출 한 상태
+            if(loanStatus == 1) {
+                // 예약 하지 않은 상태
+                if(reserveStatus == 0) {
+                    return ResponseEntity.ok("예약 가능");
+                } else {
+                    return ResponseEntity.ok("예약 중");
+                }
+            }
+            // 아무도 대출 하지 않은 상태
+            else {
+                return ResponseEntity.ok("예약 불가");
             }
         }
-
-        // 7. 대출 중이 아니고 다른 사용자도 대출 중이 아님
-        bookReserveService.reserveBook(new BookReserveRequest(userId, bookId)); // 예약 진행
-        return ResponseEntity.ok("예약 불가");
+        //사용자가 대출 한 상태
+        else {
+            return ResponseEntity.ok("대출 중");
+        }
     }
 
-
+    //사용자 예약 도서 조회
     @GetMapping("/reserving")
-    public List<BookReserveResponse> reserveBook(@RequestParam String userId) {
+    public List<BookReserveResponse> reserveBook(String userId) {
         List<BookReserveResponse> reserveBookList = bookReserveService.checkBookReserve(userId);
         return reserveBookList;
     }
 
-    // ... (다른 메소드들은 그대로 유지)
+    //사용자 예약 도서 취소
+    @PostMapping("/Reserving")
+    public void cancelReserve(@RequestBody CancelResponse request) {
+        NotificationRequest notificationRequest = new NotificationRequest();
+        notificationRequest.setUserStuId(request.getUserStuId());
+        notificationRequest.setNotiContent("도서 예약취소가 완료되었습니다.");
+        notificationRequest.setNotiTime(LocalDateTime.now());
+        notificationService.saveNotification(notificationRequest);
+        bookReserveService.cancelReserve(request.getBookId());
+    }
+
+    //예약 유효 날짜 지나면 도서 자동 취소
+    @Scheduled(cron = "0 0 8 * * 1-6")
+    public void autoReserveCancel() {
+        List<BookReserveResponse> responses = bookReserveService.findAllRez();
+        LocalDate currentDate = LocalDate.now();
+
+        for(BookReserveResponse response : responses) {
+            LocalDate rezDate = response.getBookRezDate();
+            if(currentDate.isAfter(rezDate)) {
+                bookReserveService.cancelAuto(response.getBookId());
+                NotificationRequest notificationRequest = new NotificationRequest();
+                notificationRequest.setUserStuId(response.getUserStuId());
+                notificationRequest.setNotiTime(LocalDateTime.now());
+                notificationRequest.setNotiContent(response.getBookTitle() + "이 예약 유효날짜가 지나 자동 취소되었습니다.");
+            }
+        }
+    }
 }
+

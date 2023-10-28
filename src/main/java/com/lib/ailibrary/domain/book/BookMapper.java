@@ -32,6 +32,19 @@ public interface BookMapper {
      */
     List<Book> findGenreFiction();
 
+    List<Book> findGenreDevelopment();
+
+    List<Book> findGenreScience();
+
+    List<Book> findGenreComic();
+
+    List<Book> findGenreEssay();
+
+    List<Book> findGenreEconomy();
+
+    List<Book> findGenreBiographical();
+
+
     /**
      * 도서 목록 전체 조회
      * @return 도서 목록 전체

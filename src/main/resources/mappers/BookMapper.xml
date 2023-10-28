@@ -52,11 +52,89 @@
     <!-- 소설 조회 -->
     <select id="findGenreFiction" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
         SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        WHERE
+            category = '소설'
+        ORDER BY
+            book_good DESC
+            LIMIT 10
+    </select>
+
+    <!-- 자기계발서 조회 -->
+    <select id="findGenreDevelopment" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        WHERE
+            category = '자기계발'
+        ORDER BY
+            book_good DESC
+            LIMIT 10
+    </select>
+
+    <!-- 과학도서 조회 -->
+    <select id="findGenreScience" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
         <include refid="bookColumns"></include>
         FROM
         tb_book
         WHERE
-        category = '소설'
+        category = '과학'
+        ORDER BY
+        book_good DESC
+        LIMIT 10
+    </select>
+
+    <!-- 만화책 조회 -->
+    <select id="findGenreComic" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+        <include refid="bookColumns"></include>
+        FROM
+        tb_book
+        WHERE
+        category = '만화책'
+        ORDER BY
+        book_good DESC
+        LIMIT 10
+    </select>
+
+    <!-- 에세이 조회 -->
+    <select id="findGenreEssay" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+        <include refid="bookColumns"></include>
+        FROM
+        tb_book
+        WHERE
+        category = '에세이'
+        ORDER BY
+        book_good DESC
+        LIMIT 10
+    </select>
+
+    <!-- 경제도서 조회 -->
+    <select id="findGenreEconomy" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+        <include refid="bookColumns"></include>
+        FROM
+        tb_book
+        WHERE
+        category = '경제'
+        ORDER BY
+        book_good DESC
+        LIMIT 10
+    </select>
+
+    <!-- 전기도서 조회 -->
+    <select id="findGenreBiographical" parameterType="String" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+        <include refid="bookColumns"></include>
+        FROM
+        tb_book
+        WHERE
+        category = '전기'
         ORDER BY
         book_good DESC
         LIMIT 10

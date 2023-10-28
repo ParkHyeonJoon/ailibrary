@@ -67,6 +67,9 @@ const MyDatePicker = ({onDateChange}) => {
         };
 
     const [selectedDate, setSelectedDate] = useState(getCurrentDate()); // 초기값 현재 날짜로 설정
+     const today = new Date();
+     const monthFromToday = new Date(today);
+     monthFromToday.setMonth(monthFromToday.getMonth() + 1);
   return (
     <CustomDatePicker>
       <StyledDatePickerWrapper>
@@ -76,6 +79,8 @@ const MyDatePicker = ({onDateChange}) => {
         <StyledDatePicker
             selected={selectedDate}
             onChange={handleDateChange} // 변경된 부분
+            minDate = {today}
+            maxDate = {monthFromToday}
             dateFormat="yyyy-MM-dd"
         />
       </StyledDatePickerWrapper>

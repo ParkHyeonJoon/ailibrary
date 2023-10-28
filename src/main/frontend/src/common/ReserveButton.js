@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import styled, {css} from "styled-components";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReservePos from "../assets/reserve_pos.png";
 import ReserveIm from "../assets/reserve_im.png";
@@ -27,45 +28,54 @@ const Text = styled.p`
   font-weight: 800;
 
   ${(props) =>
-          props.reservationStatus === "예약 가능" &&
-          css`
+    props.reservationStatus === "예약 가능" &&
+    css`
             color: #27ff00;
           `}
 
   ${props =>
-          (props.reservationStatus === "예약 불가" ||
-                  props.reservationStatus === "예약 중" ||
-                  props.reservationStatus === "대출 중") &&
-          css`
+    (props.reservationStatus === "예약 불가" ||
+        props.reservationStatus === "예약 중" ||
+        props.reservationStatus === "대출 중") &&
+    css`
             color: #ff0000;
           `}
 `;
 
-const ReserveButton = ({bookId, userId}) => {
-        const [reservationStatus, setReservationStatus] = useState("예약가능");
+const ReserveButton = ({ bookId }) => {
+        const [reservationStatus, setReservationStatus] = useState("예약 가능");
         const [isModalOpen, setIsModalOpen] = useState(false);
+
+        const storedUserInfo = localStorage.getItem("userInfo");
+        const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+        const userId = userInfo.userId;
+        const userStuId = userInfo.userStuId;
 
         useEffect(() => {
             // 서버에서 예약 상태를 가져오는 요청
             axios.get(`http://localhost:8080/book/reserve?bookId=${bookId}&userId=${userId}`)
                 .then((response) => {
-                    const status = response.data;
-                    setReservationStatus(status); // 예약 상태를 업데이트
+                    const reservationStatus = response.data;
+                    setReservationStatus(reservationStatus); // 예약 상태를 업데이트
                 })
                 .catch((error) => {
                     console.error(error);
                 });
-        }, [bookId, userId]);
+
+        }, [bookId, userId, userStuId, reservationStatus]);
 
         const handleButtonClick = () => {
-            if (reservationStatus === "예약 가능") { // 다른 회원이 대출 중이고 예약중임
+            if(!userInfo) {
+                alert("로그인이 필요합니다");
+                return;
+            }else{
                 setIsModalOpen(true);
-            } else if (reservationStatus === "대출 중") { // 내가 대출 중일 경우
-                alert("현재 대출 중인 도서입니다");
-            } else if (reservationStatus === "예약 중") { // 다른 회원이 대출 중이고 예약 중일 경우
-                alert("다른 사용자가 예약 중인 도서입니다.");
-            } else { // 나도 대출 안 함 다른 회원도 안 함
-                alert("현재 대출이 가능한 도서입니다. 대출기능을 이용하세요.")
+            }
+
+            if (reservationStatus === "예약 가능") { //예약 할 수 있는 상태
+                setIsModalOpen(true);
+            }  else { // 예약이 되어있어서 할 수 없는 상태
+                alert("예약이 불가한 도서입니다.")
             }
         };
 
@@ -80,15 +90,15 @@ const ReserveButton = ({bookId, userId}) => {
         if (reservationStatus === "예약 가능") {
             imageSource = ReservePos;
             buttonText = "예약 가능";
-        } else if (reservationStatus === "대출 중") {
-            imageSource = ReserveIm;
-            buttonText = "예약불가";
         } else if (reservationStatus === "예약 중") {
             imageSource = ReserveIm;
-            buttonText = "예약불가";
-        } else {
+            buttonText = "예약 중";
+        } else if (reservationStatus === "예약 불가") {
             imageSource = ReserveIm;
-            buttonText = "예약불가";
+            buttonText = "예약 불가";
+        } else if (reservationStatus === "대출 중") {
+            imageSource = ReserveIm;
+            buttonText = "예약 불가";
         }
 
         return (

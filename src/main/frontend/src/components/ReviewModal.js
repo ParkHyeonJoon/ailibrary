@@ -4,7 +4,6 @@ import {useParams} from "react-router-dom";
 import moment from "moment/moment";
 import axios from "axios";
 import {darken} from "polished";
-import MyDatePicker from "./MyDatePicker";
 import ReservePos from "../assets/reserve_pos.png";
 import ReserveIm from "../assets/reserve_im.png";
 
@@ -35,7 +34,6 @@ const ModalContent = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  background: #EFF2FF;
   width: 100%;
   height: 50px;
   display: flex;
@@ -56,7 +54,7 @@ const ModalTitle = styled.p`
   padding-left: 15px;
   font-weight: 700;
 `;
-const ReservationBtn = styled.button`
+const ConfirmBtn = styled.button`
   justify-content: center;
   background: #A5B3FF;
   color: #FFF;
@@ -90,61 +88,28 @@ const StyledText = styled.p`
   margin-left: 5px;
 `
 
-function BookReservationModal({ isOpen, onClose }) {
-    const [reservationStatus, setReservationStatus] = useState("예약 가능");
-    const [selectedDate, setSelectedDate] = useState(null);
-    const { bookId } = useParams();
-
-    const storedUserInfo = localStorage.getItem("userInfo");
-    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
-
+function BookReservationModal({ isOpen, onClose, bookInfo }) {
     if (!isOpen) return null;
 
     const handleReserveConfirm = () => {
-        if (selectedDate) {
-            const reserveDate = moment(selectedDate).format("YYYY-MM-DD");
 
-            axios
-                .post("http://localhost:8080/book/reserve", {
-                    bookId: bookId,
-                    bookRezDate: reserveDate,
-                    userId: userInfo.userId,
-                    userStuId: userInfo.userStuId
-                })
-                .then((response) => {
-                    const reservationStatus = response.data;
-                    if (reservationStatus === "예약 가능") {
-                        setReservationStatus("예약 중");
-                        alert("예약이 완료되었습니다");
-                        onClose();
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                    alert("예약 중 오류가 발생했습니다.");
-                });
-        } else {
-            alert("예약 날짜를 선택해주세요.");
-        }
     };
 
     return (
         <ModalOverlay onClick={(e) => e.stopPropagation}>
             <ModalContent>
                 <ModalHeader>
-                    <ModalTitle>도서 예약 신청</ModalTitle>
-                    <CloseButton onClick={onClose}>닫기</CloseButton>
+                    <ModalTitle>리뷰 작성</ModalTitle>
+                    <CloseButton onClick={onClose}>X</CloseButton>
                 </ModalHeader>
                 <ContentArea>
                     <StyledText>예약 유효일</StyledText>
-                    <MyDatePicker
-                        onDateChange={(date) => setSelectedDate(date)}
-                    />
+
                     <Textarea>예약 유효일 이란?<br/>
                         입력한 날짜까지 예약한 도서를 대출하지 않으면, 이 도서는, 대출할 의사가 없다는 뜻입니다.<br/>
                         예약 유효일이 지난 후 예약은 자동 취소됩니다.</Textarea>
                 </ContentArea>
-                <ReservationBtn onClick={handleReserveConfirm}>신청하기</ReservationBtn>
+                <ConfirmBtn onClick={handleReserveConfirm}>신청하기</ConfirmBtn>
             </ModalContent>
         </ModalOverlay>
     );

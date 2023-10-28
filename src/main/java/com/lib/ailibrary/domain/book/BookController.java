@@ -56,6 +56,42 @@ public class BookController {
         return book;
     }
 
+    @GetMapping("/development")
+    public List<Book> findGenreDevelopment() {
+        List<Book> book = bookService.findGenreDevelopment();
+        return book;
+    }
+
+    @GetMapping("/science")
+    public List<Book> findGenreScience() {
+        List<Book> book = bookService.findGenreScience();
+        return book;
+    }
+
+    @GetMapping("/comic")
+    public List<Book> findGenreComic() {
+        List<Book> book = bookService.findGenreComic();
+        return book;
+    }
+
+    @GetMapping("/essay")
+    public List<Book> findGenreEssay() {
+        List<Book> book = bookService.findGenreEssay();
+        return book;
+    }
+
+    @GetMapping("/economy")
+    public List<Book> findGenreEconomy() {
+        List<Book> book = bookService.findGenreEconomy();
+        return book;
+    }
+
+    @GetMapping("/biographical")
+    public List<Book> findGenreBiographical() {
+        List<Book> book = bookService.findGenreBiographical();
+        return book;
+    }
+
     //도서 키워드로 검색
     @GetMapping("/search")
     public List<Book> findBookByKeyword(@RequestParam String keyword) {
