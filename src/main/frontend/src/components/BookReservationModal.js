@@ -35,9 +35,8 @@ const ModalContent = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  background: #EFF2FF;
   width: 100%;
-  height: 50px;
+  height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;

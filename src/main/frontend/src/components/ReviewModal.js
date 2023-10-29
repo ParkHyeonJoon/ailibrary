@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import styled from "styled-components";
 import {useParams} from "react-router-dom";
 import moment from "moment/moment";
@@ -23,19 +23,19 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-  width: 600px;
+  width: 500px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: white;
-  border-radius: 5px;
+  border-radius: 10px;
   position: relative;
 `;
 
 const ModalHeader = styled.div`
   width: 100%;
-  height: 50px;
+  height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -46,8 +46,8 @@ const ModalHeader = styled.div`
 const CloseButton = styled.button`
   border: none;
   cursor: pointer;
-  margin-right: 5px;
   background: none;
+  margin-right: 15px;
 `;
 const ModalTitle = styled.p`
   font-size: 17px;
@@ -66,35 +66,51 @@ const ConfirmBtn = styled.button`
 
   &:hover {
     background: ${(props) =>
-    props.backgroundColor
-        ? darken(0.1, props.backgroundColor) // 어둡게 만드는 함수를 적용
-        : "#123456"};
+            props.backgroundColor
+                    ? darken(0.1, props.backgroundColor) // 어둡게 만드는 함수를 적용
+                    : "#123456"};
   }
 `;
 const ContentArea = styled.div`
   margin: 5px 20px;
-`
-const Textarea = styled.p`
-  font-size: 13.5px;
-  color: #696969;
-  font-weight: 600;
-  margin: 40px 5px 20px 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
-const StyledText = styled.p`
-  font-size: 14px;
-  color: #1e1e1e;
-  font-weight: bold;
-  margin-bottom: 5px;
-  margin-left: 5px;
-`
+const BookInfoArea = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-items: flex-start;
+`;
+const BookImage = styled.img`
+  width: 130px;
+  height: auto;
+  margin-right: 20px;
+`;
 
-function BookReservationModal({ isOpen, onClose, bookInfo }) {
+const BookTitle = styled.h3`
+  font-size: 17px;
+  margin: 10px 0;
+`;
+const ReviewInput = styled.textarea`
+  width: 90%;
+  min-height: 100px;
+  margin: 20px 0;
+  resize: none;
+  border-radius: 10px;
+  border: 1.5px solid #d3d3d3;
+  padding: 10px;
+`;
+
+function BookReservationModal({isOpen, onClose, bookInfo}) {
     if (!isOpen) return null;
 
     const handleReserveConfirm = () => {
 
     };
-
     return (
         <ModalOverlay onClick={(e) => e.stopPropagation}>
             <ModalContent>
@@ -103,13 +119,14 @@ function BookReservationModal({ isOpen, onClose, bookInfo }) {
                     <CloseButton onClick={onClose}>X</CloseButton>
                 </ModalHeader>
                 <ContentArea>
-                    <StyledText>예약 유효일</StyledText>
-
-                    <Textarea>예약 유효일 이란?<br/>
-                        입력한 날짜까지 예약한 도서를 대출하지 않으면, 이 도서는, 대출할 의사가 없다는 뜻입니다.<br/>
-                        예약 유효일이 지난 후 예약은 자동 취소됩니다.</Textarea>
+                    <BookInfoArea>
+                        <BookImage src={bookInfo.bookImage} alt="Book"/>
+                        <BookTitle rows="4" cols="30">{bookInfo.bookTitle}</BookTitle>
+                    </BookInfoArea>
+                    <ReviewInput
+                        placeholder="내용을 10자 이상 입력해주세요"/>
                 </ContentArea>
-                <ConfirmBtn onClick={handleReserveConfirm}>신청하기</ConfirmBtn>
+                <ConfirmBtn onClick={handleReserveConfirm}>등록</ConfirmBtn>
             </ModalContent>
         </ModalOverlay>
     );

@@ -40,6 +40,10 @@ const WriteBtn = styled.button`
   color: white;
   font-weight: 600;
   font-size: 13px;
+  &:hover {
+    background: ${(props) =>
+            props.backgroundColor || "#123456"};
+  }
 `;
 const EntireReview = styled.div`
   width: 98%;
