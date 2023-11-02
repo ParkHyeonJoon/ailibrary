@@ -29,12 +29,13 @@ function LoaningBookList({ book }) {
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
     const userId = userInfo.userId;
+    const userStuId = userInfo.userStuId;
     useEffect(() => {
 
         // 두 개의 API를 병렬로 호출하는 함수
         const fetchData = async () => {
             try {
-                const loanResponse = await fetch(`http://localhost:8080/book/loaning?userId=${userId}`);
+                const loanResponse = await fetch(`http://localhost:8080/book/loaning?userStuId=${userStuId}`);
 
                 if (!loanResponse.ok) {
                     throw new Error("Network response was not ok");

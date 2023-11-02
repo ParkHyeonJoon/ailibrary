@@ -6,7 +6,6 @@
     <!-- tb_book_loan 테이블 전체 컬럼 -->
     <sql id="bookLoanColumns">
         book_loan_id
-        , user_id
         , user_stu_id
         , book_id
         , loan_date
@@ -16,13 +15,12 @@
     </sql>
 
 
-    <!-- 예약 정보 저장 -->
+    <!-- 대출 정보 저장 -->
     <insert id="save" parameterType="com.lib.ailibrary.domain.book.BookLoanRequest" useGeneratedKeys="true" keyProperty="bookLoanId">
         INSERT INTO tb_book_loan (
         <include refid="bookLoanColumns"></include>
         ) VALUES (
         #{bookLoanId}
-        , #{userId}
         , #{userStuId}
         , #{bookId}
         , CURDATE()
@@ -73,17 +71,17 @@
         FROM
             tb_book_loan
         WHERE
-            user_id = #{userId, jdbcType=VARCHAR} AND book_id = #{bookId, jdbcType=INTEGER}
+            user_stu_id = #{userStuId, jdbcType=BIGINT} AND book_id = #{bookId, jdbcType=INTEGER}
     </select>
 
     <!-- 본인이 도서 몇 권을 대여했는지 -->
-    <select id="checkBookCount" parameterType="string" resultType="int">
+    <select id="checkBookCount" parameterType="long" resultType="int">
         SELECT
             COUNT(*)
         FROM
             tb_book_loan
         WHERE
-            user_id = #{userId}
+            user_stu_id = #{userStuId}
     </select>
 
     <!-- 도서 반납 -->
@@ -92,7 +90,7 @@
         FROM
             tb_book_loan
         WHERE
-            user_id = #{userId, jdbcType=VARCHAR} AND book_id = #{bookId, jdbcType=INTEGER}
+            user_stu_id = #{userStuId, jdbcType=BIGINT} AND book_id = #{bookId, jdbcType=INTEGER}
     </delete>
 
     <select id="getReturnDate" parameterType="map" resultType="java.time.LocalDate">
@@ -101,11 +99,11 @@
         FROM
             tb_book_loan
         WHERE
-            user_id = #{userId, jdbcType=VARCHAR} AND book_id = #{bookId, jdbcType=INTEGER}
+            user_stu_id = #{userStuId, jdbcType=BIGINT} AND book_id = #{bookId, jdbcType=INTEGER}
     </select>
 
     <!-- 사용자가 현재 대출 중인 도서 확인 -->
-    <select id="checkBookLoaning" parameterType="string" resultType="com.lib.ailibrary.domain.book.BookLoanResponse">
+    <select id="checkBookLoaning" parameterType="long" resultType="com.lib.ailibrary.domain.book.BookLoanResponse">
         SELECT
             A.book_id AS bookId, A.book_title AS bookTitle, A.book_image AS bookImage, B.return_date AS returnDate
         FROM
@@ -113,7 +111,7 @@
         LEFT JOIN
             tb_book_loan B ON A.book_id = B.book_id
         WHERE
-            B.user_id = #{userId}
+            B.user_stu_id = #{userStuId}
     </select>
 
 </mapper>

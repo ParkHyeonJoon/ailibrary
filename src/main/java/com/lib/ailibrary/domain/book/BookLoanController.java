@@ -25,16 +25,15 @@ public class BookLoanController {
     @PostMapping("/loan")
     public ResponseEntity<String> LoanBook(@RequestBody BookLoanRequest request) {
         try {
-            String userId = request.getUserId();
+            long userStuId = request.getUserStuId();
             int bookId = request.getBookId();
-            Long userStuId = request.getUserStuId();
             //대출 내역에 존재하면 loanStatus가 1, 존재하지 않으면 0
             int loanStatus = bookLoanService.checkBookLoan(bookId);
-            int loan = bookLoanService.checkBook(userId, bookId);
-            int loanCount = bookLoanService.checkBookCount(userId);
+            int loan = bookLoanService.checkBook(userStuId, bookId);
+            int loanCount = bookLoanService.checkBookCount(userStuId);
 
             //대출하려는 도서가 예약이 되어있는 도서인지 확인
-            String whoReserve = bookReserveService.checkWhoReserve(bookId);
+            Long whoReserve = bookReserveService.checkWhoReserve(bookId);
 
             //사용자가 대출 하지 않은 상태
             if(loan == 0) {
@@ -63,7 +62,7 @@ public class BookLoanController {
                     }
                 }
                 //예약이 있지만 사용자가 예약해놓은 도서일 경우
-                else if(whoReserve.equals(userId)) {
+                else if(whoReserve.equals(userStuId)) {
                     if (loanStatus == 0) {
                         //아직 대출 가능한 상태
                         if(loanCount < 5) {
@@ -73,7 +72,7 @@ public class BookLoanController {
                             notificationRequest.setNotiTime(LocalDateTime.now());
                             notificationService.saveNotification(notificationRequest);
                             bookLoanService.saveLoan(request);
-                            if(whoReserve.equals(userId)) {
+                            if(whoReserve.equals(userStuId)) {
                                 bookReserveService.cancelAuto(bookId);
                             }
                             return ResponseEntity.ok("0");
@@ -99,7 +98,7 @@ public class BookLoanController {
                 notificationRequest.setNotiContent("도서 반납이 완료되었습니다.");
                 notificationRequest.setNotiTime(LocalDateTime.now());
                 notificationService.saveNotification(notificationRequest);
-                bookLoanService.checkBookReturn(userId, bookId);
+                bookLoanService.checkBookReturn(userStuId, bookId);
                 String bookTitle = bookService.reserveBookTitle(bookId);
 
                 List<BookReserveResponse> responses = bookReserveService.findAllRez();
@@ -123,10 +122,10 @@ public class BookLoanController {
 
     //화면 들어가자마자 대출 여부 확인
     @GetMapping("/loan")
-    public ResponseEntity<String> checkLoan(@RequestParam String userId, @RequestParam int bookId) {
+    public ResponseEntity<String> checkLoan(@RequestParam long userStuId, @RequestParam int bookId) {
         try {
             int loanStatus = bookLoanService.checkBookLoan(bookId);
-            int loan = bookLoanService.checkBook(userId, bookId);
+            int loan = bookLoanService.checkBook(userStuId, bookId);
 
             if(loan == 0) {
                 if(loanStatus == 0) {
@@ -148,8 +147,8 @@ public class BookLoanController {
 
     //사용자가 현재 대출 중인 도서 목록
     @GetMapping("/loaning")
-    public List<BookLoanResponse> checkBookLoaning(@RequestParam String userId) {
-        List<BookLoanResponse> loaningBook = bookLoanService.checkBookLoaning(userId);
+    public List<BookLoanResponse> checkBookLoaning(@RequestParam long userStuId) {
+        List<BookLoanResponse> loaningBook = bookLoanService.checkBookLoaning(userStuId);
         return loaningBook;
 
     }

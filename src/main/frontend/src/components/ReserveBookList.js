@@ -62,7 +62,7 @@ function ReserveBookList({ book }) {
 
             const fetchData = async () => {
                 try {
-                    const reserveResponse = await fetch(`http://localhost:8080/book/reserving?userId=${userId}`);
+                    const reserveResponse = await fetch(`http://localhost:8080/book/reserving?userStuId=${userStuId}`);
 
                     if (!reserveResponse.ok) {
                         throw new Error("Network response was not ok");
@@ -114,7 +114,7 @@ function ReserveBookList({ book }) {
         // 두 개의 API를 병렬로 호출하는 함수
         const fetchData = async () => {
             try {
-                const reserveResponse = await fetch(`http://localhost:8080/book/reserving?userId=${userId}`);
+                const reserveResponse = await fetch(`http://localhost:8080/book/reserving?userStuId=${userStuId}`);
 
                 if (!reserveResponse.ok) {
                     throw new Error("Network response was not ok");
@@ -130,7 +130,7 @@ function ReserveBookList({ book }) {
 
         // 데이터 가져오는 함수 호출
         fetchData();
-    }, [userId]);
+    }, [userStuId]);
 
     return (
         <Wrapper>

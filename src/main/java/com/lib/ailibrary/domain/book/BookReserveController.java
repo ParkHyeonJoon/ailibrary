@@ -25,11 +25,11 @@ public class BookReserveController {
     //예약 버튼을 클릭하면 실행
     @PostMapping("/reserve")
     public ResponseEntity<String> reserveBook(@RequestBody BookReserveRequest request) {
-        String userId = request.getUserId();
+        long userStuId = request.getUserStuId();
         int bookId = request.getBookId();
 
         int loanStatus = bookLoanService.checkBookLoan(bookId);
-        int loan = bookLoanService.checkBook(userId, bookId);
+        int loan = bookLoanService.checkBook(userStuId, bookId);
 
         //reserveStatus가 0이면 예약 가능, 그 외면 예약 불가능
         int reserveStatus = bookReserveService.checkReserve(bookId);
@@ -64,10 +64,10 @@ public class BookReserveController {
 
     //화면에 들어갔을 때
     @GetMapping("/reserve")
-    public ResponseEntity<String> checkAndReserve(int bookId, String userId) {
+    public ResponseEntity<String> checkAndReserve(int bookId, long userStuId) {
 
         int loanStatus = bookLoanService.checkBookLoan(bookId);
-        int loan = bookLoanService.checkBook(userId, bookId);
+        int loan = bookLoanService.checkBook(userStuId, bookId);
         int reserveStatus = bookReserveService.checkReserve(bookId);
 
         if(loan == 0) {
@@ -93,8 +93,8 @@ public class BookReserveController {
 
     //사용자 예약 도서 조회
     @GetMapping("/reserving")
-    public List<BookReserveResponse> reserveBook(String userId) {
-        List<BookReserveResponse> reserveBookList = bookReserveService.checkBookReserve(userId);
+    public List<BookReserveResponse> reserveBook(long userStuId) {
+        List<BookReserveResponse> reserveBookList = bookReserveService.checkBookReserve(userStuId);
         return reserveBookList;
     }
 

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Getter
 public class BookReserveResponse extends Book{
     private int bookRezId;
-    private String userId;
+    //private String userId;
     private Long userStuId;
 
 
