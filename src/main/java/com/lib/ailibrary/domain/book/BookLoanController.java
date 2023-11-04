@@ -27,7 +27,7 @@ public class BookLoanController {
         try {
             long userStuId = request.getUserStuId();
             int bookId = request.getBookId();
-            //대출 내역에 존재하면 loanStatus가 1, 존재하지 않으면 0
+            //대출 상태가 대출 중인 도서가 있으면 loanStatus가 1, 존재하지 않으면 0
             int loanStatus = bookLoanService.checkBookLoan(bookId);
             int loan = bookLoanService.checkBook(userStuId, bookId);
             int loanCount = bookLoanService.checkBookCount(userStuId);
@@ -101,7 +101,7 @@ public class BookLoanController {
                 notificationRequest.setNotiContent(bookTitle2 + "이 반납 완료되었습니다.");
                 notificationRequest.setNotiTime(LocalDateTime.now());
                 notificationService.saveNotification(notificationRequest);
-                bookLoanService.checkBookReturn(userStuId, bookId);
+                bookLoanService.updateBookReturnState(userStuId, bookId);
                 String bookTitle = bookService.reserveBookTitle(bookId);
 
                 List<BookReserveResponse> responses = bookReserveService.findAllRez();
@@ -153,7 +153,12 @@ public class BookLoanController {
     public List<BookLoanResponse> checkBookLoaning(@RequestParam long userStuId) {
         List<BookLoanResponse> loaningBook = bookLoanService.checkBookLoaning(userStuId);
         return loaningBook;
+    }
 
+    @GetMapping("/loaned")
+    public List<BookLoanResponse> checkBookLoaned(@RequestParam long userStuId) {
+        List<BookLoanResponse> loanedBook = bookLoanService.checkBookLoaned(userStuId);
+        return loanedBook;
     }
 
 }

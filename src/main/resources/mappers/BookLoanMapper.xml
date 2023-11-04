@@ -61,7 +61,7 @@
         FROM
             tb_book_loan
         WHERE
-            book_id = #{bookId}
+            book_id = #{bookId} AND return_state = '대출 중'
     </select>
 
     <!-- 본인의 도서 대출 상태 체크 -->
@@ -71,7 +71,7 @@
         FROM
             tb_book_loan
         WHERE
-            user_stu_id = #{userStuId, jdbcType=BIGINT} AND book_id = #{bookId, jdbcType=INTEGER}
+            user_stu_id = #{userStuId, jdbcType=BIGINT} AND book_id = #{bookId, jdbcType=INTEGER} AND return_state = '대출 중'
     </select>
 
     <!-- 본인이 도서 몇 권을 대여했는지 -->
@@ -81,17 +81,19 @@
         FROM
             tb_book_loan
         WHERE
-            user_stu_id = #{userStuId}
+            user_stu_id = #{userStuId} AND return_state = '대출 중'
     </select>
 
     <!-- 도서 반납 -->
-    <delete id="checkBookReturn" parameterType="map">
-        DELETE
-        FROM
+    <update id="updateBookReturnState" parameterType="map">
+        UPDATE
             tb_book_loan
+        SET
+            return_state = '반납 완료'
         WHERE
             user_stu_id = #{userStuId, jdbcType=BIGINT} AND book_id = #{bookId, jdbcType=INTEGER}
-    </delete>
+    </update>
+
 
     <select id="getReturnDate" parameterType="map" resultType="java.time.LocalDate">
         SELECT
@@ -111,7 +113,19 @@
         LEFT JOIN
             tb_book_loan B ON A.book_id = B.book_id
         WHERE
-            B.user_stu_id = #{userStuId}
+            B.user_stu_id = #{userStuId} AND B.return_state = '대출 중'
+    </select>
+
+    <!-- 사용자가 대출했었던 도서 내역 확인 -->
+    <select id="checkBookLoaned" parameterType="long" resultType="com.lib.ailibrary.domain.book.BookLoanResponse">
+        SELECT
+            A.book_id AS bookId, A.book_title AS bookTitle, A.book_image AS bookImage, B.loan_date AS loanDate, B.return_date AS returnDate
+        FROM
+            tb_book A
+        LEFT JOIN
+            tb_book_loan B ON A.book_id = B.book_id
+        WHERE
+            B.user_stu_id = #{userStuId} AND B.return_state = '반납 완료'
     </select>
 
 </mapper>

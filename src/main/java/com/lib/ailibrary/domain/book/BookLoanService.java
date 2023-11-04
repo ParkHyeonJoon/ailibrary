@@ -47,12 +47,16 @@ public class BookLoanService {
     }
 
     //도서 반납하기
-    public void checkBookReturn(long userStuId, int bookId) {
-        bookLoanMapper.checkBookReturn(userStuId, bookId);
+    public void updateBookReturnState(long userStuId, int bookId) {
+        bookLoanMapper.updateBookReturnState(userStuId, bookId);
     }
 
     //사용자가 현재 대출 중인 도서 확인
     public List<BookLoanResponse> checkBookLoaning(long userStuId) {
         return bookLoanMapper.checkBookLoaning(userStuId);
+    }
+
+    public List<BookLoanResponse> checkBookLoaned(long userStuId) {
+        return bookLoanMapper.checkBookLoaned(userStuId);
     }
 }
