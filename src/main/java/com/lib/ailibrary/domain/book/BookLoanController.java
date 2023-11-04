@@ -45,7 +45,8 @@ public class BookLoanController {
                         if(loanCount < 5) {
                             NotificationRequest notificationRequest = new NotificationRequest();
                             notificationRequest.setUserStuId(userStuId);
-                            notificationRequest.setNotiContent("도서 대출이 완료되었습니다.");
+                            String bookTitle = bookService.reserveBookTitle(request.getBookId());
+                            notificationRequest.setNotiContent(bookTitle + "대출이 완료되었습니다.");
                             notificationRequest.setNotiTime(LocalDateTime.now());
                             notificationService.saveNotification(notificationRequest);
                             bookLoanService.saveLoan(request);
@@ -68,7 +69,8 @@ public class BookLoanController {
                         if(loanCount < 5) {
                             NotificationRequest notificationRequest = new NotificationRequest();
                             notificationRequest.setUserStuId(userStuId);
-                            notificationRequest.setNotiContent("도서 대출이 완료되었습니다.");
+                            String bookTitle = bookService.reserveBookTitle(request.getBookId());
+                            notificationRequest.setNotiContent(bookTitle + "이 대출 완료되었습니다.");
                             notificationRequest.setNotiTime(LocalDateTime.now());
                             notificationService.saveNotification(notificationRequest);
                             bookLoanService.saveLoan(request);
@@ -95,7 +97,8 @@ public class BookLoanController {
                 //사용자가 대출해 반납해야 되는 상태
                 NotificationRequest notificationRequest = new NotificationRequest();
                 notificationRequest.setUserStuId(userStuId);
-                notificationRequest.setNotiContent("도서 반납이 완료되었습니다.");
+                String bookTitle2 = bookService.reserveBookTitle(request.getBookId());
+                notificationRequest.setNotiContent(bookTitle2 + "이 반납 완료되었습니다.");
                 notificationRequest.setNotiTime(LocalDateTime.now());
                 notificationService.saveNotification(notificationRequest);
                 bookLoanService.checkBookReturn(userStuId, bookId);

@@ -21,6 +21,7 @@ public class BookReserveController {
     private final BookReserveService bookReserveService;
     private final BookLoanService bookLoanService;
     private final NotificationService notificationService;
+    private final BookService bookService;
 
     //예약 버튼을 클릭하면 실행
     @PostMapping("/reserve")
@@ -42,7 +43,8 @@ public class BookReserveController {
                 if(reserveStatus == 0) {
                     NotificationRequest notificationRequest = new NotificationRequest();
                     notificationRequest.setUserStuId(request.getUserStuId());
-                    notificationRequest.setNotiContent("도서 예약이 완료되었습니다.");
+                    String bookTitle = bookService.reserveBookTitle(request.getBookId());
+                    notificationRequest.setNotiContent(bookTitle + "이 예약 완료되었습니다.");
                     notificationRequest.setNotiTime(LocalDateTime.now());
                     notificationService.saveNotification(notificationRequest);
                     bookReserveService.reserveBook(request);
@@ -103,7 +105,7 @@ public class BookReserveController {
     public void cancelReserve(@RequestBody CancelResponse request) {
         NotificationRequest notificationRequest = new NotificationRequest();
         notificationRequest.setUserStuId(request.getUserStuId());
-        notificationRequest.setNotiContent("도서 예약취소가 완료되었습니다.");
+        notificationRequest.setNotiContent(request.getBookTitle() + "이(가) 예약 취소되었습니다.");
         notificationRequest.setNotiTime(LocalDateTime.now());
         notificationService.saveNotification(notificationRequest);
         bookReserveService.cancelReserve(request.getBookId());
@@ -123,6 +125,7 @@ public class BookReserveController {
                 notificationRequest.setUserStuId(response.getUserStuId());
                 notificationRequest.setNotiTime(LocalDateTime.now());
                 notificationRequest.setNotiContent(response.getBookTitle() + "이 예약 유효날짜가 지나 자동 취소되었습니다.");
+                notificationService.saveNotification(notificationRequest);
             }
         }
     }

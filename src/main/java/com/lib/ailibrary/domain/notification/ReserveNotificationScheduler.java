@@ -4,8 +4,11 @@ import com.lib.ailibrary.domain.book.BookLoanResponse;
 import com.lib.ailibrary.domain.book.BookLoanService;
 import com.lib.ailibrary.domain.book.BookReserveResponse;
 import com.lib.ailibrary.domain.book.BookReserveService;
+import com.lib.ailibrary.domain.notification.sms.MessageDTO;
+import com.lib.ailibrary.domain.notification.sms.SmsService;
 import com.lib.ailibrary.domain.room.RoomReserveResponse;
 import com.lib.ailibrary.domain.room.RoomService;
+import com.lib.ailibrary.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,6 +27,9 @@ public class ReserveNotificationScheduler {
 
     private final BookLoanService bookLoanService;
     private final BookReserveService bookReserveService;
+
+    private final SmsService smsService;
+    private final UserService userService;
 
     @Scheduled(cron = "0 0 8 * * MON-FRI") // 매일 오전 8시에 실행,  fixedRate = 60000(1분마다)
     public void sendNotifications() {
@@ -48,6 +54,7 @@ public class ReserveNotificationScheduler {
         for (Map.Entry<Long, List<RoomReserveResponse>> entry : userReservationsMap.entrySet()) {
             Long userStuId = entry.getKey();
             List<RoomReserveResponse> userReservations = entry.getValue();
+            //String userPnum = userService.findPnumById(userStuId);
 
             StringBuilder notificationContent = new StringBuilder();
 
@@ -64,6 +71,13 @@ public class ReserveNotificationScheduler {
             params.setNotiTime(LocalDateTime.now());
 
             notificationService.saveNotification(params);
+
+            // SMS 전송 코드
+            /*MessageDTO messageDTO = new MessageDTO();
+            messageDTO.setTo(userPnum);
+            messageDTO.setContent(params.getNotiContent());
+
+            smsService.sendSms(messageDTO);*/
         }
     }
 
@@ -93,8 +107,14 @@ public class ReserveNotificationScheduler {
                 params.setUserStuId(response.getUserStuId());
                 params.setNotiTime(LocalDateTime.now());
                 params.setNotiContent(response.getBookTitle() + "을 내일"+"("+response.getReturnDate()+")"+"까지 반납해주세요.");
-
                 notificationService.saveNotification(params);
+
+                // SMS 전송 코드
+                /*MessageDTO messageDTO = new MessageDTO();
+                messageDTO.setTo(userPnum);
+                messageDTO.setContent(params.getNotiContent());
+
+                smsService.sendSms(messageDTO);*/
             }
         }
     }
@@ -113,7 +133,6 @@ public class ReserveNotificationScheduler {
                 params.setUserStuId(response.getUserStuId());
                 params.setNotiTime(LocalDateTime.now());
                 params.setNotiContent(response.getBookTitle() + "을 내일"+"("+response.getBookDate()+")"+"까지 대출해주세요.");
-
                 notificationService.saveNotification(params);
             }
         }

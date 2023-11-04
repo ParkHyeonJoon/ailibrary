@@ -14,9 +14,9 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/save")
-    public void saveReiview(@RequestBody ReviewRequest request) {
+    public void saveReview(@RequestBody ReviewResponse request) {
         ReviewRequest reviewRequest = new ReviewRequest();
-        Long userStuId = request.getUserStuId();
+        long userStuId = request.getUserStuId();
         int bookId = request.getBookId();
         String review = request.getReview();
 
