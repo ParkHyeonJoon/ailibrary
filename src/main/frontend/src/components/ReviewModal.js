@@ -1,12 +1,7 @@
 import React, {useState, useRef, useEffect} from "react";
 import styled from "styled-components";
-import {useParams} from "react-router-dom";
-import moment from "moment/moment";
 import axios from "axios";
 import {darken} from "polished";
-import ReservePos from "../assets/reserve_pos.png";
-import ReserveIm from "../assets/reserve_im.png";
-
 const ModalOverlay = styled.div`
   margin-top: 30px;
   position: fixed;
@@ -105,14 +100,42 @@ const ReviewInput = styled.textarea`
   padding: 10px;
 `;
 
-function BookReservationModal({isOpen, onClose, bookInfo}) {
+function ReviewModal({ isOpen, onClose, bookInfo }) {
+    const storedUserInfo = localStorage.getItem("userInfo");
+    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+    const userStuId = userInfo ? userInfo.userStuId : null;
+
+    const [review, setReview] = useState("");
+
+    const handleReviewSubmit = async () => {
+        if (!review || review.length < 10) {
+            // 리뷰가 10자 미만이거나 비어있을 때 알림 메시지 표시
+            alert("10자 이상 리뷰를 입력해주세요");
+            return;
+        }
+
+        try {
+            const reviewData = {
+                userStuId: userStuId,
+                bookId: bookInfo.bookId,
+                review: review,
+                createdAt: new Date().toISOString(),
+            };
+
+            const response = await axios.post("http://localhost:8080/review/save", reviewData);
+
+            if (response.status === 200) {
+                onClose();
+            }
+        } catch (error) {
+            console.error("리뷰 저장 중 오류 발생: ", error);
+        }
+    };
+
     if (!isOpen) return null;
 
-    const handleReserveConfirm = () => {
-
-    };
     return (
-        <ModalOverlay onClick={(e) => e.stopPropagation}>
+        <ModalOverlay onClick={onClose}>
             <ModalContent>
                 <ModalHeader>
                     <ModalTitle>리뷰 작성</ModalTitle>
@@ -120,17 +143,21 @@ function BookReservationModal({isOpen, onClose, bookInfo}) {
                 </ModalHeader>
                 <ContentArea>
                     <BookInfoArea>
-                        <BookImage src={bookInfo.bookImage} alt="Book"/>
-                        <BookTitle rows="4" cols="30">{bookInfo.bookTitle}</BookTitle>
+                        <BookImage src={bookInfo.bookImage} alt="책" />
+                        <BookTitle>{bookInfo.bookTitle}</BookTitle>
                     </BookInfoArea>
                     <ReviewInput
-                        placeholder="내용을 10자 이상 입력해주세요"/>
+                        type="text"
+                        value={review}
+                        onClick={(e) => e.stopPropagation()} // 클릭 이벤트 전파 중지
+                        onChange={(e) => setReview(e.target.value)}
+                        placeholder="내용을 10자 이상 입력해주세요"
+                    />
                 </ContentArea>
-                <ConfirmBtn onClick={handleReserveConfirm}>등록</ConfirmBtn>
+                <ConfirmBtn onClick={handleReviewSubmit}>등록</ConfirmBtn>
             </ModalContent>
         </ModalOverlay>
     );
-};
+}
 
-
-export default BookReservationModal;
+export default ReviewModal;

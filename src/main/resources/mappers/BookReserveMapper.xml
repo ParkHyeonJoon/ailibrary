@@ -6,7 +6,6 @@
     <!-- tb_book_rez 테이블 전체 컬럼 -->
     <sql id="bookRezColumns">
         book_rez_id
-        , user_id
         , user_stu_id
         , book_id
         , book_rez_date
@@ -20,7 +19,6 @@
         <include refid="bookRezColumns"></include>
         ) VALUES (
         #{bookRezId}
-        , #{userId}
         , #{userStuId}
         , #{bookId}
         , #{bookRezDate}
@@ -95,7 +93,7 @@
     </delete>
 
     <!-- 사용자가 예약 중인 도서 조회 기능 -->
-    <select id="checkBookReserve" parameterType="string" resultType="com.lib.ailibrary.domain.book.BookReserveResponse">
+    <select id="checkBookReserve" parameterType="long" resultType="com.lib.ailibrary.domain.book.BookReserveResponse">
         SELECT
             A.book_id, A.book_title, A.book_image, B.book_rez_date
         FROM
@@ -103,13 +101,13 @@
         LEFT JOIN
             tb_book_rez B ON A.book_id = B.book_id
         WHERE
-            B.user_id = #{userId}
+            B.user_stu_id = #{userStuId}
     </select>
 
     <!-- 사용자가 대출하려는 도서가 예약이 되어있는 도서인지 확인 -->
-    <select id="checkWhoReserve" parameterType="int" resultType="string">
+    <select id="checkWhoReserve" parameterType="int" resultType="Long">
         SELECT
-            user_id
+            user_stu_id
         FROM
             tb_book_rez
         WHERE

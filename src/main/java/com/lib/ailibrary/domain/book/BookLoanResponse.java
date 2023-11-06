@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 public class BookLoanResponse extends Book{
     private int bookLoanId;
-    private String userId;
+    //private String userId
     private Long userStuId;
 
 

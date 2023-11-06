@@ -1,6 +1,5 @@
 package com.lib.ailibrary.domain.notification;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lib.ailibrary.domain.book.BookLoanResponse;
 import com.lib.ailibrary.domain.book.BookLoanService;
 import com.lib.ailibrary.domain.book.BookReserveResponse;
@@ -14,11 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,19 +22,19 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ReserveNotificationScheduler {
 
-    private final UserService userService;
-    private final SmsService smsService;
     private final RoomService roomService;
     private final NotificationService notificationService;
 
     private final BookLoanService bookLoanService;
     private final BookReserveService bookReserveService;
 
+    private final SmsService smsService;
+    private final UserService userService;
+
     @Scheduled(cron = "0 0 8 * * MON-FRI") // 매일 오전 8시에 실행,  fixedRate = 60000(1분마다)
-    public void sendNotifications() throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+    public void sendNotifications() {
         LocalDate today = LocalDate.now();
         List<RoomReserveResponse> reservations = roomService.findAllReserveToday(today);
-
 
         Map<Long, List<RoomReserveResponse>> userReservationsMap = new HashMap<>();
 
@@ -60,7 +54,7 @@ public class ReserveNotificationScheduler {
         for (Map.Entry<Long, List<RoomReserveResponse>> entry : userReservationsMap.entrySet()) {
             Long userStuId = entry.getKey();
             List<RoomReserveResponse> userReservations = entry.getValue();
-            String userPnum = userService.findPnumById(userStuId);
+            //String userPnum = userService.findPnumById(userStuId);
 
             StringBuilder notificationContent = new StringBuilder();
 
@@ -77,13 +71,12 @@ public class ReserveNotificationScheduler {
             params.setNotiTime(LocalDateTime.now());
 
             notificationService.saveNotification(params);
-            
-            
+
             // SMS 전송 코드
             /*MessageDTO messageDTO = new MessageDTO();
             messageDTO.setTo(userPnum);
             messageDTO.setContent(params.getNotiContent());
-            
+
             smsService.sendSms(messageDTO);*/
         }
     }
@@ -101,7 +94,7 @@ public class ReserveNotificationScheduler {
     }
 
     //********반납날짜 하루 전 웹페이지에 알림 띄우기(수정 필요)*******
-    @Scheduled(cron = "0 0 8 * * 1-6")
+    @Scheduled(cron = "0 0 8 * * MON-FRI")
     public void checkBookLoan() {
         List<BookLoanResponse> responses = bookLoanService.findLoanAll();
         LocalDate currentDate = LocalDate.now();
@@ -114,14 +107,20 @@ public class ReserveNotificationScheduler {
                 params.setUserStuId(response.getUserStuId());
                 params.setNotiTime(LocalDateTime.now());
                 params.setNotiContent(response.getBookTitle() + "을 내일"+"("+response.getReturnDate()+")"+"까지 반납해주세요.");
-
                 notificationService.saveNotification(params);
+
+                // SMS 전송 코드
+                /*MessageDTO messageDTO = new MessageDTO();
+                messageDTO.setTo(userPnum);
+                messageDTO.setContent(params.getNotiContent());
+
+                smsService.sendSms(messageDTO);*/
             }
         }
     }
 
     //예약 유효기간 날짜 하루 전 웹페이지 알림 띄우기(수정 필요)
-    @Scheduled(cron = "0 0 8 * * 1-6")
+    @Scheduled(cron = "0 0 8 * * MON-FRI")
     public void checkBookReserve() {
         List<BookReserveResponse> responses = bookReserveService.findAllRez();
         LocalDate currentDate = LocalDate.now();
@@ -134,7 +133,6 @@ public class ReserveNotificationScheduler {
                 params.setUserStuId(response.getUserStuId());
                 params.setNotiTime(LocalDateTime.now());
                 params.setNotiContent(response.getBookTitle() + "을 내일"+"("+response.getBookDate()+")"+"까지 대출해주세요.");
-
                 notificationService.saveNotification(params);
             }
         }

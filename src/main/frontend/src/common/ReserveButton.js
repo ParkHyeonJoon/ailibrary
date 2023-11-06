@@ -53,7 +53,7 @@ const ReserveButton = ({ bookId }) => {
 
         useEffect(() => {
             // 서버에서 예약 상태를 가져오는 요청
-            axios.get(`http://localhost:8080/book/reserve?bookId=${bookId}&userId=${userId}`)
+            axios.get(`http://localhost:8080/book/reserve?bookId=${bookId}&userStuId=${userStuId}`)
                 .then((response) => {
                     const reservationStatus = response.data;
                     setReservationStatus(reservationStatus); // 예약 상태를 업데이트
@@ -62,7 +62,7 @@ const ReserveButton = ({ bookId }) => {
                     console.error(error);
                 });
 
-        }, [bookId, userId, userStuId, reservationStatus]);
+        }, [bookId, userStuId, reservationStatus]);
 
         const handleButtonClick = () => {
             if(!userInfo) {

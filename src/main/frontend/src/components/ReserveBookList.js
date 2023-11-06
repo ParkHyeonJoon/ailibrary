@@ -73,27 +73,27 @@ function ReserveBookList({book}) {
         if (selectedBooks.length === 0) {
             return;
         }
+            const requestBody = {
+                bookId: selectedBooks,
+                userStuId: userStuId
+            };
 
-        const requestBody = {
-            bookId: selectedBooks,
-            userStuId: userStuId
-        };
+            const fetchData = async () => {
+                try {
+                    const reserveResponse = await fetch(`http://localhost:8080/book/reserving?userStuId=${userStuId}`);
 
-        const fetchData = async () => {
-            try {
-                const reserveResponse = await fetch(`http://localhost:8080/book/reserving?userId=${userId}`);
+                    if (!reserveResponse.ok) {
+                        throw new Error("Network response was not ok");
+                    }
 
-                if (!reserveResponse.ok) {
-                    throw new Error("Network response was not ok");
+                    const reserveData = await reserveResponse.json();
+
+                    setReserveBooks(reserveData);
+                } catch (error) {
+                     console.error("Error fetching data: ", error);
                 }
+            };
 
-                const reserveData = await reserveResponse.json();
-
-                setReserveBooks(reserveData);
-            } catch (error) {
-                console.error("Error fetching data: ", error);
-            }
-        };
 
         try {
             const response = await fetch('http://localhost:8080/book/Reserving', {
@@ -133,7 +133,7 @@ function ReserveBookList({book}) {
         // 두 개의 API를 병렬로 호출하는 함수
         const fetchData = async () => {
             try {
-                const reserveResponse = await fetch(`http://localhost:8080/book/reserving?userId=${userId}`);
+                const reserveResponse = await fetch(`http://localhost:8080/book/reserving?userStuId=${userStuId}`);
 
                 if (!reserveResponse.ok) {
                     throw new Error("Network response was not ok");
@@ -149,7 +149,7 @@ function ReserveBookList({book}) {
 
         // 데이터 가져오는 함수 호출
         fetchData();
-    }, [userId]);
+    }, [userStuId]);
 
     return (
         <Wrapper>

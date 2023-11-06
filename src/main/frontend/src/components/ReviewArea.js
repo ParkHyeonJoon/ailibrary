@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Line from "../common/Line";
 import Review from "./Review";
@@ -53,8 +53,7 @@ function ReviewArea({bookInfo}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
-    const userId = userInfo.userId; //아이디
-    const userStuId = userInfo.userStuId;// 학번
+
     const handleButtonClick = () => {
         if (!userInfo) {
             alert("로그인이 필요합니다");

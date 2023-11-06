@@ -62,14 +62,14 @@ public interface BookReserveMapper {
      * @param - userId
      * @return - BookReserveResponse
      */
-    List<BookReserveResponse> checkBookReserve(String userId);
+    List<BookReserveResponse> checkBookReserve(long userStuId);
 
     /**
      * 사용자가 대출하려는 도서가 예약된 도서인지
      * @param - bookId
      * @return - userId
      */
-    String checkWhoReserve(int bookId);
+    Long checkWhoReserve(int bookId);
 
     /**
      * 예약한 도서 예약 유효날짜 확인
