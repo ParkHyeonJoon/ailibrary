@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import styled, {css} from "styled-components";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import axios from "axios";
 import ReservePos from "../assets/reserve_pos.png";
 import ReserveIm from "../assets/reserve_im.png";
@@ -28,21 +28,21 @@ const Text = styled.p`
   font-weight: 800;
 
   ${(props) =>
-    props.reservationStatus === "예약 가능" &&
-    css`
+          props.reservationStatus === "예약 가능" &&
+          css`
             color: #27ff00;
           `}
 
   ${props =>
-    (props.reservationStatus === "예약 불가" ||
-        props.reservationStatus === "예약 중" ||
-        props.reservationStatus === "대출 중") &&
-    css`
+          (props.reservationStatus === "예약 불가" ||
+                  props.reservationStatus === "예약 중" ||
+                  props.reservationStatus === "대출 중") &&
+          css`
             color: #ff0000;
           `}
 `;
 
-const ReserveButton = ({ bookId }) => {
+const ReserveButton = ({bookId}) => {
         const [reservationStatus, setReservationStatus] = useState("예약 가능");
         const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -65,16 +65,12 @@ const ReserveButton = ({ bookId }) => {
         }, [bookId, userStuId, reservationStatus]);
 
         const handleButtonClick = () => {
-            if(!userInfo) {
+            if (!userInfo) {
                 alert("로그인이 필요합니다");
                 return;
-            }else{
+            } else if (reservationStatus === "예약 가능") { //예약 할 수 있는 상태
                 setIsModalOpen(true);
-            }
-
-            if (reservationStatus === "예약 가능") { //예약 할 수 있는 상태
-                setIsModalOpen(true);
-            }  else { // 예약이 되어있어서 할 수 없는 상태
+            } else { // 예약이 되어있어서 할 수 없는 상태
                 alert("예약이 불가한 도서입니다.")
             }
         };
