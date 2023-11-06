@@ -21,6 +21,7 @@ public class ReviewController {
         String review = request.getReview();
 
         reviewRequest.setUserStuId(userStuId);
+
         reviewRequest.setBookId(bookId);
         reviewRequest.setReview(review);
 
