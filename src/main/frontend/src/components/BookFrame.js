@@ -48,7 +48,12 @@ const ReturnDate = styled.p`
   font-size: 15px;
   font-weight: 600;
 `;
-const BookFrame = ({ book, rank, showRank, showReturnDate }) => {
+const BookRezDate = styled.p`
+  color: red;
+  font-size: 15px;
+  font-weight: 600;
+`;
+const BookFrame = ({ book, rank, showRank, showReturnDate, showRezDate }) => {
     return (
         <Link to={`/book-detail/${book.bookId}`}
               style={{ textDecoration: "none"}}>
@@ -60,6 +65,9 @@ const BookFrame = ({ book, rank, showRank, showReturnDate }) => {
                 <BookTitle>{book.bookTitle}</BookTitle>
                 {showReturnDate && (
                     <ReturnDate>반납 {book.returnDate}</ReturnDate>
+                )}
+                {showRezDate && (
+                    <BookRezDate>예약 기한 : {book.bookRezDate}</BookRezDate>
                 )}
             </BookWrapper>
         </Link>

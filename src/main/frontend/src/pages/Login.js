@@ -12,8 +12,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: black;
-  color: white;
+  background: #ffffff;
+  color: #000000;
 `;
 
 const LoginArea = styled.div`
@@ -35,7 +35,7 @@ const InputArea = styled.div`
   width: 300px;
   height: 40px;
   background: #ffffff;
-  border: 2px solid #000000;
+  border: 2px solid #c4c4c4;
   display: flex;
   align-items: center;
   justify-content: center;

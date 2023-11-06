@@ -3,6 +3,8 @@ import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import BookInfo from "../components/BookInfo";
+import ReviewArea from "../components/ReviewArea";
+import Line from "../common/Line";
 
 const Wrapper = styled.div`
   position: relative; /* 포지션 설정 */
@@ -38,8 +40,8 @@ const BackgroundImage = styled.div`
 
 
 const BookImage = styled.img`
-  width: 300px;
-  height: 450px;
+  width: 280px;
+  height: 420px;
   border-radius: 5px;
   box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.2);
   z-index:100;
@@ -64,6 +66,8 @@ const BookDetail = () => {
                 <BookInfo bookInfo={bookInfo}/>
                 <BookImage src={bookInfo.bookImage} alt="Book"/>
             </ContentWrapper>
+            <ReviewArea bookInfo={bookInfo}/>
+
         </Wrapper>
     );
 };

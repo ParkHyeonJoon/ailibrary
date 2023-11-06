@@ -23,4 +23,11 @@ public interface UserMapper {
      * @return 회원 수
      */
     int countByLoginId(String loginId);
+
+    /**
+     * 회원 전화번호 가져오기
+     * @param userStuId - PK
+     * @return 전화번호
+     */
+    String findPNumById(Long userStuId);
 }

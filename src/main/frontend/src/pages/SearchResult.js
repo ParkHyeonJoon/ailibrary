@@ -10,15 +10,14 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: black;
-  color: white;
-  height: 100vh;
+  justify-content: flex-start;
+  background: #ffffff;
+  color: #000000;
 `;
 
 const ContentWrapper = styled.div`
   width: 1000px;
-  margin-top: 10px;
+  margin-top: 160px;
 `;
 const Title = styled.h2`
   margin: 50px 0;

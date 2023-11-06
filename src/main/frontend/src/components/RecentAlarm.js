@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Alarm from "./Alarm";
 import axios from "axios";
@@ -16,10 +16,12 @@ const Wrapper = styled.div`
 `;
 
 const AlarmWrapper = styled.div`
-width: 98%;
+  width: 98%;
   height: 95%;
   overflow-y: auto;
+  overflow-x: hidden;
 `;
+
 function RecentAlarm() {
     const [notifications, setNotifications] = useState([]);
 
@@ -58,9 +60,10 @@ function RecentAlarm() {
     return (
         <Wrapper>
             <AlarmWrapper>
-            {notifications.map((notification) => (
-                <Alarm key={notification.notiId} notification={notification} onDelete={handleDeleteNotification} showDeleteButton={true} />
-            ))}
+                {notifications.map((notification) => (
+                    <Alarm key={notification.notiId} notification={notification} onDelete={handleDeleteNotification}
+                           showDeleteButton={true}/>
+                ))}
             </AlarmWrapper>
         </Wrapper>
     );

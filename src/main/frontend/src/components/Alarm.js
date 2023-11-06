@@ -4,7 +4,7 @@ import axios from "axios";
 
 const Wrapper = styled.div`
   width: 95%;
-  height: 70px;
+  height: 60px;
   color: black;
   border-radius: 10px;
   background: #EFF2FF;
@@ -21,7 +21,8 @@ const ContentArea = styled.div`
   width: 80%;
 `;
 const Content = styled.p`
-    margin-left: 10px;
+  margin-left: 10px;
+  font-size: 14px;
 `;
 
 const Date = styled.p`
@@ -40,13 +41,14 @@ const DeleteBtn = styled.button`
   position: absolute;
   top: 0;
   right: 0;
+
   &:hover {
     color: ${(props) => props.hoverBackgroundColor || "#989898"};
     cursor: pointer;
   }
 `;
 
-function Alarm({ notification, onDelete, showDeleteButton }) {
+function Alarm({notification, onDelete, showDeleteButton}) {
     const storedToken = localStorage.getItem('token');
     const handleDeleteClick = () => {
         // 알림 삭제 요청을 서버로 보냅니다.

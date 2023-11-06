@@ -35,9 +35,8 @@ const ModalContent = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  background: #EFF2FF;
   width: 100%;
-  height: 50px;
+  height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -138,7 +137,7 @@ function BookReservationModal({ isOpen, onClose }) {
                     <StyledText>예약 유효일</StyledText>
                     <MyDatePicker
                         onDateChange={(date) => setSelectedDate(date)}
-                        />
+                    />
                     <Textarea>예약 유효일 이란?<br/>
                         입력한 날짜까지 예약한 도서를 대출하지 않으면, 이 도서는, 대출할 의사가 없다는 뜻입니다.<br/>
                         예약 유효일이 지난 후 예약은 자동 취소됩니다.</Textarea>

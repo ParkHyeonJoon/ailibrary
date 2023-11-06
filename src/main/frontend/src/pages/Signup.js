@@ -11,8 +11,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding-bottom: 30px;
-  background: black;
-  color: white
+  background: #ffffff;
+  color: #000000
 `;
 
 const Title = styled.p`
@@ -56,6 +56,7 @@ const InputField = styled.input`
   width: 100%;
   height: 35px;
   border: 1px solid #c4c4c4;
+  border-radius: 5px;
   padding: 2.5px;
 `;
 
