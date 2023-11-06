@@ -28,16 +28,16 @@ const Text = styled.p`
   font-weight: 800;
 
   ${(props) =>
-          props.reservationStatus === "예약 가능" &&
-          css`
+    props.reservationStatus === "예약 가능" &&
+    css`
             color: #27ff00;
           `}
 
   ${props =>
-          (props.reservationStatus === "예약 불가" ||
-                  props.reservationStatus === "예약 중" ||
-                  props.reservationStatus === "대출 중") &&
-          css`
+    (props.reservationStatus === "예약 불가" ||
+        props.reservationStatus === "예약 중" ||
+        props.reservationStatus === "대출 중") &&
+    css`
             color: #ff0000;
           `}
 `;
@@ -68,10 +68,11 @@ const ReserveButton = ({ bookId }) => {
             if(!userInfo) {
                 alert("로그인이 필요합니다");
                 return;
+            }else{
+                setIsModalOpen(true);
             }
 
             if (reservationStatus === "예약 가능") { //예약 할 수 있는 상태
-                alert("예약 날짜를 선택해주세요.");
                 setIsModalOpen(true);
             }  else { // 예약이 되어있어서 할 수 없는 상태
                 alert("예약이 불가한 도서입니다.")

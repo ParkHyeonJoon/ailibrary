@@ -103,7 +103,6 @@ const BookInfo = ({ bookInfo }) => {
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
-
   useEffect(() => {
       if (userInfo && bookId) {
         // 사용자 정보가 있을 때만 API 호출

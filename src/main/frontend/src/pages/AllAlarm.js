@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 
 const Title = styled.p`
   text-align: left;
-  color: white;
+  color: #000000;
   font-family: Inter;
   font-size: 25px;
   font-style: normal;

@@ -37,7 +37,7 @@ const CustomSlider = styled(Slider)`
     opacity: 0;
     z-index: 1;
     transition: opacity 0.3s;
-    right: 150px;
+    right: 130px;
     width: 45px;
     height: 45px;
   }
