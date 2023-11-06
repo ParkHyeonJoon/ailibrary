@@ -22,7 +22,7 @@ public class ReviewApiService {
     private RestTemplate restTemplate;
 
     public String sendPostRequest(String review) {
-        String url = "http://localhost:5000/api/review";
+        String url = "http://ec2-15-164-252-94.ap-northeast-2.compute.amazonaws.com:5001/api/review";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -36,8 +36,7 @@ public class ReviewApiService {
         try {
             JsonNode rootNode = objectMapper.readTree(response);
             String summary = rootNode.get("response").asText();
-            String unescapedResponse = StringEscapeUtils.unescapeJson(summary);
-            return unescapedResponse;
+            return StringEscapeUtils.unescapeJson(summary);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -28,7 +28,7 @@ public class NotificationController {
         return notiResponses;
     }
 
-    @PostMapping("/notification/alllist") // 삭제 된 알림 포함 내역
+    @PostMapping("/notification/all-list") // 삭제 된 알림 포함 내역
     public List<NotificationResponse> getAllNotification(@RequestBody final Long userStuId) {
 
         List<NotificationResponse> notiResponses = notificationService.findAllById(userStuId);

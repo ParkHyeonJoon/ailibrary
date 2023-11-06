@@ -30,7 +30,6 @@ public class RoomController {
             @RequestParam String rezDate,
             @RequestParam String[] rezTime) {
 
-        LocalDate currentDate = LocalDate.now();
 
         RoomSearchRequest params = new RoomSearchRequest();
         params.setRoomType(roomType);
@@ -52,8 +51,7 @@ public class RoomController {
             }
         }
 
-        List<RoomSearchResponse> resultList = roomService.findRemainRoom(params);
-        return resultList;
+        return roomService.findRemainRoom(params);
     }
 
     // 신규 예약 생성

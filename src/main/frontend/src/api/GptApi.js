@@ -3,7 +3,7 @@ export const fetchChatGPTResponse = async (userInput) => {
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
     try {
-        const response = await fetch('http://localhost:5000/api/gpt', {
+        const response = await fetch('http://ec2-15-164-252-94.ap-northeast-2.compute.amazonaws.com:5001/api/gpt' , {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

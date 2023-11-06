@@ -45,7 +45,7 @@ function AllAlarm() {
     const userStuId = userInfo.userStuId;
     const fetchNotifications = () => {
         axios
-            .post("http://localhost:8080/notification/alllist", userStuId, {
+            .post("http://localhost:8080/notification/all-list", userStuId, {
                 headers: {
                     'Authorization': storedToken,
                     'Content-Type': 'application/json'

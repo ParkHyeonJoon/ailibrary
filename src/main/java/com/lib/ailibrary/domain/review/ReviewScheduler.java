@@ -15,24 +15,25 @@ public class ReviewScheduler {
     private final ReviewService reviewService;
     private final ReviewApiService reviewApiService;
 
-    @Scheduled(cron = "0 0 12 * * *") //fixedRate = 60000(1분마다) cron = "0 0 12 * * *"
+    @Scheduled(cron = "0 0 12 * * *") //fixedRate = 60000 (1분마다) cron = "0 0 12 * * *"
     public void reviewSummary() {
-        int[] allBookId = bookService.findAllBookId();
+        int[] allBookId = bookService.findAllBookId();  // 모든 도서 번호 가져오기
 
-        for(int i=0; i<allBookId.length; i++) {
-            List<ReviewResponse> reviewList = reviewService.findReviewByBookId(allBookId[i]);
+        for (int i : allBookId) {
+            List<ReviewResponse> reviewList = reviewService.findReviewByBookId(i); // 각 도서별 리뷰 가져오기
 
-            if(reviewList.isEmpty()) {
+            if (reviewList.isEmpty()) { // 리뷰 없으면 다음 도서
                 continue;
             }
 
-            String reviews = "";
-            for(ReviewResponse review : reviewList) {
-                reviews += review.getReview() + " ";
 
+            StringBuilder stringBuilder = new StringBuilder();
+            for (ReviewResponse review : reviewList) {
+                stringBuilder.append(review.getReview()).append(" "); // 리뷰 합치기
             }
-            String reviewSummary = reviewApiService.sendPostRequest(reviews);
-            bookService.updateReviewSummary(reviewSummary, allBookId[i]);
+            String reviews = stringBuilder.toString();
+            String reviewSummary = reviewApiService.sendPostRequest(reviews); // 합친 리뷰 GPT한테 보내기
+            bookService.updateReviewSummary(reviewSummary, i);     // 요약한 리뷰 db에 저장
         }
     }
 }
