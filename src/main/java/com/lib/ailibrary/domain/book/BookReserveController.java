@@ -112,7 +112,7 @@ public class BookReserveController {
     }
 
     //예약 유효 날짜 지나면 도서 자동 취소
-    @Scheduled(fixedRate = 600000)
+    @Scheduled(cron = "0 0 8 * * MON-FRI")
     public void autoReserveCancel() {
         List<BookReserveResponse> responses = bookReserveService.findAllRez();
         LocalDate currentDate = LocalDate.now();
