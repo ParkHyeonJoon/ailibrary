@@ -94,7 +94,7 @@ public class ReserveNotificationScheduler {
     }
 
     //********반납날짜 하루 전 웹페이지에 알림 띄우기(수정 필요)*******
-    @Scheduled(cron = "0 0 8 * * 1-6")
+    @Scheduled(cron = "0 0 8 * * MON-FRI")
     public void checkBookLoan() {
         List<BookLoanResponse> responses = bookLoanService.findLoanAll();
         LocalDate currentDate = LocalDate.now();
@@ -120,7 +120,7 @@ public class ReserveNotificationScheduler {
     }
 
     //예약 유효기간 날짜 하루 전 웹페이지 알림 띄우기(수정 필요)
-    @Scheduled(cron = "0 0 8 * * 1-6")
+    @Scheduled(cron = "0 0 8 * * MON-FRI")
     public void checkBookReserve() {
         List<BookReserveResponse> responses = bookReserveService.findAllRez();
         LocalDate currentDate = LocalDate.now();
