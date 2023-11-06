@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 public class BookReserveRequest extends Book {
     private int bookRezId;
-    private String userId;
+    //private String userId;
     private Long userStuId;
 
 

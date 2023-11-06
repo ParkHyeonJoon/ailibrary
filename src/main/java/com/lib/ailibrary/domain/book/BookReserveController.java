@@ -21,15 +21,16 @@ public class BookReserveController {
     private final BookReserveService bookReserveService;
     private final BookLoanService bookLoanService;
     private final NotificationService notificationService;
+    private final BookService bookService;
 
     //예약 버튼을 클릭하면 실행
     @PostMapping("/reserve")
     public ResponseEntity<String> reserveBook(@RequestBody BookReserveRequest request) {
-        String userId = request.getUserId();
+        long userStuId = request.getUserStuId();
         int bookId = request.getBookId();
 
         int loanStatus = bookLoanService.checkBookLoan(bookId);
-        int loan = bookLoanService.checkBook(userId, bookId);
+        int loan = bookLoanService.checkBook(userStuId, bookId);
 
         //reserveStatus가 0이면 예약 가능, 그 외면 예약 불가능
         int reserveStatus = bookReserveService.checkReserve(bookId);
@@ -42,7 +43,8 @@ public class BookReserveController {
                 if(reserveStatus == 0) {
                     NotificationRequest notificationRequest = new NotificationRequest();
                     notificationRequest.setUserStuId(request.getUserStuId());
-                    notificationRequest.setNotiContent("도서 예약이 완료되었습니다.");
+                    String bookTitle = bookService.reserveBookTitle(request.getBookId());
+                    notificationRequest.setNotiContent(bookTitle + "이(가) 예약 완료되었습니다.");
                     notificationRequest.setNotiTime(LocalDateTime.now());
                     notificationService.saveNotification(notificationRequest);
                     bookReserveService.reserveBook(request);
@@ -64,10 +66,10 @@ public class BookReserveController {
 
     //화면에 들어갔을 때
     @GetMapping("/reserve")
-    public ResponseEntity<String> checkAndReserve(int bookId, String userId) {
+    public ResponseEntity<String> checkAndReserve(int bookId, long userStuId) {
 
         int loanStatus = bookLoanService.checkBookLoan(bookId);
-        int loan = bookLoanService.checkBook(userId, bookId);
+        int loan = bookLoanService.checkBook(userStuId, bookId);
         int reserveStatus = bookReserveService.checkReserve(bookId);
 
         if(loan == 0) {
@@ -93,8 +95,8 @@ public class BookReserveController {
 
     //사용자 예약 도서 조회
     @GetMapping("/reserving")
-    public List<BookReserveResponse> reserveBook(String userId) {
-        List<BookReserveResponse> reserveBookList = bookReserveService.checkBookReserve(userId);
+    public List<BookReserveResponse> reserveBook(long userStuId) {
+        List<BookReserveResponse> reserveBookList = bookReserveService.checkBookReserve(userStuId);
         return reserveBookList;
     }
 
@@ -103,26 +105,29 @@ public class BookReserveController {
     public void cancelReserve(@RequestBody CancelResponse request) {
         NotificationRequest notificationRequest = new NotificationRequest();
         notificationRequest.setUserStuId(request.getUserStuId());
-        notificationRequest.setNotiContent("도서 예약취소가 완료되었습니다.");
+        notificationRequest.setNotiContent(request.getBookTitle() + "이(가) 예약 취소되었습니다.");
         notificationRequest.setNotiTime(LocalDateTime.now());
         notificationService.saveNotification(notificationRequest);
         bookReserveService.cancelReserve(request.getBookId());
     }
 
     //예약 유효 날짜 지나면 도서 자동 취소
-    @Scheduled(cron = "0 0 8 * * 1-6")
+    @Scheduled(fixedRate = 600000)
     public void autoReserveCancel() {
         List<BookReserveResponse> responses = bookReserveService.findAllRez();
         LocalDate currentDate = LocalDate.now();
 
         for(BookReserveResponse response : responses) {
             LocalDate rezDate = response.getBookRezDate();
+            //rezDate.isAfter(currentDate) currentDate.isAfter(rezDate)
+            //오늘 날짜 보다 예약 유효 날짜가 더 지났을 때.
             if(currentDate.isAfter(rezDate)) {
                 bookReserveService.cancelAuto(response.getBookId());
                 NotificationRequest notificationRequest = new NotificationRequest();
                 notificationRequest.setUserStuId(response.getUserStuId());
                 notificationRequest.setNotiTime(LocalDateTime.now());
-                notificationRequest.setNotiContent(response.getBookTitle() + "이 예약 유효날짜가 지나 자동 취소되었습니다.");
+                notificationRequest.setNotiContent(response.getBookTitle() + "이(가) 예약 유효날짜가 지나 자동 취소되었습니다.");
+                notificationService.saveNotification(notificationRequest);
             }
         }
     }

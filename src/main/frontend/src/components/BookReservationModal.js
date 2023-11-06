@@ -108,7 +108,6 @@ function BookReservationModal({ isOpen, onClose }) {
                 .post("http://localhost:8080/book/reserve", {
                     bookId: bookId,
                     bookRezDate: reserveDate,
-                    userId: userInfo.userId,
                     userStuId: userInfo.userStuId
                 })
                 .then((response) => {

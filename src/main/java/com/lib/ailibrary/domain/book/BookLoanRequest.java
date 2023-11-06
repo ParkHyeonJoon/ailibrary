@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 public class BookLoanRequest {
     private int bookLoanId; //대출 아이디
-    private String userId; //학생 아이디
+    //private String userId; 학생 아이디
     private Long userStuId; //학생 학번
     private int bookId; //도서 아이디
     private String bookTitle;

@@ -36,16 +36,36 @@ BookLoanMapper {
     void deleteById(int bookLoanId);
 
     /**
-     * 대출 상태 확인
+     * 타인의 대출 상태 확인
      * @param - bookId
      */
     int checkBookLoan(int bookId);
 
-    int checkBook(@Param("userId") String userId, @Param("bookId") int bookId);
+    /**
+     * 내 대출 상태 확인
+     * @param userStuId
+     * @param bookId
+     * @return
+     */
+    int checkBook(@Param("userStuId") long userStuId, @Param("bookId") int bookId);
 
-    int checkBookCount(String userId);
+    /**
+     * 본인이 몇권 대여했는지(5권 이상이면 대출 불가)
+     * @param userStuId
+     * @return
+     */
+    int checkBookCount(long userStuId);
 
-    void checkBookReturn(@Param("userId") String userId, @Param("bookId") int bookId);
+    /**
+     * 도서 반납 기능
+     * @param userStuId
+     * @param bookId
+     */
+    void updateBookReturnState(@Param("userStuId") long userStuId, @Param("bookId") int bookId);
 
-    List<BookLoanResponse> checkBookLoaning(String userId);
+    LocalDate getReturnDate(@Param("userStuId") long userStuId, @Param("bookId") int bookId);
+
+    List<BookLoanResponse> checkBookLoaning(long userStuId);
+
+    List<BookLoanResponse> checkBookLoaned(long userStuId);
 }

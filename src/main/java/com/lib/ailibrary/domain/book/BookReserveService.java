@@ -94,8 +94,8 @@ public class BookReserveService {
      * 사용자가 예약한 도서 조회
      * userId로 조회
      */
-    public List<BookReserveResponse> checkBookReserve(String userId) {
-        List<BookReserveResponse> reserveBookList = bookReserveMapper.checkBookReserve(userId);
+    public List<BookReserveResponse> checkBookReserve(long userStuId) {
+        List<BookReserveResponse> reserveBookList = bookReserveMapper.checkBookReserve(userStuId);
         return reserveBookList;
     }
 
@@ -103,7 +103,7 @@ public class BookReserveService {
      * 대출하려는 도서가 예약이 된 도서인지
      * bookId로 조회해서 userId 조회
      */
-    public String checkWhoReserve(int bookId) {
+    public Long checkWhoReserve(int bookId) {
         return bookReserveMapper.checkWhoReserve(bookId);
     }
 

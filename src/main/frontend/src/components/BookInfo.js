@@ -108,6 +108,7 @@ const BookInfo = ({ bookInfo }) => {
       if (userInfo && bookId) {
         // 사용자 정보가 있을 때만 API 호출
         const userId = userInfo.userId;
+        const userStuId = userInfo.userStuId;
 
         // 백엔드 API 호출하여 초기 찜 상태 확인
         axios
@@ -125,7 +126,7 @@ const BookInfo = ({ bookInfo }) => {
           });
 
         axios
-           .get(`http://localhost:8080/book/loan?userId=${userId}&bookId=${bookId}`)
+           .get(`http://localhost:8080/book/loan?userStuId=${userStuId}&bookId=${bookId}`)
            .then((response) => {
               const loanStatus = response.data;
               if (loanStatus === "able") {
@@ -193,7 +194,7 @@ const BookInfo = ({ bookInfo }) => {
       const userStuId = userInfo.userStuId;
 
       axios
-        .post('http://localhost:8080/book/loan', { bookId, userId, userStuId }, {
+        .post('http://localhost:8080/book/loan', { bookId, userStuId }, {
           headers: {
             'Content-Type': 'application/json',
           },
