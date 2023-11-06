@@ -3,6 +3,8 @@ package com.lib.ailibrary.domain.review;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 public class ReviewResponse {
@@ -10,4 +12,5 @@ public class ReviewResponse {
     private long userStuId;
     private int bookId;
     private String review;
+    private LocalDate reviewDate;
 }

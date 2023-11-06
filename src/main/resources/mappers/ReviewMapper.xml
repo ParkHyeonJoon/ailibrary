@@ -9,6 +9,7 @@
         , user_stu_id
         , book_id
         , review
+        , reveiw_date
     </sql>
 
     <!-- 전체 리뷰 조회 -->
@@ -38,15 +39,16 @@
         , #{userStuId}
         , #{bookId}
         , #{review}
+        , #{reveiwDate}
         )
     </insert>
 
     <!-- 리뷰 수정 -->
     <update id="updateReview" parameterType="com.lib.ailibrary.domain.review.ReviewRequest">
         UPDATE
-            tb_review
+            tb_review,
         SET
-            review = #{review}
+            review = #{review}, review_date = #{reviewDate}
         WHERE
             user_stu_id = #{userStuId, jdbcType=BIGINT} AND book_id = #{bookId, jdbcType=INTEGER}
     </update>

@@ -3,6 +3,8 @@ package com.lib.ailibrary.domain.review;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 public class ReviewRequest {
@@ -10,4 +12,5 @@ public class ReviewRequest {
     private long userStuId; // 학생 학번
     private int bookId; //도서 아이디
     private String review; // 리뷰 내용
+    private LocalDate reviewDate;
 }

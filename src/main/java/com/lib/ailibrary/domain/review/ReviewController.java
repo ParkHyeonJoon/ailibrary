@@ -3,6 +3,7 @@ package com.lib.ailibrary.domain.review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -19,10 +20,12 @@ public class ReviewController {
         long userStuId = request.getUserStuId();
         int bookId = request.getBookId();
         String review = request.getReview();
+        LocalDate reviewDate = request.getReviewDate();
 
         reviewRequest.setUserStuId(userStuId);
         reviewRequest.setBookId(bookId);
         reviewRequest.setReview(review);
+        reviewRequest.setReviewDate(reviewDate);
 
         reviewService.saveReview(reviewRequest);
     }
