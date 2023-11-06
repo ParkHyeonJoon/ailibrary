@@ -63,6 +63,8 @@ BookLoanMapper {
      */
     void updateBookReturnState(@Param("userStuId") long userStuId, @Param("bookId") int bookId);
 
+    LocalDate getReturnDate(@Param("userStuId") long userStuId, @Param("bookId") int bookId);
+
     List<BookLoanResponse> checkBookLoaning(long userStuId);
 
     List<BookLoanResponse> checkBookLoaned(long userStuId);

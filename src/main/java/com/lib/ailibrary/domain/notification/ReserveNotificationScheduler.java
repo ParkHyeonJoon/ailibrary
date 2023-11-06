@@ -1,9 +1,6 @@
 package com.lib.ailibrary.domain.notification;
 
-import com.lib.ailibrary.domain.book.BookLoanResponse;
-import com.lib.ailibrary.domain.book.BookLoanService;
-import com.lib.ailibrary.domain.book.BookReserveResponse;
-import com.lib.ailibrary.domain.book.BookReserveService;
+import com.lib.ailibrary.domain.book.*;
 import com.lib.ailibrary.domain.notification.sms.MessageDTO;
 import com.lib.ailibrary.domain.notification.sms.SmsService;
 import com.lib.ailibrary.domain.room.RoomReserveResponse;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Component
@@ -27,6 +25,7 @@ public class ReserveNotificationScheduler {
 
     private final BookLoanService bookLoanService;
     private final BookReserveService bookReserveService;
+    private final BookService bookService;
 
     private final SmsService smsService;
     private final UserService userService;
@@ -100,13 +99,14 @@ public class ReserveNotificationScheduler {
         LocalDate currentDate = LocalDate.now();
         for(BookLoanResponse response : responses) {
             LocalDate returnDate = response.getReturnDate();
-            Duration duration = Duration.between(currentDate, returnDate);
-
-            if(duration.toDays() == 1) {
+            int bookId = response.getBookId();
+            String bookTitle = bookService.reserveBookTitle(bookId);
+            long daysDifference = currentDate.until(returnDate, ChronoUnit.DAYS);
+            if(daysDifference == 1) {
                 NotificationRequest params = new NotificationRequest();
                 params.setUserStuId(response.getUserStuId());
                 params.setNotiTime(LocalDateTime.now());
-                params.setNotiContent(response.getBookTitle() + "을 내일"+"("+response.getReturnDate()+")"+"까지 반납해주세요.");
+                params.setNotiContent("["+bookTitle+"]" +response.getReturnDate()+ " 까지 반납해주세요.");
                 notificationService.saveNotification(params);
 
                 // SMS 전송 코드
@@ -126,13 +126,15 @@ public class ReserveNotificationScheduler {
         LocalDate currentDate = LocalDate.now();
         for(BookReserveResponse response : responses) {
             LocalDate returnDate = response.getBookRezDate();
-            Duration duration = Duration.between(currentDate, returnDate);
+            int bookId = response.getBookId();
+            String bookTitle = bookService.reserveBookTitle(bookId);
+            long daysDifference = currentDate.until(returnDate, ChronoUnit.DAYS);
 
-            if(duration.toDays() == 1) {
+            if(daysDifference == 1) {
                 NotificationRequest params = new NotificationRequest();
                 params.setUserStuId(response.getUserStuId());
                 params.setNotiTime(LocalDateTime.now());
-                params.setNotiContent(response.getBookTitle() + "을 내일"+"("+response.getBookDate()+")"+"까지 대출해주세요.");
+                params.setNotiContent("["+bookTitle+"]" +response.getBookRezDate()+ " 까지 대출해주세요. 예약 유효날짜가 지나면 예약은 자동 취소됩니다.");
                 notificationService.saveNotification(params);
             }
         }

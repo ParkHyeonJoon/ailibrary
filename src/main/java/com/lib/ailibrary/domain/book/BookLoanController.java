@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -46,7 +47,7 @@ public class BookLoanController {
                             NotificationRequest notificationRequest = new NotificationRequest();
                             notificationRequest.setUserStuId(userStuId);
                             String bookTitle = bookService.reserveBookTitle(request.getBookId());
-                            notificationRequest.setNotiContent(bookTitle + "대출이 완료되었습니다.");
+                            notificationRequest.setNotiContent("["+bookTitle+"] 대출이 완료되었습니다. 반납일은" + LocalDate.now().plusDays(14) + "입니다. 반납일자를 준수해주시기 바랍니다.");
                             notificationRequest.setNotiTime(LocalDateTime.now());
                             notificationService.saveNotification(notificationRequest);
                             bookLoanService.saveLoan(request);
@@ -70,7 +71,7 @@ public class BookLoanController {
                             NotificationRequest notificationRequest = new NotificationRequest();
                             notificationRequest.setUserStuId(userStuId);
                             String bookTitle = bookService.reserveBookTitle(request.getBookId());
-                            notificationRequest.setNotiContent(bookTitle + "이 대출 완료되었습니다.");
+                            notificationRequest.setNotiContent("["+bookTitle+"] 대출이 완료되었습니다. 반납일은" + LocalDate.now().plusDays(14) + "입니다. 반납일자를 준수해주시기 바랍니다.");
                             notificationRequest.setNotiTime(LocalDateTime.now());
                             notificationService.saveNotification(notificationRequest);
                             bookLoanService.saveLoan(request);
@@ -98,7 +99,7 @@ public class BookLoanController {
                 NotificationRequest notificationRequest = new NotificationRequest();
                 notificationRequest.setUserStuId(userStuId);
                 String bookTitle2 = bookService.reserveBookTitle(request.getBookId());
-                notificationRequest.setNotiContent(bookTitle2 + "이 반납 완료되었습니다.");
+                notificationRequest.setNotiContent("["+bookTitle2+"]" + " 반납이 " + LocalDate.now() + "부로 완료되었습니다.");
                 notificationRequest.setNotiTime(LocalDateTime.now());
                 notificationService.saveNotification(notificationRequest);
                 bookLoanService.updateBookReturnState(userStuId, bookId);
@@ -108,7 +109,7 @@ public class BookLoanController {
                 for(BookReserveResponse response : responses) {
                     if(response.getBookId() == bookId) {
                         NotificationRequest notirequest2 = new NotificationRequest();
-                        notirequest2.setNotiContent("예약하신 " + bookTitle + " 도서가 반납되었습니다.");
+                        notirequest2.setNotiContent("예약하신 [" + bookTitle  +"] 도서가 "+ LocalDate.now() +"부로 반납 되었습니다."+response.getBookRezDate()+" 까지 대출해주세요.");
                         notirequest2.setUserStuId(response.getUserStuId());
                         notirequest2.setNotiTime(LocalDateTime.now());
                         notificationService.saveNotification(notirequest2);

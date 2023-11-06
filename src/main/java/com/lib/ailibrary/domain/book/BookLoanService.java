@@ -51,6 +51,11 @@ public class BookLoanService {
         bookLoanMapper.updateBookReturnState(userStuId, bookId);
     }
 
+    public LocalDate getReturnDate(long userStuId, int bookId) {
+        LocalDate returnDate = bookLoanMapper.getReturnDate(userStuId, bookId);
+        return returnDate;
+    }
+
     //사용자가 현재 대출 중인 도서 확인
     public List<BookLoanResponse> checkBookLoaning(long userStuId) {
         return bookLoanMapper.checkBookLoaning(userStuId);
