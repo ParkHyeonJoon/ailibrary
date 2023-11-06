@@ -3,7 +3,6 @@ package com.lib.ailibrary.domain.review;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.text.StringEscapeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,11 +14,8 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ReviewApiService {
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private RestTemplate restTemplate;
+    private ObjectMapper objectMapper = new ObjectMapper();
+    private RestTemplate restTemplate = new RestTemplate();
 
     public String sendPostRequest(String review) {
         String url = "http://ec2-15-164-252-94.ap-northeast-2.compute.amazonaws.com:5001/api/review";
