@@ -109,7 +109,7 @@ public class BookLoanController {
                 for(BookReserveResponse response : responses) {
                     if(response.getBookId() == bookId) {
                         NotificationRequest notirequest2 = new NotificationRequest();
-                        notirequest2.setNotiContent("예약하신 [" + bookTitle  +"] 도서가 "+ LocalDate.now() +"부로 반납 되었습니다.");
+                        notirequest2.setNotiContent("예약하신 [" + bookTitle  +"] 도서가 "+ LocalDate.now() +"부로 반납 되었습니다."+response.getBookRezDate()+" 까지 대출해주세요.");
                         notirequest2.setUserStuId(response.getUserStuId());
                         notirequest2.setNotiTime(LocalDateTime.now());
                         notificationService.saveNotification(notirequest2);
