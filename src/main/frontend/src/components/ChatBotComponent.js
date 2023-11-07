@@ -30,14 +30,47 @@ function ResponseComponent({ steps, triggerNextStep }) {
         async function fetchResponse() {
             // 이미 로딩 중이면 함수를 호출하지 않음
             if (loading) {
-                const response = await fetchChatGPTResponse(steps['2'].value);
-                setResult(response);
-                setLoading(false);
+                const userInput = steps['2'].value;
+                if (userInput.charAt(0) === '!') {
+                    try {
+                        const response = await fetch(`http://localhost:8080/book/search?keyword=${userInput.slice(1)}`);
+
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+
+                        const data = await response.json();
+                        console.log(data);
+                        setResult(
+                            <div>
+                                제목: {data[0].bookTitle}
+                                <br />
+                                저자: {data[0].author}
+                                <br />
+                                출판연도: {data[0].publishedDate}
+                                <br />
+                                츨판사: {data[0].publisher}
+                                <br />
+                                장르: {data[0].category}
+                                <br />
+                                위치: {data[0].floor}층
+                            </div>
+                        )
+                        setLoading(false);
+                    } catch (error) {
+                        console.error('Error searching books: ', error);
+                        setLoading(false); // 에러 발생 시에도 로딩 상태를 false로 설정
+                    }
+                } else {
+                    const response = await fetchChatGPTResponse(userInput);
+                    setResult(response);
+                    setLoading(false);
+                }
             }
         }
 
         fetchResponse();
-    }, [steps, loading]); // loading 상태 추가
+    }, [steps, loading]);;
 
     useEffect(() => {
         if (!loading) {
@@ -67,6 +100,7 @@ function ChatBotComponent() {
             trigger: '1'
         },
     ];
+
 
     return (
         <div className="App">

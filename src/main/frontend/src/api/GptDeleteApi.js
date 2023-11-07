@@ -1,24 +1,22 @@
-// src/api/GptApi.js
-export const fetchChatGPTResponse = async (userInput) => {
+// src/api/GptApiDelete.js
+export const fetchChatGPTDelete = async () => {
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
     try {
-        const response = await fetch('http://localhost:5001/api/gpt' , {
+        const response = await fetch('http://localhost:5001/api/gpt/delete' , {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 userId: userInfo.userId,
-                text: userInput,
             }),
         });
 
-        const data = await response.json();
-        return data.response;
+        return "삭제 완료";
 
     } catch (error) {
-        console.error('Error fetching ChatGPT response:', error);
-        return 'Sorry, I couldn\'t understand that.';
+        console.error('삭제 실패: ', error);
+        return '삭제 실패';
     }
 };

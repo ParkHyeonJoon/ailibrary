@@ -14,8 +14,8 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ReviewApiService {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-    private RestTemplate restTemplate = new RestTemplate();
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final RestTemplate restTemplate = new RestTemplate();
 
     public String sendPostRequest(String review) {
         String url = "http://ec2-15-164-252-94.ap-northeast-2.compute.amazonaws.com:5001/api/review";
