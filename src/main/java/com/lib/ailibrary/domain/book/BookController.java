@@ -1,5 +1,7 @@
 package com.lib.ailibrary.domain.book;
 
+import com.lib.ailibrary.domain.review.ReviewResponse;
+import com.lib.ailibrary.domain.review.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -150,5 +152,11 @@ public class BookController {
     public List<Book> likeBooklist(String userId) {
         List<Book> likeBookList = bookService.checkLikeBook(userId);
         return likeBookList;
+    }
+
+    @GetMapping("/summary")
+    public String findReviewSummary(int bookId) {
+        String summary = bookService.findReviewSummary(bookId);
+        return summary;
     }
 }

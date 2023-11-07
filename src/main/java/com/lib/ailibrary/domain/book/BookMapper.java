@@ -104,4 +104,6 @@ public interface BookMapper {
      */
     String reserveBookTitle(int bookId);
 
+    String findReviewSummary(int bookId);
+
 }

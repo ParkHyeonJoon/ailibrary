@@ -106,7 +106,7 @@ public class ReserveNotificationScheduler {
                 NotificationRequest params = new NotificationRequest();
                 params.setUserStuId(response.getUserStuId());
                 params.setNotiTime(LocalDateTime.now());
-                params.setNotiContent("["+bookTitle+"]" +response.getReturnDate()+ " 까지 반납해주세요.");
+                params.setNotiContent("["+bookTitle+"] " +response.getReturnDate()+ " 까지 반납해주세요.");
                 notificationService.saveNotification(params);
 
                 // SMS 전송 코드
@@ -134,7 +134,7 @@ public class ReserveNotificationScheduler {
                 NotificationRequest params = new NotificationRequest();
                 params.setUserStuId(response.getUserStuId());
                 params.setNotiTime(LocalDateTime.now());
-                params.setNotiContent("["+bookTitle+"]" +response.getBookRezDate()+ " 까지 대출해주세요. 예약 유효날짜가 지나면 예약은 자동 취소됩니다.");
+                params.setNotiContent("["+bookTitle+"] " +response.getBookRezDate()+ " 까지 대출해주세요. 예약 유효날짜가 지나면 예약은 자동 취소됩니다.");
                 notificationService.saveNotification(params);
             }
         }

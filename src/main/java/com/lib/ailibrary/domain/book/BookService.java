@@ -183,4 +183,9 @@ public class BookService {
         String bookTitle = bookMapper.reserveBookTitle(bookId);
         return bookTitle;
     }
+
+    public String findReviewSummary(int bookId) {
+        String summary = bookMapper.findReviewSummary(bookId);
+        return summary;
+    }
 }

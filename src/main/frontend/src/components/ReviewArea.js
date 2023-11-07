@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useState, useEffect } from "react";
 import styled from "styled-components";
 import Line from "../common/Line";
 import Review from "./Review";
 import ReviewModal from "./ReviewModal";
+import axios from "axios";
 
 const Wrapper = styled.div`
   position: relative; /* 포지션 설정 */
@@ -51,8 +52,23 @@ const EntireReview = styled.div`
 
 function ReviewArea({bookInfo}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [reviewSummary, setReviewSummary] = useState("");
+
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+
+    useEffect(() => {
+        if(userInfo && bookInfo.bookId) {
+            axios
+                .get(`http://localhost:8080/book/summary?bookId=${bookInfo.bookId}`)
+                .then((response) => {
+                    setReviewSummary(response.data);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+            }
+    }, [bookInfo]);
 
     const handleButtonClick = () => {
         if (!userInfo) {
@@ -68,9 +84,7 @@ function ReviewArea({bookInfo}) {
     return (
         <Wrapper>
             <Title>ChatGPT로 리뷰를 요약했어요</Title>
-            <ReviewSummary>부자가 되기 위해서는 생각을 바꿔야 합니다. 기성세대처럼 돈을 터부시 한다거나 욜로처럼 지금 이순간만 생각하는 건 굉장히 위험한 발상입니다. 유대인들을 보세요. 이들이
-                돈을 다루는걸 보세요. 최근 존리의 주식투자 책을 보니 더더욱 유대인들이 돈을 바라보는 시점에 대해 잘 이해가 되네요. 성공하고 싶은 분들이라면 돈의 속성을 한번 읽어보세요. 제 주변에
-                돈에 대해 떠드는 사람치고 부자인사람 한 명도 없습니다.</ReviewSummary>
+            <ReviewSummary>{reviewSummary}</ReviewSummary>
             <EntireReview>
                 <p>전체 리뷰</p>
                 <WriteBtn onClick={handleButtonClick}>리뷰 작성</WriteBtn>
