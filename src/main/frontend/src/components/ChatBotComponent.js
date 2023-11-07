@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ChatBot, { Loading } from 'react-simple-chatbot';
 import { ThemeProvider } from 'styled-components';
 import { fetchChatGPTResponse } from "../api/GptApi";
+import { fetchChatGPTDelete } from "../api/GptDeleteApi"
 
 // Creating our own theme
 const theme = {
@@ -22,14 +23,18 @@ const config = {
     floating: true
 };
 
+var count = 0;
 function ResponseComponent({ steps, triggerNextStep }) {
     const [loading, setLoading] = useState(true);
     const [result, setResult] = useState('');
+
 
     useEffect(() => {
         async function fetchResponse() {
             // 이미 로딩 중이면 함수를 호출하지 않음
             if (loading) {
+                count = count + 1;
+                console.log(count);
                 const userInput = steps['2'].value;
                 if (userInput.charAt(0) === '!') {
                     try {
@@ -62,6 +67,10 @@ function ResponseComponent({ steps, triggerNextStep }) {
                         setLoading(false); // 에러 발생 시에도 로딩 상태를 false로 설정
                     }
                 } else {
+                    if (count === 6) { // 6번째 질문에 대화 초기화
+                        const response = await  fetchChatGPTDelete();
+                        console.log(response);
+                    }
                     const response = await fetchChatGPTResponse(userInput);
                     setResult(response);
                     setLoading(false);
@@ -70,7 +79,7 @@ function ResponseComponent({ steps, triggerNextStep }) {
         }
 
         fetchResponse();
-    }, [steps, loading]);;
+    }, [steps, loading]);
 
     useEffect(() => {
         if (!loading) {
