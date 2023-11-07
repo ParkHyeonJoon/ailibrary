@@ -28,16 +28,16 @@ const Text = styled.p`
   font-weight: 800;
 
   ${(props) =>
-          props.reservationStatus === "예약 가능" &&
-          css`
+    props.reservationStatus === "예약 가능" &&
+    css`
             color: #27ff00;
           `}
 
   ${props =>
-          (props.reservationStatus === "예약 불가" ||
-                  props.reservationStatus === "예약 중" ||
-                  props.reservationStatus === "대출 중") &&
-          css`
+    (props.reservationStatus === "예약 불가" ||
+        props.reservationStatus === "예약 중" ||
+        props.reservationStatus === "대출 중") &&
+    css`
             color: #ff0000;
           `}
 `;

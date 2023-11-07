@@ -10,7 +10,7 @@ import BookDetail from "./pages/BookDetail";
 import SearchResult from "./pages/SearchResult";
 import Notice from "./pages/Notice";
 import AllAlarm from "./pages/AllAlarm";
-
+import LoanBooksPage from "./pages/LoanBooksPage";
 function App() {
     // const [closingWindow, setClosingWindow] = useState(false);
     //
@@ -93,8 +93,9 @@ function App() {
                     <Route path="/bookbytype" element={<BooksByType/>}/>
                     <Route path="/signup" element={<Signup/>}/>
                     <Route path="/login" element={<Login/>}/>
-                    <Route path="/mypage" element={<MyPage/>}/>
-                    <Route path="/book-detail/:bookId" element={<BookDetail/>}/>o
+                    <Route path="/mypage" element={<MyPage />}/>
+                    <Route path="/loanbooks" element={<LoanBooksPage/>} />
+                    <Route path="/book-detail/:bookId" element={<BookDetail/>}/>
                     <Route path="/results/:keyword" element={<SearchResult/>}/>
                     <Route path="/notice" element={<Notice/>}/>
                     <Route path="/allalarm" element={<AllAlarm/>}/>

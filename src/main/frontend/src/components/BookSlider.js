@@ -1,5 +1,6 @@
 // Slider.js
 import React from "react";
+import {useNavigate} from "react-router-dom";
 import BookFrame from "../components/BookFrame";
 import styled from "styled-components";
 import Slider from "react-slick"; // Import Slider from react-slick
@@ -18,10 +19,12 @@ const Title = styled.p`
   font-size: 25px;
   font-weight: 700;
   margin-bottom: 10px;
+  width: 94%;
 `;
 const CustomSlider = styled(Slider)`
   width: 110%;
   position: relative;
+
   .slick-prev {
     position: absolute;
     opacity: 0;
@@ -54,62 +57,92 @@ const StyledDiv = styled.div`
   padding-top: 10px;
   margin-left: 60px;
 `;
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+`;
+const AllButton = styled.button`
+  width: 6%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 30px;
+  &:hover {
+    color: #5856d6;
+  }
+`;
 
-function SliderComponent({ title, books, showRank, showRezDate, showReturnDate }) {
+function SliderComponent({title, books, showRank, showRezDate, showReturnDate, targetPath}) {
+    const Navigate = useNavigate();
+    const slideCount = Math.min(books.length, 6); // 슬라이드 개수를 데이터 개수 또는 최대 6 중 작은 값으로 설정
+
     const settings = {
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 800,
         arrows: true,
         autoplay: false,
-        slidesToShow: 6,
-        slidesToScroll: 5,
+        slidesToShow: slideCount, // 슬라이드 개수로 설정
+        slidesToScroll: slideCount, // 슬라이드 개수로 설정
         initialSlide: 0,
-        centerMode: false,
-        prevArrow: <img src={leftArrowImage} alt="Previous" />,
-        nextArrow: <img src={rightArrowImage} alt="Next" />,
+        centerMode: false, // centerMode를 false로 설정
+        prevArrow: <img src={leftArrowImage} alt="Previous"/>,
+        nextArrow: <img src={rightArrowImage} alt="Next"/>,
         responsive: [
             {
                 breakpoint: 1440,
                 settings: {
-                    slidesToShow: 5,
-                    slidesToScroll: 5,
+                    slidesToShow: Math.min(slideCount, 5),
+                    slidesToScroll: Math.min(slideCount, 5),
                 },
             },
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
+                    slidesToShow: Math.min(slideCount, 4),
+                    slidesToScroll: Math.min(slideCount, 4),
                 },
             },
             {
                 breakpoint: 720,
                 settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToShow: Math.min(slideCount, 3),
+                    slidesToScroll: Math.min(slideCount, 3),
                 },
             },
             {
                 breakpoint: 480,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
+                    slidesToShow: Math.min(slideCount, 2),
+                    slidesToScroll: Math.min(slideCount, 2),
                 },
             },
             {
                 breakpoint: 360,
                 settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
+                    slidesToShow: Math.min(slideCount, 1),
+                    slidesToScroll: Math.min(slideCount, 1),
                 },
             },
         ],
     };
+    const onClickAllBtn = () => {
+        if (targetPath === "/loanbooks") {
+            Navigate(targetPath);
+        } else {
+            console.log('실행 안 됨');
+        }
+    };
 
     return (
         <Container>
-            <Title>{title}</Title>
+            <Header>
+                <Title>{title}</Title>
+                <AllButton onClick={onClickAllBtn}>
+                    전체보기
+                </AllButton>
+            </Header>
             <CustomSlider {...settings}>
                 {books.map((book, index) => (
                     <StyledDiv key={index}>
