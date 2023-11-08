@@ -76,10 +76,17 @@ const AllButton = styled.button`
 function SliderComponent({title, books, showRank, showRezDate, showReturnDate, targetPath}) {
     const Navigate = useNavigate();
     const slideCount = Math.min(books.length, 6); // 슬라이드 개수를 데이터 개수 또는 최대 6 중 작은 값으로 설정
+    const wrapperStyle = {
+        width: "180px",
+        height: "270px",
+        position: "relative",
+        marginRight: "-20px",
+        transition: "transform 0.3s ease"
+    };
 
     const settings = {
         dots: false,
-        infinite: false,
+        infinite: true,
         speed: 800,
         arrows: true,
         autoplay: false,
@@ -149,9 +156,11 @@ function SliderComponent({title, books, showRank, showRezDate, showReturnDate, t
                         <BookFrame
                             book={book}
                             rank={index + 1}
+                            showTitle={true}
                             showRank={showRank}
                             showRezDate={showRezDate}
                             showReturnDate={showReturnDate}
+                            wrapper={wrapperStyle}
                         />
                     </StyledDiv>
                 ))}

@@ -3,22 +3,18 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom';
 
 const BookWrapper = styled.div`
-  position: relative;
-  width: 180px;
-  height: 270px;
-  margin-right: -20px;
-  transition: transform 0.3s ease;
-  &:hover {
-    transform: scale(1.03);
-  }
+  ${(props) => props.wrapper};
 `;
 
 const BookImage = styled.img`
   width: 100%;
-  height: 250px;
+  height: 92%;
   border-radius: 5px;
   box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.2);
   position: relative; // 상대적 위치 설정
+  &:hover {
+    transform: scale(1.03);
+  }
 `;
 
 const BookTitle = styled.p`
@@ -53,16 +49,18 @@ const BookRezDate = styled.p`
   font-size: 15px;
   font-weight: 600;
 `;
-const BookFrame = ({ book, rank, showRank, showReturnDate, showRezDate }) => {
+const BookFrame = ({ book, rank, showTitle, showRank, showReturnDate, showRezDate, wrapper }) => {
     return (
         <Link to={`/book-detail/${book.bookId}`}
               style={{ textDecoration: "none"}}>
-            <BookWrapper>
+            <BookWrapper wrapper={wrapper}>
                 {showRank &&
                     <BookRank>{rank}</BookRank>
                 }
                 <BookImage src={book.bookImage} alt={book.bookTitle} />
+                {showTitle &&
                 <BookTitle>{book.bookTitle}</BookTitle>
+                }
                 {showReturnDate && (
                     <ReturnDate>반납 {book.returnDate}</ReturnDate>
                 )}
