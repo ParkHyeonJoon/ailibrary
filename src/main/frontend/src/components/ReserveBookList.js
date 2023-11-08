@@ -52,11 +52,11 @@ function ReserveBookList({book}) {
     const [selectedBooks, setSelectedBooks] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
 
-    const selection = (bookId, selected) => {
+    const selection = (bookId, bookTitle, selected) => {
         if (selected) {
-            setSelectedBooks([...selectedBooks, bookId]);
+            setSelectedBooks([...selectedBooks, { bookId, bookTitle }]);
         } else {
-            setSelectedBooks(selectedBooks.filter((id) => id !== bookId));
+            setSelectedBooks(selectedBooks.filter((book) => book.bookId !== bookId));
         }
         if (selectAll && !selected) {
             setSelectAll(false);
@@ -73,8 +73,13 @@ function ReserveBookList({book}) {
         if (selectedBooks.length === 0) {
             return;
         }
+
+        const bookIds = selectedBooks.map((book) => book.bookId);
+        const bookTitles = selectedBooks.map((book) => book.bookTitle);
+
             const requestBody = {
-                bookId: selectedBooks,
+                bookId: bookIds,
+                bookTitle: bookTitles,
                 userStuId: userStuId
             };
 
@@ -122,8 +127,8 @@ function ReserveBookList({book}) {
         if (selectAll) {
             setSelectedBooks([]);
         } else {
-            const allBookIds = reserveBooks.map((book) => book.bookId);
-            setSelectedBooks(allBookIds);
+            const allBookData = reserveBooks.map((book) => ( { bookId: book.bookId, bookTitle: book.bookTitle}));
+            setSelectedBooks(allBookData);
         }
         setSelectAll(!selectAll);
     };
@@ -168,8 +173,9 @@ function ReserveBookList({book}) {
             <SectionWrapper>
                 {reserveBooks.map((book, index) => (
                     <div style={{ display: 'flex', alignItems: 'center'}} key={index}>
-                        <StyledInput type="checkbox" checked={selectedBooks.includes(book.bookId)}
-                               onChange={() => selection(book.bookId, !selectedBooks.includes(book.bookId))}/>
+                        <StyledInput type="checkbox"
+                                     checked={selectedBooks.some(selectedBook => selectedBook.bookId === book.bookId)}
+                                     onChange={() => selection(book.bookId, book.bookTitle, !selectedBooks.some(selectedBook => selectedBook.bookId === book.bookId))}/>
                         <BookFrame book={book} showRank={false} showReturnDate={false} showRezDate={true}/>
                     </div>
                 ))}

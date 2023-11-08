@@ -7,7 +7,7 @@ import java.util.List;
 @Getter
 public class CancelResponse {
     //String userId;
-    String bookTitle;
+    List<String> bookTitle;
     Long userStuId;
     List<Integer> bookId;
 }
