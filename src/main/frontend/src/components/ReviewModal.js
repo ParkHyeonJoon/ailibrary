@@ -104,6 +104,7 @@ function ReviewModal({ isOpen, onClose, bookInfo }) {
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
     const userStuId = userInfo ? userInfo.userStuId : null;
+    const userId = userInfo ? userInfo.userId : null;
 
     const [review, setReview] = useState("");
 
@@ -117,6 +118,7 @@ function ReviewModal({ isOpen, onClose, bookInfo }) {
         try {
             const reviewData = {
                 userStuId: userStuId,
+                userId: userId,
                 bookId: bookInfo.bookId,
                 review: review,
                 reviewDate: new Date().toISOString(), // reviewDate 추가

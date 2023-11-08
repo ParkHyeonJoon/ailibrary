@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import {useParams} from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 import Line from "../common/Line";
 
@@ -19,15 +21,42 @@ const Date = styled.p`
 const Content = styled.div`
     font-size: 14px;
 `;
-const Review = () => {
+const Review = ( {bookInfo} ) => {
+    const [reviews, setReviews] = useState([]);
+    const { bookId } = useParams();
+    const storedUserInfo = localStorage.getItem("userInfo");
+    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+
+    useEffect(() => {
+         if (userInfo && bookId) {
+             // 사용자 정보가 있을 때만 API 호출
+             const userId = userInfo.userId;
+             const userStuId = userInfo.userStuId;
+
+        axios
+            .get(`http://localhost:8080/review/${bookId}`)
+            .then((response) => {
+                const modifiedReviews = response.data.map((review) => ({
+                ...review,
+                userId: review.userId.substring(0, 3) + '*'.repeat(review.userId.length - 3),
+                }));
+                setReviews(modifiedReviews);
+            })
+            .catch((error) => console.error(error));
+        }
+    }, [bookId]);
+
     return (
-        <Wrapper>
-            <Date>2023.10.27</Date>
-            <Content>
-                참마음이 되면 영원히 산디는게 가장 획기적인 얘기다.
-                이루이면 좋겠다. 작가님의 삽화 세계명상. 연필로 스케치해준게 너무 센스가 넘치네.
-            </Content>
-        </Wrapper>
+        <div>
+            {reviews.map((review) => (
+                <Wrapper key={review.reviewId}>
+                    <Date>{review.reviewDate} {review.userId}</Date>
+                    <Content>
+                        {review.review}
+                    </Content>
+                </Wrapper>
+            ))}
+        </div>
     );
 };
 

@@ -7,13 +7,14 @@
     <sql id="reviewColumns">
         review_id
         , user_stu_id
+        , user_id
         , book_id
         , review
-        , reveiw_date
+        , review_date
     </sql>
 
     <!-- 전체 리뷰 조회 -->
-    <select id="findReview" resultType="com.lib.ailibrary.domain.review.ReviewResponse">
+    <select id="findReviewAll" resultType="com.lib.ailibrary.domain.review.ReviewResponse">
         SELECT
             <include refid="reviewColumns"></include>
         FROM
@@ -37,9 +38,10 @@
         ) VALUES (
         #{reviewId}
         , #{userStuId}
+        , #{userId}
         , #{bookId}
         , #{review}
-        , #{reveiwDate}
+        , #{reviewDate}
         )
     </insert>
 
