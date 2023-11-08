@@ -126,6 +126,7 @@
             tb_book_loan B ON A.book_id = B.book_id
         WHERE
             B.user_stu_id = #{userStuId} AND B.return_state = '반납 완료'
+        ORDER BY B.loan_date DESC;
     </select>
 
 </mapper>
