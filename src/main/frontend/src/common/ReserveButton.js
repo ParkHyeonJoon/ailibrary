@@ -82,6 +82,7 @@ const ReserveButton = ({ bookId }) => {
 
         const closeModal = () => {
             setIsModalOpen(false);
+            setReservationStatus('예약 중');
         };
 
         let imageSource;
