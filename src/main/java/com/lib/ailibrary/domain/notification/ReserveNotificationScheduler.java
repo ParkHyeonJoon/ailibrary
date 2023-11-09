@@ -37,7 +37,7 @@ public class ReserveNotificationScheduler {
     private final BookService bookService;
 
 
-    @Scheduled(cron = "0 0 8 * * MON-FRI") // 매일 오전 8시에 실행,  fixedRate = 60000(1분마다)
+    @Scheduled(cron = "0 0 8 * * MON-FRI") // 매일 오전 8시에 실행,  fixedRate = 600000 (10분마다) cron = "0 0 8 * * MON-FRI"
     public void sendNotifications() throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         LocalDate today = LocalDate.now();
         List<RoomReserveResponse> reservations = roomService.findAllReserveToday(today);
@@ -80,8 +80,8 @@ public class ReserveNotificationScheduler {
             notificationService.saveNotification(params);
 
 
-            // SMS 전송 코드
-            /*MessageDTO messageDTO = new MessageDTO();
+            /*// SMS 전송 코드
+            MessageDTO messageDTO = new MessageDTO();
             messageDTO.setTo(userPnum);
             messageDTO.setContent(params.getNotiContent());
 
@@ -90,14 +90,14 @@ public class ReserveNotificationScheduler {
     }
 
     private String getRoomName(int roomId) {
-        String[] roomNames = {"1번 스터디룸", "2번 스터디룸", "3번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
+        String[] roomNames = {"","1번 스터디룸", "2번 스터디룸", "3번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
                 "1번 스터디룸", "2번스터디룸", "3번 스터디룸", "4번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
                 "오디토리움", "VR룸"};
         return roomNames[roomId];
     }
 
     private String getRoomFloor(int roomId) {
-        String[] roomFloors = {"2층", "2층", "2층", "3층", "3층", "3층", "4층", "4층", "4층", "4층", "5층", "5층", "5층", "5층", "5층"};
+        String[] roomFloors = {"","2층", "2층", "2층", "3층", "3층", "3층", "4층", "4층", "4층", "4층", "5층", "5층", "5층", "5층", "5층"};
         return roomFloors[roomId];
     }
 
