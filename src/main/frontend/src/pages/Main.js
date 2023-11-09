@@ -4,8 +4,7 @@ import styled, {ThemeProvider} from "styled-components";
 import Header from "../components/Header";
 import ChatBotComponent from "../components/ChatBotComponent";
 import SliderComponent from "../components/BookSlider";
-
-
+import SliderComponentV2 from "../components/BookSliderV2";
 const Wrapper = styled.div`
   width: 100%;
   display: flex;

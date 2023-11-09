@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import MyProfile from "../components/MyProfile";
 import ReserveBookList from "../components/ReserveBookList";
 import LikeBookList from "../components/LikeBookList";
-import SliderComponent from "../components/BookSlider";
+import SliderComponent from "../components/BookSliderV2";
 
 const Wrapper = styled.div`
   width: 100%;

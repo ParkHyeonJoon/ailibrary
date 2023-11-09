@@ -1,3 +1,4 @@
+// Slider.js
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import BookFrame from "../components/BookFrame";
@@ -9,7 +10,7 @@ import rightArrowImage from "../assets/right-arrow.png";
 import leftArrowImage from "../assets/left-arrow.png";
 
 const Container = styled.div`
-  width: 90%;
+  width: 80%;
   overflow-x: hidden;
 `;
 const Title = styled.p`
@@ -21,9 +22,7 @@ const Title = styled.p`
   width: 94%;
 `;
 const CustomSlider = styled(Slider)`
-  width: 110%;
-  position: relative;
-
+  
   .slick-prev {
     position: absolute;
     opacity: 0;
@@ -50,11 +49,20 @@ const CustomSlider = styled(Slider)`
       opacity: 1;
     }
   }
+
+  .slick-list {
+    width: 100%;
+    margin-left: 20px;
+  }
+  .slick-track {
+    display: inline;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
 `;
 
 const StyledDiv = styled.div`
   padding-top: 10px;
-  margin-left: ${props => props.marginLeft};
 `;
 const Header = styled.div`
   display: flex;
@@ -72,7 +80,7 @@ const AllButton = styled.button`
   }
 `;
 
-function SliderComponent({title, books, showRank, showRezDate, showReturnDate, targetPath}) {
+function SliderComponentV2({title, books, showRank, showRezDate, showReturnDate, targetPath}) {
     const Navigate = useNavigate();
     const slideCount = Math.min(books.length, 6); // 슬라이드 개수를 데이터 개수 또는 최대 6 중 작은 값으로 설정
     const wrapperStyle = {
@@ -82,56 +90,20 @@ function SliderComponent({title, books, showRank, showRezDate, showReturnDate, t
         marginRight: "-20px",
         transition: "transform 0.3s ease"
     };
-    const marginLeft = showRank ? "60px" : "20px";
+
     const settings = {
+        rows: 1,
+        slidesPerRow:1,
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 800,
         arrows: true,
         autoplay: false,
-        slidesToShow: slideCount, // 슬라이드 개수로 설정
-        slidesToScroll: slideCount, // 슬라이드 개수로 설정
-        initialSlide: 0,
+        slidesToShow: 5, // 슬라이드 개수로 설정
+        slidesToScroll: 5, // 슬라이드 개수로 설정
         centerMode: false, // centerMode를 false로 설정
         prevArrow: <img src={leftArrowImage} alt="Previous"/>,
         nextArrow: <img src={rightArrowImage} alt="Next"/>,
-        responsive: [
-            {
-                breakpoint: 1440,
-                settings: {
-                    slidesToShow: Math.min(slideCount, 5),
-                    slidesToScroll: Math.min(slideCount, 5),
-                },
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: Math.min(slideCount, 4),
-                    slidesToScroll: Math.min(slideCount, 4),
-                },
-            },
-            {
-                breakpoint: 720,
-                settings: {
-                    slidesToShow: Math.min(slideCount, 3),
-                    slidesToScroll: Math.min(slideCount, 3),
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: Math.min(slideCount, 2),
-                    slidesToScroll: Math.min(slideCount, 2),
-                },
-            },
-            {
-                breakpoint: 360,
-                settings: {
-                    slidesToShow: Math.min(slideCount, 1),
-                    slidesToScroll: Math.min(slideCount, 1),
-                },
-            },
-        ],
     };
     const onClickAllBtn = () => {
         if (targetPath === "/loanbooks") {
@@ -151,12 +123,10 @@ function SliderComponent({title, books, showRank, showRezDate, showReturnDate, t
             </Header>
             <CustomSlider {...settings}>
                 {books.map((book, index) => (
-                    <StyledDiv marginLeft={marginLeft} key={index}>
+                    <StyledDiv key={index}>
                         <BookFrame
                             book={book}
-                            rank={index + 1}
                             showTitle={true}
-                            showRank={showRank}
                             showRezDate={showRezDate}
                             showReturnDate={showReturnDate}
                             wrapper={wrapperStyle}
@@ -168,4 +138,4 @@ function SliderComponent({title, books, showRank, showRezDate, showReturnDate, t
     );
 }
 
-export default SliderComponent;
+export default SliderComponentV2;
