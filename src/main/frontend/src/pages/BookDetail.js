@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import BookInfo from "../components/BookInfo";
 import ReviewArea from "../components/ReviewArea";
-import Line from "../common/Line";
 
 const Wrapper = styled.div`
   position: relative; /* 포지션 설정 */
@@ -67,7 +66,6 @@ const BookDetail = () => {
                 <BookImage src={bookInfo.bookImage} alt="Book"/>
             </ContentWrapper>
             <ReviewArea bookInfo={bookInfo}/>
-
         </Wrapper>
     );
 };

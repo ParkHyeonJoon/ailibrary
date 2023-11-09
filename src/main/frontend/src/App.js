@@ -11,6 +11,8 @@ import SearchResult from "./pages/SearchResult";
 import Notice from "./pages/Notice";
 import AllAlarm from "./pages/AllAlarm";
 import LoanBooksPage from "./pages/LoanBooksPage";
+import NoticeWritePage from "./pages/NoticeWritePage";
+import NoticeViewPage from "./pages/NoticeViewPage";
 function App() {
     // const [closingWindow, setClosingWindow] = useState(false);
     //
@@ -99,6 +101,8 @@ function App() {
                     <Route path="/results/:keyword" element={<SearchResult/>}/>
                     <Route path="/notice" element={<Notice/>}/>
                     <Route path="/allalarm" element={<AllAlarm/>}/>
+                    <Route path="/notice-write" element={<NoticeWritePage/>}/>
+                    <Route path="/notice/:id" element={<NoticeViewPage/>} />
                 </Routes>
             </Router>
     );
