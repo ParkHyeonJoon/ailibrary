@@ -93,7 +93,7 @@ public class ReserveNotificationScheduler {
     }
 
     //********반납날짜 하루 전 웹페이지에 알림 띄우기(수정 필요)*******
-    @Scheduled(cron = "0 0 8 * * MON-FRI")
+    @Scheduled(fixedRate = 600000)
     public void checkBookLoan() {
         List<BookLoanResponse> responses = bookLoanService.findLoanAll();
         LocalDate currentDate = LocalDate.now();
@@ -109,6 +109,7 @@ public class ReserveNotificationScheduler {
                 params.setNotiContent("["+bookTitle+"] " +response.getReturnDate()+ " 까지 반납해주세요.");
                 notificationService.saveNotification(params);
 
+                //String userPnum = userService.findPnumById(response.getUserStuId());
                 // SMS 전송 코드
                 /*MessageDTO messageDTO = new MessageDTO();
                 messageDTO.setTo(userPnum);
@@ -136,6 +137,14 @@ public class ReserveNotificationScheduler {
                 params.setNotiTime(LocalDateTime.now());
                 params.setNotiContent("["+bookTitle+"] " +response.getBookRezDate()+ " 까지 대출해주세요. 예약 유효날짜가 지나면 예약은 자동 취소됩니다.");
                 notificationService.saveNotification(params);
+
+                //String userPnum = userService.findPnumById(response.getUserStuId);
+                // SMS 전송 코드
+                /*MessageDTO messageDTO = new MessageDTO();
+                messageDTO.setTo(userPnum);
+                messageDTO.setContent(params.getNotiContent());
+
+                smsService.sendSms(messageDTO);*/
             }
         }
     }

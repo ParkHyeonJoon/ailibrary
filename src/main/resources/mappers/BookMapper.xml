@@ -252,4 +252,13 @@
             book_id = #{bookId}
     </select>
 
+    <select id="myFavoriteBook" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        WHERE
+            book_id IN (12, 14, 17, 19, 20, 25, 32, 43, 72, 41);
+    </select>
+
 </mapper>

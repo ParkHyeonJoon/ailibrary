@@ -100,7 +100,7 @@ const ReviewInput = styled.textarea`
   padding: 10px;
 `;
 
-function ReviewModal({ isOpen, onClose, bookInfo }) {
+function ReviewModal({ isOpen, onClose, bookInfo, updateReviews }) {
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
     const userStuId = userInfo ? userInfo.userStuId : null;
@@ -130,6 +130,7 @@ function ReviewModal({ isOpen, onClose, bookInfo }) {
                 // 성공한 경우
                 alert("리뷰 등록이 완료되었습니다.");
                 onClose();
+                window.location.reload();
             } else {
                 // 서버 응답은 성공하지만 다른 상태 코드를 받은 경우
                 alert("서버 응답이 실패했습니다. 다시 시도해주세요.");

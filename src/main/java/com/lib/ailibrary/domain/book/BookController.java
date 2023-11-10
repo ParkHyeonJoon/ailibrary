@@ -159,4 +159,9 @@ public class BookController {
         String summary = bookService.findReviewSummary(bookId);
         return summary;
     }
+
+    @GetMapping("/favorite")
+    public List<Book> myFavoriteBook() {
+        return bookService.myFavoriteBook();
+    }
 }
