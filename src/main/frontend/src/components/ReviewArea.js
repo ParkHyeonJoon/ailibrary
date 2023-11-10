@@ -43,7 +43,7 @@ const WriteBtn = styled.button`
   font-size: 13px;
   &:hover {
     background: ${(props) =>
-            props.backgroundColor || "#123456"};
+    props.backgroundColor || "#123456"};
   }
 `;
 const EntireReview = styled.div`
@@ -67,7 +67,7 @@ function ReviewArea({bookInfo}) {
                 .catch((error) => {
                     console.error(error);
                 });
-            }
+        }
     }, [bookInfo]);
 
     const handleButtonClick = () => {

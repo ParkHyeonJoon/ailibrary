@@ -33,9 +33,11 @@
     <!-- 대출 정보 조회 -->
     <select id="findByAll" resultType="com.lib.ailibrary.domain.book.BookLoanResponse">
         SELECT
-        <include refid="bookLoanColumns"></include>
+            <include refid="bookLoanColumns"></include>
         FROM
-        tb_book_loan
+            tb_book_loan
+        WHERE
+            return_state = '대출 중'
     </select>
 
 

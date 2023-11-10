@@ -2,6 +2,8 @@ package com.lib.ailibrary.domain.book;
 
 import com.lib.ailibrary.domain.notification.NotificationRequest;
 import com.lib.ailibrary.domain.notification.NotificationService;
+import com.lib.ailibrary.domain.notification.sms.SmsService;
+import com.lib.ailibrary.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ public class BookLoanController {
     private final BookReserveService bookReserveService;
     private final NotificationService notificationService;
     private final BookService bookService;
+    private final SmsService smsService;
+    private final UserService userService;
 
     //대출 버튼 클릭
     @PostMapping("/loan")
@@ -113,6 +117,14 @@ public class BookLoanController {
                         notirequest2.setUserStuId(response.getUserStuId());
                         notirequest2.setNotiTime(LocalDateTime.now());
                         notificationService.saveNotification(notirequest2);
+
+                        //String userPnum = userService.findPnumById(response.getUserStuId());
+                        // SMS 전송 코드
+                        /*MessageDTO messageDTO = new MessageDTO();
+                        messageDTO.setTo(userPnum);
+                        messageDTO.setContent(notirequest2.getNotiContent());
+
+                        smsService.sendSms(messageDTO);*/
                     }
                 }
 

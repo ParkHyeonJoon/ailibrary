@@ -2,6 +2,8 @@ package com.lib.ailibrary.domain.book;
 
 import com.lib.ailibrary.domain.notification.NotificationRequest;
 import com.lib.ailibrary.domain.notification.NotificationService;
+import com.lib.ailibrary.domain.notification.sms.SmsService;
+import com.lib.ailibrary.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,6 +24,8 @@ public class BookReserveController {
     private final BookLoanService bookLoanService;
     private final NotificationService notificationService;
     private final BookService bookService;
+    private final SmsService smsService;
+    private final UserService userService;
 
     //예약 버튼을 클릭하면 실행
     @PostMapping("/reserve")
@@ -129,6 +133,14 @@ public class BookReserveController {
                 notificationRequest.setNotiTime(LocalDateTime.now());
                 notificationRequest.setNotiContent("["+bookTitle+"] 예약 유효날짜가 지나 자동 예약 취소되었습니다.");
                 notificationService.saveNotification(notificationRequest);
+
+                //String userPnum = userService.findPnumById(response.getUserStuId());
+                // SMS 전송 코드
+                /*MessageDTO messageDTO = new MessageDTO();
+                messageDTO.setTo(userPnum);
+                messageDTO.setContent(notificationRequest.getNotiContent());
+
+                smsService.sendSms(messageDTO);*/
             }
         }
     }

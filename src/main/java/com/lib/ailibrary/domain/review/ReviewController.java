@@ -42,4 +42,9 @@ public class ReviewController {
         List<ReviewResponse> reviewByBookId = reviewService.findReviewByBookId(bookId);
         return reviewByBookId;
     }
+
+    @PostMapping("/delete")
+    public void deleteReview(@RequestParam long userStuId, @RequestParam int bookId) {
+        reviewService.deleteReview(userStuId, bookId);
+    }
 }
