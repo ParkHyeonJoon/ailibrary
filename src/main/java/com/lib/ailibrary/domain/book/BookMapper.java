@@ -104,6 +104,10 @@ public interface BookMapper {
      */
     String reserveBookTitle(int bookId);
 
+    String findReviewSummary(int bookId);
+
+    List<Book> myFavoriteBook();
+
     /**
      * 전체 도서 번호 조회
      * @return 도서 번호 배열

@@ -15,6 +15,7 @@
         , book_good
         , book_date
         , book_image
+        , review_summary
     </sql>
 
     <!-- 도서 검색 정보 조회 -->
@@ -240,6 +241,24 @@
             tb_book
         WHERE
             book_id = #{bookId}
+    </select>
+
+    <select id="findReviewSummary" parameterType="int" resultType="string">
+        SELECT
+            review_summary
+        FROM
+            tb_book
+        WHERE
+            book_id = #{bookId}
+    </select>
+
+    <select id="myFavoriteBook" resultType="com.lib.ailibrary.domain.book.Book">
+        SELECT
+            <include refid="bookColumns"></include>
+        FROM
+            tb_book
+        WHERE
+            book_id IN (12, 14, 17, 19, 20, 25, 32, 43, 72, 41);
     </select>
 
     <!-- 전체 도서 번호 조회 -->

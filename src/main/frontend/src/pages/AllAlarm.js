@@ -77,7 +77,9 @@ function AllAlarm() {
                 <Title>전체 알림</Title>
                 <AlarmArea>
                     {notifications.map((notification) => (
-                        <Alarm key={notification.notiId} notification={notification} onDelete={handleDeleteNotification}
+                        <Alarm key={notification.notiId}
+                               notification={notification}
+                               onDelete={handleDeleteNotification}
                                showDeleteButton={false}/>
                     ))}
                 </AlarmArea>

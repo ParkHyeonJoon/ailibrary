@@ -110,10 +110,11 @@ function BookReservationModal({ isOpen, onClose }) {
                     userStuId: userInfo.userStuId
                 })
                 .then((response) => {
-                    const reservationStatus = response.data;
-                    if (reservationStatus === "예약 가능") {
+                    const reservation = response.data;
+                    if (reservation === "예약 가능") {
                         setReservationStatus("예약 중");
                         alert("예약이 완료되었습니다");
+
                         onClose();
                     }
                 })

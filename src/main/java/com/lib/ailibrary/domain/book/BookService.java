@@ -197,4 +197,13 @@ public class BookService {
     public void updateReviewSummary(String review, int bookId) {
         bookMapper.updateReviewSummary(review, bookId);
     }
+
+    public String findReviewSummary(int bookId) {
+        String summary = bookMapper.findReviewSummary(bookId);
+        return summary;
+    }
+
+    public List<Book> myFavoriteBook() {
+        return bookMapper.myFavoriteBook();
+    }
 }
