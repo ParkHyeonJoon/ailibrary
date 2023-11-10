@@ -77,7 +77,7 @@ const MainSlider = ({books}) => {
                     <BookFrame src={book.bookImage}/>
                     <BookTitle>{book.bookTitle}</BookTitle>
                     <BookInform>돈 시간 운명으로부터 완전한 자유를 얻는 7단계 인생 공략집</BookInform>
-                    <BookRank>오늘의 영화 순위 {index + 1}위</BookRank>
+                    <BookRank>오늘의 도서 순위 {index + 1}위</BookRank>
                 </StyledDiv>
             ))}
         </CustomSlider>

@@ -45,7 +45,6 @@ const MainAlarm = () => {
     const storedToken = localStorage.getItem('token');
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
-    const userStuId = userInfo.userStuId;
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -56,8 +55,9 @@ const MainAlarm = () => {
     };
 
     const NotificationCount = () => {
+        if(userInfo !== null) {
         axios
-            .post("http://localhost:8080/notification/count", userStuId, {
+            .post("http://localhost:8080/notification/count", userInfo.userStuId, {
                 headers: {
                     'Authorization': storedToken,
                     'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ const MainAlarm = () => {
             .catch((error) => {
                 console.error("Error", error);
             });
-    };
+    }};
     useEffect(() => {
         NotificationCount();
     }, []);
