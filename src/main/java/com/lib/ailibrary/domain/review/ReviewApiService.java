@@ -31,15 +31,10 @@ public class ReviewApiService {
 
         try {
             JsonNode rootNode = objectMapper.readTree(response);
-            String summary = rootNode.get("response").asText();
-            return StringEscapeUtils.unescapeJson(summary);
+            return rootNode.get("response").asText();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
-
-
-
     }
 }

@@ -34,7 +34,10 @@ public class ReviewScheduler {
             }
             String reviews = stringBuilder.toString();
             String reviewSummary = reviewApiService.sendPostRequest(reviews); // 합친 리뷰 GPT 전송
-            bookService.updateReviewSummary(reviewSummary, i);     // 요약한 리뷰 db에 저장
+            ReviewDto dto = new ReviewDto();
+            dto.setReviewSummary(reviewSummary);
+            dto.setBookId(i);
+            bookService.updateReviewSummary(dto);     // 요약한 리뷰 db에 저장
         }
     }
 }
