@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 
@@ -45,10 +44,6 @@ public class RoomService {
 
         return roomMapper.findByIdAfterToday(userStuId);
     }
-
-    /**
-     * 예약 정보 수정 ( 보류 )
-     */
 
     /**
      * 예약 정보 삭제

@@ -184,6 +184,20 @@ public class BookService {
         return bookTitle;
     }
 
+    /**
+     * 전체 도서 번호 조회
+     */
+    public int[] findAllBookId() {
+        return bookMapper.findAllBookId();
+    }
+
+    /**
+     * 리뷰 요약 삽입
+     */
+    public void updateReviewSummary(String review, int bookId) {
+        bookMapper.updateReviewSummary(review, bookId);
+    }
+
     public String findReviewSummary(int bookId) {
         String summary = bookMapper.findReviewSummary(bookId);
         return summary;

@@ -108,4 +108,15 @@ public interface BookMapper {
 
     List<Book> myFavoriteBook();
 
+    /**
+     * 전체 도서 번호 조회
+     * @return 도서 번호 배열
+     */
+    int[] findAllBookId();
+
+    /**
+     * 리뷰 요약 삽입
+     * @param reviewSummary - 리뷰 요약
+     */
+    void updateReviewSummary(String reviewSummary, int bookId);
 }

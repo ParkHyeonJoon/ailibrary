@@ -30,7 +30,6 @@ public class RoomController {
             @RequestParam String rezDate,
             @RequestParam String[] rezTime) {
 
-        LocalDate currentDate = LocalDate.now();
 
         RoomSearchRequest params = new RoomSearchRequest();
         params.setRoomType(roomType);
@@ -52,8 +51,7 @@ public class RoomController {
             }
         }
 
-        List<RoomSearchResponse> resultList = roomService.findRemainRoom(params);
-        return resultList;
+        return roomService.findRemainRoom(params);
     }
 
     // 신규 예약 생성
@@ -90,23 +88,19 @@ public class RoomController {
 
             int roomId = params.getRoomId();
 
-            String[] roomNames = {"1번 스터디룸", "2번 스터디룸", "3번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
+            String[] roomNames = {"","1번 스터디룸", "2번 스터디룸", "3번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
                     "1번 스터디룸", "2번스터디룸", "3번 스터디룸", "4번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
                     "오디토리움", "VR룸"};
 
-            String[] roomFloors = {"2층", "2층", "2층", "3층", "3층", "3층", "4층", "4층", "4층", "4층", "5층", "5층", "5층", "5층", "5층"};
+            String[] roomFloors = {"","2층", "2층", "2층", "3층", "3층", "3층", "4층", "4층", "4층", "4층", "5층", "5층", "5층", "5층", "5층"};
 
             try {
                 Date date = inputFormatter.parse(params.getRezDate().toString());
                 String formattedDate = outputFormatter.format(date);
                 String roomInfo = formattedDate + " " + rezTimeOutput  + " " + roomFloors[roomId] + " " + roomNames[roomId];
-                if (roomId <= 13) {
-                    notificationRequest.setNotiContent(roomInfo + " 이용 예약이 완료되었습니다.");
-                } else if (params.getRoomId() == 14) {
-                    notificationRequest.setNotiContent(roomInfo + "  이용 예약이 완료되었습니다.");
-                } else {
-                    notificationRequest.setNotiContent(roomInfo + "  예약이 완료되었습니다.");
-                }
+
+                notificationRequest.setNotiContent(roomInfo + " 이용 예약이 완료되었습니다.");
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -261,4 +261,23 @@
             book_id IN (12, 14, 17, 19, 20, 25, 32, 43, 72, 41);
     </select>
 
+    <!-- 전체 도서 번호 조회 -->
+    <select id="findAllBookId" >
+        SELECT
+            book_id
+        FROM
+            tb_book
+
+    </select>
+
+    <!-- 리뷰 요약 삽입 -->
+    <update id="updateReviewSummary" >
+        UPDATE
+            tb_book
+        SET
+            review_summary = #{reviewSummary}
+        WHERE
+            book_id = #{bookId}
+    </update>
+
 </mapper>
