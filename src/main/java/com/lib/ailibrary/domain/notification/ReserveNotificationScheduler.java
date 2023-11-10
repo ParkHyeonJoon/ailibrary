@@ -3,6 +3,7 @@ package com.lib.ailibrary.domain.notification;
 import com.lib.ailibrary.domain.book.*;
 import com.lib.ailibrary.domain.notification.sms.MessageDTO;
 import com.lib.ailibrary.domain.notification.sms.SmsService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lib.ailibrary.domain.room.RoomReserveResponse;
 import com.lib.ailibrary.domain.room.RoomService;
 import com.lib.ailibrary.domain.user.UserService;
@@ -10,6 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,6 +26,9 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ReserveNotificationScheduler {
 
+    private final UserService userService;
+    private final SmsService smsService;
+
     private final RoomService roomService;
     private final NotificationService notificationService;
 
@@ -27,13 +36,12 @@ public class ReserveNotificationScheduler {
     private final BookReserveService bookReserveService;
     private final BookService bookService;
 
-    private final SmsService smsService;
-    private final UserService userService;
 
-    @Scheduled(cron = "0 0 8 * * MON-FRI") // 매일 오전 8시에 실행,  fixedRate = 60000(1분마다)
-    public void sendNotifications() {
+    @Scheduled(cron = "0 0 8 * * MON-FRI") // 매일 오전 8시에 실행,  fixedRate = 600000 (10분마다) cron = "0 0 8 * * MON-FRI"
+    public void sendNotifications() throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         LocalDate today = LocalDate.now();
         List<RoomReserveResponse> reservations = roomService.findAllReserveToday(today);
+
 
         Map<Long, List<RoomReserveResponse>> userReservationsMap = new HashMap<>();
 
@@ -53,7 +61,7 @@ public class ReserveNotificationScheduler {
         for (Map.Entry<Long, List<RoomReserveResponse>> entry : userReservationsMap.entrySet()) {
             Long userStuId = entry.getKey();
             List<RoomReserveResponse> userReservations = entry.getValue();
-            //String userPnum = userService.findPnumById(userStuId);
+            String userPnum = userService.findPnumById(userStuId);
 
             StringBuilder notificationContent = new StringBuilder();
 
@@ -71,8 +79,9 @@ public class ReserveNotificationScheduler {
 
             notificationService.saveNotification(params);
 
-            // SMS 전송 코드
-            /*MessageDTO messageDTO = new MessageDTO();
+
+            /*// SMS 전송 코드
+            MessageDTO messageDTO = new MessageDTO();
             messageDTO.setTo(userPnum);
             messageDTO.setContent(params.getNotiContent());
 
@@ -81,14 +90,14 @@ public class ReserveNotificationScheduler {
     }
 
     private String getRoomName(int roomId) {
-        String[] roomNames = {"1번 스터디룸", "2번 스터디룸", "3번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
+        String[] roomNames = {"","1번 스터디룸", "2번 스터디룸", "3번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
                 "1번 스터디룸", "2번스터디룸", "3번 스터디룸", "4번 스터디룸", "1번 스터디룸", "2번 스터디룸", "3번 스터디룸",
                 "오디토리움", "VR룸"};
         return roomNames[roomId];
     }
 
     private String getRoomFloor(int roomId) {
-        String[] roomFloors = {"2층", "2층", "2층", "3층", "3층", "3층", "4층", "4층", "4층", "4층", "5층", "5층", "5층", "5층", "5층"};
+        String[] roomFloors = {"","2층", "2층", "2층", "3층", "3층", "3층", "4층", "4층", "4층", "4층", "5층", "5층", "5층", "5층", "5층"};
         return roomFloors[roomId];
     }
 

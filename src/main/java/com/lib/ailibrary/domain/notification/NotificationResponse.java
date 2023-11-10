@@ -1,5 +1,9 @@
 package com.lib.ailibrary.domain.notification;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +20,7 @@ public class NotificationResponse {
     private LocalDateTime notiTime; // 알림 등록 시간
     private boolean leadCheck; // 알림 열람 여부
     private String dateMessage; // 날짜메시지 ex) 1일전, 5분전 등
+
     // 알림 등록 시간 처리
     public void getDaysBetweenNotificationAndCurrentTime() {
         LocalDateTime currentTime = LocalDateTime.now();
