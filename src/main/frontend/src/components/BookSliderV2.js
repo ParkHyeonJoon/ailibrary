@@ -22,7 +22,7 @@ const Title = styled.p`
   width: 94%;
 `;
 const CustomSlider = styled(Slider)`
-  
+
   .slick-prev {
     position: absolute;
     opacity: 0;
@@ -54,6 +54,7 @@ const CustomSlider = styled(Slider)`
     width: 100%;
     margin-left: 20px;
   }
+
   .slick-track {
     display: inline;
     align-items: flex-start;
@@ -75,14 +76,24 @@ const AllButton = styled.button`
   border: none;
   cursor: pointer;
   margin-top: 30px;
+
   &:hover {
     color: #5856d6;
   }
 `;
-
+const EmptyMessage =  styled.p`
+  width: 98%;
+  height: 200px;
+  text-align: center;
+  line-height: 200px;
+  font-size: 17px;
+  margin-left: 1.5%;
+  border: 1px solid #d2d2d2;
+  border-radius: 5px;
+`;
 function SliderComponentV2({title, books, showRank, showRezDate, showReturnDate, targetPath}) {
     const Navigate = useNavigate();
-    const slideCount = Math.min(books.length, 6); // 슬라이드 개수를 데이터 개수 또는 최대 6 중 작은 값으로 설정
+
     const wrapperStyle = {
         width: "180px",
         height: "270px",
@@ -93,7 +104,7 @@ function SliderComponentV2({title, books, showRank, showRezDate, showReturnDate,
 
     const settings = {
         rows: 1,
-        slidesPerRow:1,
+        slidesPerRow: 1,
         dots: false,
         infinite: false,
         speed: 800,
@@ -108,9 +119,12 @@ function SliderComponentV2({title, books, showRank, showRezDate, showReturnDate,
     const onClickAllBtn = () => {
         if (targetPath === "/loanbooks") {
             Navigate(targetPath);
+        } else if (targetPath === "/reservebooks") {
+            Navigate(targetPath);
         } else {
             console.log('실행 안 됨');
         }
+
     };
 
     return (
@@ -121,19 +135,32 @@ function SliderComponentV2({title, books, showRank, showRezDate, showReturnDate,
                     전체보기
                 </AllButton>
             </Header>
-            <CustomSlider {...settings}>
-                {books.map((book, index) => (
-                    <StyledDiv key={index}>
-                        <BookFrame
-                            book={book}
-                            showTitle={true}
-                            showRezDate={showRezDate}
-                            showReturnDate={showReturnDate}
-                            wrapper={wrapperStyle}
-                        />
-                    </StyledDiv>
-                ))}
-            </CustomSlider>
+            {books.length > 0 ? (
+                <CustomSlider {...settings}>
+                    {books.map((book, index) => (
+                        <StyledDiv key={index}>
+                            <BookFrame
+                                book={book}
+                                showTitle={true}
+                                showRezDate={showRezDate}
+                                showReturnDate={showReturnDate}
+                                wrapper={wrapperStyle}
+                            />
+                        </StyledDiv>
+                    ))}
+                </CustomSlider>
+            ) : (
+                <EmptyMessage>
+                    {targetPath === "/loanbooks"
+                        ? "대출하신 도서가 없습니다."
+                        : targetPath === "/reservebooks"
+                            ? "예약하신 도서가 없습니다."
+                            : targetPath ==="likebooks"
+                                ? "찜하신 도서가 없습니다."
+                                : ""
+                    }
+                </EmptyMessage>
+            )}
         </Container>
     );
 }

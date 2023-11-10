@@ -144,7 +144,7 @@ function ReviewModal({ isOpen, onClose, bookInfo }) {
     if (!isOpen) return null;
 
     return (
-        <ModalOverlay onClick={onClose}>
+        <ModalOverlay>
             <ModalContent>
                 <ModalHeader>
                     <ModalTitle>리뷰 작성</ModalTitle>
