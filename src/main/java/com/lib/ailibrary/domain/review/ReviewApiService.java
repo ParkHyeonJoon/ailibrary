@@ -18,7 +18,7 @@ public class ReviewApiService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public String sendPostRequest(String review) {
-        String url = "http://ec2-15-164-252-94.ap-northeast-2.compute.amazonaws.com:5001/api/review";
+        String url = "http://ec2-15-164-252-94.ap-northeast-2.compute.amazonaws.com:5001/api/review"; //http://ec2-15-164-252-94.ap-northeast-2.compute.amazonaws.com:5001/api/review http://127.0.0.1:5001/api/review
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
