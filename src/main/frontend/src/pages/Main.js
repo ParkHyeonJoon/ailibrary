@@ -25,26 +25,29 @@ const ContentArea = styled.div`
 function Main() {
     const [topBooks, setTopBooks] = useState([]);
     const [newBooks, setNewBooks] = useState([]);
-
+    const [favoriteBooks, setFavoriteBooks] = useState([]);
     useEffect(() => {
         // 두 개의 API를 병렬로 호출하는 함수
         const fetchData = async () => {
             try {
-                const [topResponse, newResponse] = await Promise.all([
+                const [topResponse, newResponse, favoriteResponse] = await Promise.all([
                     fetch("http://localhost:8080/book/top"),
                     fetch("http://localhost:8080/book/new"),
+                    fetch("http://localhost:8080/book/favorite"),
                 ]);
 
-                if (!topResponse.ok || !newResponse.ok ) {
+                if (!topResponse.ok || !newResponse.ok || !favoriteResponse.ok) {
                     throw new Error("Network response was not ok");
                 }
 
                 const topData = await topResponse.json();
                 const newData = await newResponse.json();
+                const favoriteData = await favoriteResponse.json();
 
 
                 setTopBooks(topData);
                 setNewBooks(newData);
+                setFavoriteBooks(favoriteData);
             } catch (error) {
                 console.error("Error fetching data: ", error);
             }
@@ -60,6 +63,7 @@ function Main() {
             <ContentArea>
                 <SliderComponent title="오늘 도서관의 TOP 10 도서!!" books={topBooks} showRank={true} />
                 <SliderComponent title="뜨끈뜨끈한 새로 들어온 도서들!" books={newBooks} showRank={false} />
+                <SliderComponent title="이번주 사서 추천 도서들!" books={favoriteBooks} showRank={false}/>
                 <ChatBotComponent/>
             </ContentArea>
         </Wrapper>

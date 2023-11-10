@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Line from "../common/Line";
+import {Link} from "react-router-dom";
+import NavContent from "./NavContent";
 const ModalWrapper = styled.div`
   width: 300px;
   height: 400px;
@@ -12,6 +14,7 @@ const ModalWrapper = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 const Header = styled.div`
@@ -35,7 +38,36 @@ const CloseBtn = styled.button`
   padding: 10px;
 `;
 const ModalContent = styled.div`
-  /* 모달 내용의 스타일을 정의하세요. */
+  display: flex;
+  flex-direction: column;
+`;
+const StyledText = styled.p`
+  font-size: 12px;
+  color: #757575;
+  margin-left: 150px;
+`;
+const NavItem = styled.a`
+  padding: 10px;
+  box-sizing: border-box;
+  color: #000000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #dedede;
+  }
+
+  &:hover {
+    background: #efefef;
+  }
+
+\`                                                        ;
 `;
 const MainModalAlarm =({count, userInfo, onClose})=> {
     return (
@@ -46,7 +78,8 @@ const MainModalAlarm =({count, userInfo, onClose})=> {
             </Header>
             <Line/>
             <ModalContent>
-                읽지 않은 알람: {count}
+                <NavItem href="">알림<StyledText>읽지 않은 알림 {count}개</StyledText></NavItem>
+                <NavItem href="">회원정보 수정</NavItem>
 
             </ModalContent>
         </ModalWrapper>
