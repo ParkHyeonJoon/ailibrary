@@ -72,7 +72,7 @@ function ResponseComponent({ steps, triggerNextStep }) {
                         console.log(response);
                     }
                     const response = await fetchChatGPTResponse(userInput);
-                    setResult(response);
+                    setResult(<div>{response}</div>);
                     setLoading(false);
                 }
             }
