@@ -188,4 +188,8 @@ public class BookService {
         String summary = bookMapper.findReviewSummary(bookId);
         return summary;
     }
+
+    public List<Book> myFavoriteBook() {
+        return bookMapper.myFavoriteBook();
+    }
 }

@@ -106,4 +106,6 @@ public interface BookMapper {
 
     String findReviewSummary(int bookId);
 
+    List<Book> myFavoriteBook();
+
 }
