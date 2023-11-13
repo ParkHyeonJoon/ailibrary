@@ -29,8 +29,8 @@ public class ReviewScheduler {
 
             StringBuilder stringBuilder = new StringBuilder();
             for (ReviewResponse review : reviewList) {
-                //String cleanedReview = review.getReview().replaceAll("[\\r\\n]+", " ");
-                stringBuilder.append(review.getReview()).append(" "); // 리뷰 합치기
+                String cleanedReview = review.getReview().replaceAll("[\\r\\n]+", " ");
+                stringBuilder.append(cleanedReview).append(" "); // 리뷰 합치기
             }
             String reviews = stringBuilder.toString();
             String reviewSummary = reviewApiService.sendPostRequest(reviews); // 합친 리뷰 GPT 전송

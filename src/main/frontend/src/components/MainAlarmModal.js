@@ -1,4 +1,3 @@
-/*
 import React from "react";
 import styled from "styled-components";
 import Line from "../common/Line";
@@ -86,4 +85,4 @@ const MainModalAlarm =({count, userInfo, onClose})=> {
         </ModalWrapper>
     );
 }
-export default MainModalAlarm;*/
+export default MainModalAlarm;
