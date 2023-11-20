@@ -102,7 +102,7 @@ public class ReserveNotificationScheduler {
     }
 
     //********반납날짜 하루 전 웹페이지에 알림 띄우기(수정 필요)*******
-    @Scheduled(fixedRate = 600000)
+    @Scheduled(cron = "0 0 8 * * *")
     public void checkBookLoan() {
         List<BookLoanResponse> responses = bookLoanService.findLoanAll();
         LocalDate currentDate = LocalDate.now();
@@ -118,7 +118,7 @@ public class ReserveNotificationScheduler {
                 params.setNotiContent("["+bookTitle+"] " +response.getReturnDate()+ " 까지 반납해주세요.");
                 notificationService.saveNotification(params);
 
-                //String userPnum = userService.findPnumById(response.getUserStuId());
+                String userPnum = userService.findPnumById(response.getUserStuId());
                 // SMS 전송 코드
                 /*MessageDTO messageDTO = new MessageDTO();
                 messageDTO.setTo(userPnum);
@@ -130,7 +130,7 @@ public class ReserveNotificationScheduler {
     }
 
     //예약 유효기간 날짜 하루 전 웹페이지 알림 띄우기(수정 필요)
-    @Scheduled(cron = "0 0 8 * * MON-FRI")
+    @Scheduled(cron = "0 0 8 * * *")
     public void checkBookReserve() {
         List<BookReserveResponse> responses = bookReserveService.findAllRez();
         LocalDate currentDate = LocalDate.now();
@@ -158,7 +158,6 @@ public class ReserveNotificationScheduler {
         }
     }
 }
-
 
 
 

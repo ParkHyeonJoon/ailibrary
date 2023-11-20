@@ -15,7 +15,7 @@ public class ReviewScheduler {
     private final ReviewService reviewService;
     private final ReviewApiService reviewApiService;
 
-    @Scheduled(fixedRate = 60000) //fixedRate = 60000 (1분마다) cron = "0 0 12 * * *"
+    /*@Scheduled(cron = "0 0 12 * * *") //fixedRate = 60000 (1분마다) cron = "0 0 12 * * *"
     public void reviewSummary() {
         int[] allBookId = bookService.findAllBookId();  // 모든 도서 번호 가져 오기
 
@@ -34,7 +34,10 @@ public class ReviewScheduler {
             }
             String reviews = stringBuilder.toString();
             String reviewSummary = reviewApiService.sendPostRequest(reviews); // 합친 리뷰 GPT 전송
-            bookService.updateReviewSummary(reviewSummary, i);     // 요약한 리뷰 db에 저장
+            ReviewDto dto = new ReviewDto();
+            dto.setReviewSummary(reviewSummary);
+            dto.setBookId(i);
+            bookService.updateReviewSummary(dto);     // 요약한 리뷰 db에 저장
         }
-    }
+    }*/
 }

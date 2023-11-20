@@ -1,5 +1,6 @@
 package com.lib.ailibrary.domain.book;
 
+import com.lib.ailibrary.domain.review.ReviewDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -194,8 +195,8 @@ public class BookService {
     /**
      * 리뷰 요약 삽입
      */
-    public void updateReviewSummary(String review, int bookId) {
-        bookMapper.updateReviewSummary(review, bookId);
+    public void updateReviewSummary(ReviewDto dto) {
+        bookMapper.updateReviewSummary(dto);
     }
 
     public String findReviewSummary(int bookId) {
