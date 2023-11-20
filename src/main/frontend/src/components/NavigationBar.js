@@ -42,6 +42,11 @@ const NavItem = styled.a`
 `;
 
 function NavigationBar() {
+    // 로컬 스토리지에서 userInfo 가져오기
+    const storedUserInfo = localStorage.getItem("userInfo");
+
+    // userInfo가 있을 때만 로그인 상태로 간주하여 MainAlarm 렌더링
+    const isLoggedIn = !!storedUserInfo;
     return (
         <Wrapper>
             <NavWrapper>
@@ -50,7 +55,8 @@ function NavigationBar() {
                 <NavItem href="/notice">도서관안내</NavItem>
                 <NavItem href="/mypage">MyPage</NavItem>
             </NavWrapper>
-            <MainAlarm/>
+            {/* userInfo가 있을 때만 MainAlarm을 렌더링 */}
+            {isLoggedIn && <MainAlarm />}
         </Wrapper>
     );
 }
