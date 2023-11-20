@@ -72,15 +72,12 @@ const ReserveButton = () => {
         if (!userInfo) {
             alert("로그인이 필요합니다");
             return;
-        } else {
-            setIsModalOpen(true);
         }
-
-        if (reservationStatus === "예약 가능") {
-            setIsModalOpen(true);
-        } else {
+        if (reservationStatus !== "예약 가능") {
             alert("예약이 불가한 도서입니다.");
+            return;
         }
+        setIsModalOpen(true);
     };
 
     const closeModal = () => {
