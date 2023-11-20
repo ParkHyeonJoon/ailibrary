@@ -44,7 +44,7 @@ const ModalContent = styled.div`
 const StyledText = styled.p`
   font-size: 12px;
   color: #757575;
-  margin-left: 150px;
+  margin-left: 130px;
 `;
 const NavItem = styled.a`
   padding: 10px;
