@@ -18,7 +18,6 @@ const UserImage = styled.img`
   width: 80%;
   height: 80%;
   border-radius: 50%;
-
   &:hover {
     box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.42);
   }

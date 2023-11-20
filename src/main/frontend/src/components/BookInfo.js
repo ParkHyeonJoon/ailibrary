@@ -99,13 +99,11 @@ const BookInfo = ({ bookInfo }) => {
     const [isBookLoaned, setIsBookLoaned] = useState(false);
     const [loanButtonText, setLoanButtonText] = useState("대출하기");
     const { bookId } = useParams();
-
     const storedUserInfo = localStorage.getItem("userInfo");
     const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
 
   useEffect(() => {
-      if (userInfo && bookId) {
-        // 사용자 정보가 있을 때만 API 호출
+      if (userInfo) {
         const userId = userInfo.userId;
         const userStuId = userInfo.userStuId;
 
@@ -142,7 +140,11 @@ const BookInfo = ({ bookInfo }) => {
             .catch((error) => {
               console.error("Error checking book loan status: ", error);
             });
-        }
+        } else {
+          setIsLiked(false);
+          setIsBookLoaned(false);
+          setLoanButtonText("대출하기");
+      }
     }, [userInfo, bookId]);
 
   const handleLikeClick = () => {

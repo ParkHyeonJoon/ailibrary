@@ -42,48 +42,51 @@ const Text = styled.p`
           `}
 `;
 
-const ReserveButton = ({ bookId }) => {
-        const [reservationStatus, setReservationStatus] = useState("예약 가능");
-        const [isModalOpen, setIsModalOpen] = useState(false);
+const ReserveButton = () => {
+    const { bookId } = useParams();
+    const [reservationStatus, setReservationStatus] = useState("예약 가능");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [userInfo, setUserInfo] = useState(null);
 
+    useEffect(() => {
         const storedUserInfo = localStorage.getItem("userInfo");
-        const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
-        const userId = userInfo.userId;
-        const userStuId = userInfo.userStuId;
+        const parsedUserInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+        setUserInfo(parsedUserInfo);
+    }, []);
 
-        useEffect(() => {
-            // 서버에서 예약 상태를 가져오는 요청
+    useEffect(() => {
+        if (userInfo) {
+            const userStuId = userInfo.userStuId;
             axios.get(`http://localhost:8080/book/reserve?bookId=${bookId}&userStuId=${userStuId}`)
                 .then((response) => {
                     const reservationStatus = response.data;
-                    setReservationStatus(reservationStatus); // 예약 상태를 업데이트
+                    setReservationStatus(reservationStatus);
                 })
                 .catch((error) => {
                     console.error(error);
                 });
+        }
+    }, [userInfo, bookId]);
 
-        }, [bookId, userStuId, reservationStatus]);
+    const handleButtonClick = () => {
+        if (!userInfo) {
+            alert("로그인이 필요합니다");
+            return;
+        } else {
+            setIsModalOpen(true);
+        }
 
-        const handleButtonClick = () => {
-            if(!userInfo) {
-                alert("로그인이 필요합니다");
-                return;
-            }else{
-                setIsModalOpen(true);
-            }
+        if (reservationStatus === "예약 가능") {
+            setIsModalOpen(true);
+        } else {
+            alert("예약이 불가한 도서입니다.");
+        }
+    };
 
-            if (reservationStatus === "예약 가능") { //예약 할 수 있는 상태
-                setIsModalOpen(true);
-            }  else { // 예약이 되어있어서 할 수 없는 상태
-                alert("예약이 불가한 도서입니다.")
-            }
-        };
-
-
-        const closeModal = () => {
-            setIsModalOpen(false);
-            setReservationStatus('예약 중');
-        };
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setReservationStatus('예약 중');
+    };
 
         let imageSource;
         let buttonText;

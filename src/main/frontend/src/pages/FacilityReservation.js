@@ -101,8 +101,8 @@ function FacilityReservation() {
     const [selectedMenu, setSelectedMenu] = useState("스터디룸");
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTimes, setSelectedTimes] = useState([]);
-    const [searchResult, setSearchResult] = useState([]); // 배열로 초기화
-
+    const [searchResult, setSearchResult] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const handleMenuClick = (menu) => {
         setSelectedMenu(menu);
     };
@@ -111,10 +111,9 @@ function FacilityReservation() {
         try {
             if (!selectedDate || selectedTimes.length === 0) {
                 console.error("날짜와 시간을 선택해주세요.");
-
-                return; // 선택한 날짜나 시간이 없다면 더 이상 진행하지 않음
+                return;
             }
-            console.log(selectedMenu + " " + selectedDate + " " + selectedTimes)
+
             const result = await searchFacility(
                 selectedMenu,
                 selectedDate,
@@ -133,12 +132,25 @@ function FacilityReservation() {
         if (selectedTimes.length === 0) {
             setSearchResult([]);
         } else {
-        handleFacilitySearch();
+            handleFacilitySearch();
         }
     }, [selectedMenu, selectedDate, selectedTimes]);
 
-    // 검색 결과를 그룹화
+    useEffect(() => {
+        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        if (userInfo) {
+            setIsLoggedIn(true);
+        } else {
+            alert("로그인 후 이용이 가능한 페이지입니다.");
+            window.location.href = "/login";
+        }
+    }, []);
+
     const groupedSearchResult = groupByRoomFloor(searchResult);
+
+    if (!isLoggedIn) {
+        return null; // 로그인되지 않은 경우 페이지를 렌더링하지 않음
+    }
 
     return (
         <Wrapper>
