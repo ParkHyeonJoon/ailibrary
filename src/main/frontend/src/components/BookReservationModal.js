@@ -89,7 +89,7 @@ const StyledText = styled.p`
   margin-left: 5px;
 `
 
-function BookReservationModal({ isOpen, onClose }) {
+function BookReservationModal({ isOpen, onClose, onReservationComplete }) {
     const [reservationStatus, setReservationStatus] = useState("예약 가능");
     const [selectedDate, setSelectedDate] = useState(null);
     const { bookId } = useParams();
@@ -112,9 +112,9 @@ function BookReservationModal({ isOpen, onClose }) {
                 .then((response) => {
                     const reservation = response.data;
                     if (reservation === "예약 가능") {
-                        setReservationStatus("예약 중");
+                        // 예약이 성공했을 때 모달을 닫고 예약이 완료되었음을 부모 컴포넌트로 전달합니다.
+                        onReservationComplete(); // 여기서 예약이 완료되었음을 알림
                         alert("예약이 완료되었습니다");
-
                         onClose();
                     }
                 })

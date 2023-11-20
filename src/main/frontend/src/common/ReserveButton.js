@@ -68,6 +68,21 @@ const ReserveButton = () => {
         }
     }, [userInfo, bookId]);
 
+    useEffect(() => {
+        // 모달에서 예약이 완료될 때 실행되는 코드
+        if (reservationStatus === "예약 불가") {
+            // 여기서 서버로부터 reservationStatus를 새로 받아옵니다.
+            const userStuId = userInfo.userStuId;
+            axios.get(`http://localhost:8080/book/reserve?bookId=${bookId}&userStuId=${userStuId}`)
+                .then((response) => {
+                    const newReservationStatus = response.data;
+                    setReservationStatus(newReservationStatus);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    }, [userInfo, bookId, reservationStatus]);
     const handleButtonClick = () => {
         if (!userInfo) {
             alert("로그인이 필요합니다");
@@ -82,7 +97,12 @@ const ReserveButton = () => {
 
     const closeModal = () => {
         setIsModalOpen(false);
-        setReservationStatus('예약 중');
+    };
+    const handleReservationComplete = () => {
+        // 모달에서 예약이 완료되었을 때 실행되는 함수
+        setIsModalOpen(false); // 모달 닫기
+        // 여기서 부모 컴포넌트에 예약이 완료되었음을 전달하여 상태를 갱신합니다.
+        setReservationStatus("예약 중"); // 예약 중 상태로 변경 예시
     };
 
         let imageSource;
@@ -111,6 +131,7 @@ const ReserveButton = () => {
                 <BookReservationModal
                     isOpen={isModalOpen}
                     onClose={closeModal}
+                    onReservationComplete={handleReservationComplete} // 모달에서 예약 완료 시 실행되는 함수
                 />
             </>
         );
