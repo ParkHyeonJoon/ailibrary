@@ -15,7 +15,7 @@ public class ReviewScheduler {
     private final ReviewService reviewService;
     private final ReviewApiService reviewApiService;
 
-    @Scheduled(cron = "0 0 12 * * *") //fixedRate = 60000 (1분마다) cron = "0 0 12 * * *"
+    @Scheduled(fixedRate = 60000) //fixedRate = 60000 (1분마다) cron = "0 0 12 * * *"
     public void reviewSummary() {
         int[] allBookId = bookService.findAllBookId();  // 모든 도서 번호 가져 오기
 
